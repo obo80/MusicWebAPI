@@ -12,7 +12,7 @@ namespace MusicWebAPI
             // Add services to the container.
             builder.Services.AddControllers();
             builder.Services.AddDbContext<MusicWebDbContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("RestaurantDbConnection")));
+                options.UseSqlServer(builder.Configuration.GetConnectionString("MusicWebAPILocalDbConnection")));
 
 
 

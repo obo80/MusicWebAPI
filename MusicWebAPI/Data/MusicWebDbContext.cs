@@ -17,55 +17,40 @@ namespace MusicWebAPI.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.Entity<Artist>()
-            //    .HasMany(ar => ar.Albums)
-            //    .WithOne(al => al.Artist)
-            //    .HasForeignKey(al => al.ArtistId);
 
-            //modelBuilder.Entity<Artist>()
-            //    .HasMany(ar => ar.Songs)
-            //    .WithOne(s => s.Artist)
-            //    .HasForeignKey(s => s.ArtistId);
-
-            //modelBuilder.Entity<Album>()
-            //    .HasMany(al => al.Songs)
-            //    .WithOne(s => s.Album)
-            //    .HasForeignKey(s => s.AlbumId);
-
-            //modelBuilder.Entity<Album>()
-            //    .HasOne(al => al.Genres);
-
-            modelBuilder.Entity<Artist>(ar =>
+            modelBuilder.Entity<Artist>(eb =>
             {
-                ar.Property(ar => ar.Name).IsRequired();
+                eb.Property(ar => ar.Name).IsRequired();
 
-                ar.HasMany(ar => ar.Albums)
+                eb.HasMany(ar => ar.Albums)
                 .WithOne(al => al.Artist)
                 .HasForeignKey(al => al.ArtistId);
 
-                ar.HasMany(ar => ar.Songs)
+                eb.HasMany(ar => ar.Songs)
                 .WithOne(s => s.Artist)
-                .HasForeignKey(s => s.ArtistId);
+                .HasForeignKey(s => s.ArtistId).
+                OnDelete(DeleteBehavior.ClientCascade);
 
             });
 
-            modelBuilder.Entity<Album>(al =>
+            modelBuilder.Entity<Album>(eb =>
             {
-                al.Property(al => al.Title).IsRequired();
-                al.Property(al => al.ArtistId).IsRequired();
+                eb.Property(al => al.Title).IsRequired();
+                eb.Property(al => al.ArtistId).IsRequired();
 
-                al.HasMany(al => al.Songs)
+                eb.HasMany(al => al.Songs)
                 .WithOne(s => s.Album)
-                .HasForeignKey(s => s.AlbumId);
+                .HasForeignKey(s => s.AlbumId)
+                .OnDelete(DeleteBehavior.NoAction);
 
-                al.HasOne(al => al.Genres);
+                eb.HasOne(al => al.Genres);
             });
 
 
-            modelBuilder.Entity<Song>(s =>
+            modelBuilder.Entity<Song>(eb =>
             {
-                s.Property(s => s.Title).IsRequired();
-                s.Property(s => s.ArtistId).IsRequired();
+                eb.Property(s => s.Title).IsRequired();
+                eb.Property(s => s.ArtistId).IsRequired();
 
             });
 
