@@ -22,6 +22,8 @@ namespace MusicWebAPI.Data
             {
                 eb.Property(ar => ar.Name).IsRequired();
 
+                //eb.HasIndex(ar => ar.Name).IsUnique();
+
                 eb.HasMany(ar => ar.Albums)
                 .WithOne(al => al.Artist)
                 .HasForeignKey(al => al.ArtistId);

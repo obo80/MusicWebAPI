@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MusicWebAPI.Data;
 
@@ -10,9 +11,11 @@ using MusicWebAPI.Data;
 namespace MusicWebAPI.Migrations
 {
     [DbContext(typeof(MusicWebDbContext))]
-    partial class MusicWebDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251018203309_FirstFixNullable")]
+    partial class FirstFixNullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

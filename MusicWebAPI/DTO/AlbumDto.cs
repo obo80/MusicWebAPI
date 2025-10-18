@@ -1,25 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using MusicWebAPI.Entities;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace MusicWebAPI.Entities
+namespace MusicWebAPI.DTO
 {
-    public class Album
+    internal class AlbumDto
     {
         public int Id { get; set; }
 
         public string Title { get; set; }
         public string? Description { get; set; }
-
-        public Artist Artist { get; set; }
         public int ArtistId { get; set; }
 
-        public  Genre Genres { get; set; }
-        public int GenreId { get; set; }
+        public virtual Artist Artist { get; set; }
 
         public virtual ICollection<Song>? Songs { get; set; }
-
     }
 }

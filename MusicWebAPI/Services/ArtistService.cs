@@ -1,0 +1,87 @@
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using MusicWebAPI.Data;
+using MusicWebAPI.DTO;
+using MusicWebAPI.Entities;
+using MusicWebAPI.Services.Interfaces;
+
+namespace MusicWebAPI.Services
+{
+    public class ArtistService : IArtistService
+    {
+        private readonly MusicWebDbContext _dbContext;
+        private readonly IMapper _mapper;
+
+        public ArtistService(MusicWebDbContext dbContext, IMapper mapper)
+        {
+            _dbContext = dbContext;
+            _mapper = mapper;
+        }
+
+        public async Task<IEnumerable<ArtistDto>> GetAllArtists()
+        {
+            var artists = await _dbContext.Artists.ToListAsync();
+            var artistsDto = _mapper.Map<List<ArtistDto>>(artists);
+
+            return artistsDto;
+        }
+
+        public async Task<ArtistDto> GetArtistsById(int id)
+        {
+            var artist = await _dbContext.Artists.FindAsync(id);
+
+            if (artist is null) 
+                return null;
+
+
+            var artistDto = _mapper.Map<ArtistDto>(artist);
+            return artistDto;
+        }
+
+
+        public async Task<Artist> CreateArtist (CreateArtistDto dto)
+        {
+            var artist = _mapper.Map<Artist>(dto);
+            await _dbContext.Artists.AddAsync(artist);
+            await _dbContext.SaveChangesAsync();
+            return artist;
+        }
+
+        public async Task<bool> DeleteArtist (int id)
+        {
+            var artist = await _dbContext.
+                Artists.FirstOrDefaultAsync(a => a.Id == id);
+
+            if (artist is null) return false;
+
+            _dbContext.Artists.Remove(artist);
+            await _dbContext.SaveChangesAsync();
+
+            return true;
+
+        }
+
+        public async Task<bool> UpdateArtist(UpdateArtist dto, int id)
+        {
+            var artist = await _dbContext.
+            Artists.FirstOrDefaultAsync(a => a.Id == id);
+
+            if (artist is null) return false;
+
+            artist.Name = dto.Name;
+            artist.Description = dto.Description;
+
+            await _dbContext.SaveChangesAsync();
+            return true;
+        }
+
+
+
+
+
+
+    }
+
+
+}

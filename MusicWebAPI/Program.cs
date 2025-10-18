@@ -1,5 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using MusicWebAPI.Data;
+using MusicWebAPI.Services;
+using MusicWebAPI.Services.Interfaces;
+using System.Reflection;
 
 namespace MusicWebAPI
 {
@@ -13,6 +16,13 @@ namespace MusicWebAPI
             builder.Services.AddControllers();
             builder.Services.AddDbContext<MusicWebDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("MusicWebAPILocalDbConnection")));
+
+            builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
+            // add custom servicess
+            builder.Services.AddScoped<IArtistService, ArtistService>();
+            //builder.Services.AddScoped<IAlbumService, AlbumService>();
+            //builder.Services.AddScoped<ISongService, SongService>();
 
 
 
