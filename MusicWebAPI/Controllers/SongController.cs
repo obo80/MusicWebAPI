@@ -12,11 +12,11 @@ namespace MusicWebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class SongsController : ControllerBase
+    public class SongController : ControllerBase
     {
         private readonly MusicWebDbContext _dbContext;
 
-        public SongsController(MusicWebDbContext dbContext)
+        public SongController(MusicWebDbContext dbContext)
         {
             _dbContext = dbContext;
         }

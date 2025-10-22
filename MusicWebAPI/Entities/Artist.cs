@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MusicWebAPI.Entities.Rating;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -13,8 +14,11 @@ namespace MusicWebAPI.Entities
         public string Name { get; set; }
         public string? Description { get; set; }
 
+
         public virtual ICollection<Album>? Albums { get; set; }
         public virtual ICollection<Song>? Songs { get; set; }
+
+        public virtual ICollection<ArtistRating>? Ratings { get; set; }
 
 
 

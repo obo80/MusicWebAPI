@@ -14,14 +14,14 @@ using MusicWebAPI.Services.Interfaces;
 
 namespace MusicWebAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/artist")]
     [ApiController]
-    public class ArtistsController : ControllerBase
+    public class ArtistController : ControllerBase
     {
         private readonly IArtistService _artistService;
 
 
-        public ArtistsController(IArtistService artistService)
+        public ArtistController(IArtistService artistService)
         {
             _artistService = artistService;
         }
@@ -61,28 +61,13 @@ namespace MusicWebAPI.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutArtist([FromRoute] int id, [FromBody] UpdateArtist updateArtistDto)
         {
-            var result = await _artistService.UpdateArtist(updateArtistDto, id);
+            //var result = await _artistService.UpdateArtist(updateArtistDto, id);
 
-            if (!result)
-            {
-                return NotFound();
-            }
- 
-            //try
+            //if (!result)
             //{
-            //    await _dbContext.SaveChangesAsync();
+            //    return NotFound();
             //}
-            //catch (DbUpdateConcurrencyException)
-            //{
-            //    if (!ArtistExists(id))
-            //    {
-            //        return NotFound();
-            //    }
-            //    else
-            //    {
-            //        throw;
-            //    }
-            //}
+            await Task.Run(() => _artistService.UpdateArtist(updateArtistDto, id));
 
             return Ok();
         }
@@ -93,12 +78,14 @@ namespace MusicWebAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteArtist(int id)
         {
-            var result = await _artistService.DeleteArtist(id);
-            
-            if (!result)
-            {
-                return NotFound();
-            }
+            //var result = await _artistService.DeleteArtist(id);
+
+            //if (!result)
+            //{
+            //    return NotFound();
+            //}
+
+            await Task.Run(() => _artistService.DeleteArtist(id));
 
             return NoContent();
         }

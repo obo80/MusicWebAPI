@@ -1,4 +1,5 @@
 ﻿using MusicWebAPI.Entities;
+using MusicWebAPI.Entities.Rating;
 using System.ComponentModel.DataAnnotations;
 
 namespace MusicWebAPI.DTO
@@ -14,5 +15,6 @@ namespace MusicWebAPI.DTO
         public virtual Artist Artist { get; set; }
 
         public virtual ICollection<Song>? Songs { get; set; }
+        public virtual ICollection<AlbumRating>? Ratings { get; set; }
     }
 }

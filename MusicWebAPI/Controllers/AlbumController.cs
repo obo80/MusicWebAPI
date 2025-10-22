@@ -13,12 +13,12 @@ namespace MusicWebAPI.Controllers
 {
     [Route("api/artist/{artistId}/album")]
     [ApiController]
-    public class AlbumsController : ControllerBase
+    public class AlbumController : ControllerBase
     {
         private readonly MusicWebDbContext _dbContext;
         private readonly IAlbumService _albumService;
 
-        public AlbumsController(MusicWebDbContext dBContext, IAlbumService albumService)
+        public AlbumController(MusicWebDbContext dBContext, IAlbumService albumService)
         {
             _dbContext = dBContext;
             _albumService = albumService;

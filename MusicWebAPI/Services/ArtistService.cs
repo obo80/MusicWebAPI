@@ -5,6 +5,7 @@ using MusicWebAPI.Data;
 using MusicWebAPI.DTO;
 using MusicWebAPI.Entities;
 using MusicWebAPI.Services.Interfaces;
+using MusicWebAPI.Exceptions;
 
 namespace MusicWebAPI.Services
 {
@@ -34,8 +35,9 @@ namespace MusicWebAPI.Services
         {
             var artist = await _dbContext.Artists.FindAsync(id);
 
-            if (artist is null) 
-                return null;
+            if (artist is null)
+                throw new NotFoundExceptions("Artist not found");
+                //return null;
 
 
             var artistDto = _mapper.Map<ArtistDto>(artist);
@@ -51,32 +53,32 @@ namespace MusicWebAPI.Services
             return artist;
         }
 
-        public async Task<bool> DeleteArtist (int id)
+        public async void DeleteArtist (int id)
         {
             var artist = await _dbContext.
                 Artists.FirstOrDefaultAsync(a => a.Id == id);
 
-            if (artist is null) return false;
+            if (artist is null)// return false;
+                throw new NotFoundExceptions("Artist not found");
 
             _dbContext.Artists.Remove(artist);
             await _dbContext.SaveChangesAsync();
 
-            return true;
 
         }
 
-        public async Task<bool> UpdateArtist(UpdateArtist dto, int id)
+        public async void UpdateArtist(UpdateArtist dto, int id)
         {
             var artist = await _dbContext.
             Artists.FirstOrDefaultAsync(a => a.Id == id);
 
-            if (artist is null) return false;
+            if (artist is null) //return false;
+                throw new NotFoundExceptions("Artist not found");
 
             artist.Name = dto.Name;
             artist.Description = dto.Description;
 
             await _dbContext.SaveChangesAsync();
-            return true;
         }
 
 
