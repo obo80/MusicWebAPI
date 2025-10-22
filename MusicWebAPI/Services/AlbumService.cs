@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using MusicWebAPI.Data;
+using MusicWebAPI.DTO;
+using MusicWebAPI.Entities;
 using MusicWebAPI.Services.Interfaces;
 
 namespace MusicWebAPI.Services
@@ -14,5 +16,10 @@ namespace MusicWebAPI.Services
             _dbContext = dbContext;
             _mapper = mapper;
         }
+
+
+
+
+
     }
 }

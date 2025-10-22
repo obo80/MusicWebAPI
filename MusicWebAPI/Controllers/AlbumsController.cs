@@ -1,24 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MusicWebAPI.Data;
 using MusicWebAPI.Entities;
+using MusicWebAPI.Services.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace MusicWebAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/artist/{artistId}/album")]
     [ApiController]
     public class AlbumsController : ControllerBase
     {
         private readonly MusicWebDbContext _dbContext;
+        private readonly IAlbumService _albumService;
 
-        public AlbumsController(MusicWebDbContext dBContext)
+        public AlbumsController(MusicWebDbContext dBContext, IAlbumService albumService)
         {
             _dbContext = dBContext;
+            _albumService = albumService;
         }
 
         // GET: api/Albums

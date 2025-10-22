@@ -12,15 +12,18 @@ namespace MusicWebAPI.Services
     {
         private readonly MusicWebDbContext _dbContext;
         private readonly IMapper _mapper;
+        private readonly ILogger _logger;
 
-        public ArtistService(MusicWebDbContext dbContext, IMapper mapper)
+        public ArtistService(MusicWebDbContext dbContext, IMapper mapper, ILogger<ArtistService> logger)
         {
             _dbContext = dbContext;
             _mapper = mapper;
+            _logger = logger;
         }
 
         public async Task<IEnumerable<ArtistDto>> GetAllArtists()
         {
+            
             var artists = await _dbContext.Artists.ToListAsync();
             var artistsDto = _mapper.Map<List<ArtistDto>>(artists);
 
