@@ -14,7 +14,7 @@ using MusicWebAPI.Services.Interfaces;
 
 namespace MusicWebAPI.Controllers
 {
-    [Route("api/artist")]
+    [Route("api/Artist")]
     [ApiController]
     public class ArtistController : ControllerBase
     {
@@ -59,17 +59,13 @@ namespace MusicWebAPI.Controllers
 
         // PUT: api/Artists/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutArtist([FromRoute] int id, [FromBody] UpdateArtist updateArtistDto)
+        public async Task<IActionResult> PutArtist([FromRoute] int id, [FromBody] UpdateArtistDto updateArtistDto)
         {
-            //var result = await _artistService.UpdateArtist(updateArtistDto, id);
+            var artist = await _artistService.UpdateArtist(updateArtistDto, id);
+            //await Task.Run(() => _artistService.UpdateArtist(updateArtistDto, id));
 
-            //if (!result)
-            //{
-            //    return NotFound();
-            //}
-            await Task.Run(() => _artistService.UpdateArtist(updateArtistDto, id));
-
-            return Ok();
+            
+            return Ok(artist);
         }
 
 
@@ -78,14 +74,9 @@ namespace MusicWebAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteArtist(int id)
         {
-            //var result = await _artistService.DeleteArtist(id);
+            await _artistService.DeleteArtistById(id);
 
-            //if (!result)
-            //{
-            //    return NotFound();
-            //}
-
-            await Task.Run(() => _artistService.DeleteArtist(id));
+            //await Task.Run(() => _artistService.DeleteArtist(id));
 
             return NoContent();
         }

@@ -13,6 +13,9 @@ namespace MusicWebAPI.Mapping
             CreateMap<Song, SongDto>();
 
             CreateMap<CreateArtistDto, Artist>();
+            CreateMap<CreateAlbumDto, Album>();
+            CreateMap<CreateSongDto, Song>();
+
         }
     }
 }

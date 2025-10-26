@@ -12,7 +12,7 @@ namespace MusicWebAPI.Services.Interfaces
         Task<IEnumerable<ArtistDto>> GetAllArtists();
         Task<ArtistDto> GetArtistsById(int id);
         Task<Artist> CreateArtist(CreateArtistDto createArtistDto);
-        void UpdateArtist(UpdateArtist dto, int id);
-        void DeleteArtist(int id);
+        Task<Artist> UpdateArtist(UpdateArtistDto dto, int id);
+        Task DeleteArtistById(int id);
     }
 }

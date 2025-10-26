@@ -4,15 +4,19 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MusicWebAPI.DTO
 {
-    internal class AlbumDto
+    public class AlbumDto
     {
         public int Id { get; set; }
-
         public string Title { get; set; }
         public string? Description { get; set; }
-        public int ArtistId { get; set; }
+        public int? ReleasedYear { get; set; }
 
+        public int ArtistId { get; set; }
         public virtual Artist Artist { get; set; }
+
+        public int GenreId { get; set; }
+        public Genre? Genres { get; set; }
+
 
         public virtual ICollection<Song>? Songs { get; set; }
         public virtual ICollection<AlbumRating>? Ratings { get; set; }

@@ -5,6 +5,7 @@ using MusicWebAPI.Services;
 using MusicWebAPI.Services.Interfaces;
 using NLog.Web;
 using System.Reflection;
+using System.Text.Json.Serialization;
 
 namespace MusicWebAPI
 {
@@ -21,7 +22,8 @@ namespace MusicWebAPI
             builder.Host.UseNLog();
 
             // Add services to the container.
-            builder.Services.AddControllers();
+            builder.Services.AddControllers()
+                .AddJsonOptions(option => option.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
             builder.Services.AddDbContext<MusicWebDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("MusicWebAPILocalDbConnection")));
 
