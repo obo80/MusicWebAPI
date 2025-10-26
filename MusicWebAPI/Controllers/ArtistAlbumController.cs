@@ -31,7 +31,6 @@ namespace MusicWebAPI.Controllers
         {
             var albumsDto = await _albumService.GetAllAlbums(artistId);
             return Ok(albumsDto);
-            //return Ok(new List<AlbumDto>());
         }
 
         // GET: api/Artist/{artistId}/Album/5
@@ -39,7 +38,6 @@ namespace MusicWebAPI.Controllers
         public async Task<ActionResult<Album>> GetAlbum([FromRoute] int id)
         {
             var albumDto = await _albumService.GetAlbumById(id);
-
             return Ok(albumDto);
         }
 
@@ -48,9 +46,7 @@ namespace MusicWebAPI.Controllers
         public async Task<ActionResult<Album>> PostAlbum([FromBody] CreateAlbumDto createAlbumDto, [FromRoute] int artistId)
         {
             var newAlbum = await _albumService.CreateAlbum(createAlbumDto, artistId);
-
             return Created($"api/Artist/{artistId}/Album/{newAlbum.Id}", newAlbum);
- 
         }
 
         // PUT: api/Artist/{artistId}/Album/5
@@ -58,8 +54,6 @@ namespace MusicWebAPI.Controllers
         public async Task<IActionResult> PutAlbum([FromRoute] int id,[FromBody] UpdateAlbumDto updateAlbumDto)
         {
             var updatedAlbum = await _albumService.UpdateAlbum(updateAlbumDto, id);
-            //await Task.Run(() => _albumService.UpdateAlbum(updateAlbumDto, id));
-
             return Ok(updatedAlbum);
         }
 

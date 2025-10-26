@@ -66,20 +66,20 @@ namespace MusicWebAPI.Services
 
         public async Task<Album> UpdateAlbum(UpdateAlbumDto dto, int id)
         {
-            var album = await _dbContext
+            var updatedAlbum = await _dbContext
                 .Albums.FirstOrDefaultAsync(a => a.Id == id);
 
-            if (album is null)
+            if (updatedAlbum is null)
                 throw new NotFoundExceptions("Album not found");
 
-            album.Title = dto.Title;
-            album.Description = dto.Description;
-            album.ReleasedYear = dto.ReleasedYear;
+            updatedAlbum.Title = dto.Title;
+            updatedAlbum.Description = dto.Description;
+            updatedAlbum.ReleasedYear = dto.ReleasedYear;
 
-            _dbContext.Albums.Update(album);
+            _dbContext.Albums.Update(updatedAlbum);
             await _dbContext.SaveChangesAsync();
 
-            return album;
+            return updatedAlbum;
         }
 
 

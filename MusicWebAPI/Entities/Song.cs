@@ -15,8 +15,8 @@ namespace MusicWebAPI.Entities
         public int? Lenght {  get; set; }
         public int? ReleasedYear { get; set; }
 
-        public int AlbumId { get; set; }
-        public virtual Album Album { get; set; }
+        public int? AlbumId { get; set; }
+        public virtual Album? Album { get; set; }
 
         public int ArtistId { get; set; }
         public virtual Artist Artist { get; set; }

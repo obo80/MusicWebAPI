@@ -13,7 +13,6 @@ namespace MusicWebAPI.DTO
         public int? ReleasedYear { get; set; }
 
 
-        public int GenreId { get; set; }
         public int? AlbumId { get; set; }
 
         //public virtual Album? Album { get; set; }

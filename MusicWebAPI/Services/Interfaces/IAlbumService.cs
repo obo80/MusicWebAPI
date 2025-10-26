@@ -11,6 +11,6 @@ namespace MusicWebAPI.Services.Interfaces
         Task<Album> CreateAlbum(DTO.CreateAlbumDto dto, int artistId);
         Task<Album> UpdateAlbum(UpdateAlbumDto dto, int id);
         Task DeleteAlbumById(int id);
-        Task DeleteAllAlbums(int id);
+        Task DeleteAllAlbums(int ArtistId);
     }
 }
