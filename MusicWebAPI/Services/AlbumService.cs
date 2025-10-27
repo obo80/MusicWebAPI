@@ -44,7 +44,7 @@ namespace MusicWebAPI.Services
         {
             var album = await _dbContext.Albums.FindAsync(id);
             if (album is null)
-                throw new NotFoundExceptions("Album not found");
+                throw new NotFoundException("Album not found");
 
             var albumDto = _mapper.Map<AlbumDto>(album);
             return albumDto;
@@ -70,7 +70,7 @@ namespace MusicWebAPI.Services
                 .Albums.FirstOrDefaultAsync(a => a.Id == id);
 
             if (updatedAlbum is null)
-                throw new NotFoundExceptions("Album not found");
+                throw new NotFoundException("Album not found");
 
             updatedAlbum.Title = dto.Title;
             updatedAlbum.Description = dto.Description;
@@ -89,7 +89,7 @@ namespace MusicWebAPI.Services
                 .Albums.FirstOrDefaultAsync(a => a.Id == id);
 
             if (album is null)
-                throw new NotFoundExceptions("Album not found");
+                throw new NotFoundException("Album not found");
 
             _dbContext.Albums.Remove(album);
             await _dbContext.SaveChangesAsync();
@@ -113,7 +113,7 @@ namespace MusicWebAPI.Services
                 Artists.
                 FirstOrDefaultAsync(a => a.Id == artistId);
             if (artist is null)
-                throw new NotFoundExceptions($"Artist not found");
+                throw new NotFoundException($"Artist not found");
 
             return artist;
         }

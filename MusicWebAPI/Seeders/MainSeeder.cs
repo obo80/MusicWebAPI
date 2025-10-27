@@ -33,15 +33,15 @@ namespace MusicWebAPI.Seeders
             {
                 new Role()
                 {
-                    Name = "User"
+                    Name = "User"           //standard user role - can rate, comment and view content
                 },
                 new Role()
                 {
-                Name = "Manager"
+                Name = "Creator"            //content creator role - can add new, edit and delete their own items
             },
                 new Role()
                 {
-                    Name = "Admin"
+                    Name = "Admin"          //admin role - can manage all items and users
                 },
             };
 

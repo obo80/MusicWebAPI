@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using MusicWebAPI.Data;
@@ -15,12 +16,14 @@ namespace MusicWebAPI.Services
     public class AccountService : IAccountService
     {
         private readonly MusicWebDbContext _dbContext;
+        private readonly IMapper _mapper;
         private readonly IPasswordHasher<User> _passwordHasher;
         private readonly AuthenticationSettings _authenticationSettings;
 
-        public AccountService(MusicWebDbContext dbContext, IPasswordHasher<User> passwordHasher, AuthenticationSettings authenticationSettings)
+        public AccountService(MusicWebDbContext dbContext,IMapper mapper, IPasswordHasher<User> passwordHasher, AuthenticationSettings authenticationSettings)
         {
             _dbContext = dbContext;
+            _mapper = mapper;
             _passwordHasher = passwordHasher;
             _authenticationSettings = authenticationSettings;
         }
@@ -30,7 +33,7 @@ namespace MusicWebAPI.Services
             {
                 Name = dto.Name,
                 Email = dto.Email,
-                RoleId = dto.RoleId
+                RoleId = 1 //default role 'User' - new created user cannot assign himself higher role
 
             };
 
@@ -40,21 +43,27 @@ namespace MusicWebAPI.Services
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<string> GenerateJWT(LoginDto dto)
+        public async Task<string> Login(LoginDto dto)
         {
             var user = await _dbContext.Users
                 .Include(u => u.Role)
                 .FirstOrDefaultAsync(u => u.Email == dto.Email);
-            if (user is null) 
+            if (user is null)
             {
                 throw new BadRequestException("Invalid username or password");
             }
-            var result = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, dto.Password);
-            if (result == PasswordVerificationResult.Failed)
+            var passwordHash = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, dto.Password);
+            if (passwordHash == PasswordVerificationResult.Failed)
             {
                 throw new BadRequestException("Invalid username or password");
             }
+            var token = GenerateJwtToken(user);
+            return token;
 
+        }
+
+        private string GenerateJwtToken(User user)
+        {
             var claims = new List<Claim>()
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
@@ -75,7 +84,21 @@ namespace MusicWebAPI.Services
 
             var tokenHandler = new JwtSecurityTokenHandler();
             return tokenHandler.WriteToken(token);
+        }
 
+        public async Task<UserDto> GetCurrentUser()
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<UserDto> UpdateCurrentUser(UpdateUserDto dto)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task DeleteCurrentUser()
+        {
+            throw new NotImplementedException();
         }
     }
 }

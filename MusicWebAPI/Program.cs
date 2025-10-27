@@ -65,6 +65,7 @@ namespace MusicWebAPI
 
             //for Fluent Validator nuget
             builder.Services.AddScoped<IValidator<RegisterUserDto>, RegisterUserDtoValidator>();
+            builder.Services.AddScoped<IValidator<UpdateUserDto>, UpdateUserDtoValidator>();
             builder.Services.AddScoped<IValidator<LoginDto>, LoginDtoValidator>();
 
             //builder.Services.AddScoped<IValidator<RestaurantQuery>, RestaurantQueryValidator>();
@@ -75,6 +76,7 @@ namespace MusicWebAPI
             builder.Services.AddScoped<IAlbumService, AlbumService>();
             builder.Services.AddScoped<ISongService, SongService>();
             builder.Services.AddScoped<IAccountService, AccountService>();
+            builder.Services.AddScoped<IUserService, UserService>();
 
 
             builder.Services.AddScoped<MainSeeder>();

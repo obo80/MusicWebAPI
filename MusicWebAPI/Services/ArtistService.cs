@@ -36,7 +36,7 @@ namespace MusicWebAPI.Services
             var artist = await _dbContext.Artists.FindAsync(id);
 
             if (artist is null)
-                throw new NotFoundExceptions("Artist not found");
+                throw new NotFoundException("Artist not found");
                 //return null;
 
 
@@ -60,9 +60,11 @@ namespace MusicWebAPI.Services
             var artist = await _dbContext.Artists.FindAsync(id);
 
             if (artist is null)
-                throw new NotFoundExceptions("Artist not found");
+                throw new NotFoundException("Artist not found");
 
-            artist.Name = dto.Name;
+            if (dto.Name != null)
+                artist.Name = dto.Name;
+
             artist.Description = dto.Description;
 
             await _dbContext.SaveChangesAsync();
@@ -76,7 +78,7 @@ namespace MusicWebAPI.Services
 
 
             if (artist is null)// return false;
-                throw new NotFoundExceptions("Artist not found");
+                throw new NotFoundException("Artist not found");
 
             _dbContext.Artists.Remove(artist);
             await _dbContext.SaveChangesAsync();

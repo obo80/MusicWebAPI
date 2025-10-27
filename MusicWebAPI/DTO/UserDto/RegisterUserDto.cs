@@ -10,6 +10,6 @@ namespace MusicWebAPI.DTO.UserDto
         public string Password { get; set; }
         public string ConfirmPassword { get; set; }
 
-        public int RoleId { get; set; } = 1;
+        //public int RoleId { get; set; } = 1;   //disabled - user cannot grant role greater than 'User' to himself
     }
 }
