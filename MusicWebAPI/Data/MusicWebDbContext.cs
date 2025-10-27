@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MusicWebAPI.Entities;
 using MusicWebAPI.Entities.Rating;
+using MusicWebAPI.Entities.User;
 
 namespace MusicWebAPI.Data
 {
@@ -20,8 +21,26 @@ namespace MusicWebAPI.Data
         public DbSet<AlbumRating> AlbumRatings { get; set; }
         public DbSet<SongRating> SongRatings { get; set; }
 
+        public DbSet<User> Users { get; set; } 
+        public DbSet<Role> Roles { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<User>(eb =>
+            {
+                eb.Property(u => u.Name).IsRequired();
+                eb.Property(u => u.Email).IsRequired();
+                //eb.Property(u => u.PasswordHash).IsRequired();
+                //eb.HasOne(u => u.Role)
+                //.WithMany()
+                //.HasForeignKey(u => u.RoleId);
+            });
+
+            modelBuilder.Entity<Role>(eb =>
+            {
+                eb.Property(r => r.Name).IsRequired();
+            });
+
 
             modelBuilder.Entity<Artist>(eb =>
             {

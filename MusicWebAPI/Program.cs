@@ -1,10 +1,19 @@
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using MusicWebAPI.Data;
+using MusicWebAPI.DTO.UserDto;
+using MusicWebAPI.DTO.Validators;
+using MusicWebAPI.Entities.User;
 using MusicWebAPI.Middleware;
+using MusicWebAPI.Seeders;
 using MusicWebAPI.Services;
 using MusicWebAPI.Services.Interfaces;
 using NLog.Web;
 using System.Reflection;
+using System.Text;
 using System.Text.Json.Serialization;
 
 namespace MusicWebAPI
@@ -21,6 +30,27 @@ namespace MusicWebAPI
             builder.Logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Information);
             builder.Host.UseNLog();
 
+            //authentication settings
+            var authenticationSettings = new AuthenticationSettings();
+            builder.Configuration.GetSection("Authentication").Bind(authenticationSettings);
+            builder.Services.AddSingleton(authenticationSettings);
+            builder.Services.AddAuthentication(option =>
+            {
+                option.DefaultAuthenticateScheme = "Bearer";
+                option.DefaultScheme = "Bearer";
+                option.DefaultChallengeScheme = "Bearer";
+            }).AddJwtBearer(cfg =>
+            {
+                cfg.RequireHttpsMetadata = false;
+                cfg.SaveToken = true;
+                cfg.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidIssuer = authenticationSettings.JwtIssuer,
+                    ValidAudience = authenticationSettings.JwtIssuer,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authenticationSettings.JwtKey)),
+                };
+            });
+
             // Add services to the container.
             builder.Services.AddControllers()
                 .AddJsonOptions(option => option.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
@@ -31,10 +61,23 @@ namespace MusicWebAPI
 
             builder.Services.AddScoped<ErrorHandlingMiddleware>();
 
+            builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+
+            //for Fluent Validator nuget
+            builder.Services.AddScoped<IValidator<RegisterUserDto>, RegisterUserDtoValidator>();
+            builder.Services.AddScoped<IValidator<LoginDto>, LoginDtoValidator>();
+
+            //builder.Services.AddScoped<IValidator<RestaurantQuery>, RestaurantQueryValidator>();
+            builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly).AddFluentValidationAutoValidation();
+
             // add custom servicess
             builder.Services.AddScoped<IArtistService, ArtistService>();
             builder.Services.AddScoped<IAlbumService, AlbumService>();
             builder.Services.AddScoped<ISongService, SongService>();
+            builder.Services.AddScoped<IAccountService, AccountService>();
+
+
+            builder.Services.AddScoped<MainSeeder>();
 
 
 
@@ -43,8 +86,16 @@ namespace MusicWebAPI
 
             var app = builder.Build();
 
+            // Seed the database
+            var scope = app.Services.CreateScope();
+            var seeder = scope.ServiceProvider.GetRequiredService<MainSeeder>();
+            seeder.Seed();
+
+
             app.UseMiddleware<ErrorHandlingMiddleware>();
 
+
+            app.UseAuthentication();
             // Configure the HTTP request pipeline.
 
             app.UseHttpsRedirection();
