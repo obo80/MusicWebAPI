@@ -4,13 +4,11 @@ using MusicWebAPI.DTO.UserDto;
 
 namespace MusicWebAPI.DTO.Validators
 {
-    public class UpdateUserDtoValidator : AbstractValidator<UpdateUserDto>
+    public class UpdateCurrentUserDtoValidator : AbstractValidator<UpdateCurrentUserDto>
     {
-        public UpdateUserDtoValidator(MusicWebDbContext dbContext)
+        public UpdateCurrentUserDtoValidator(MusicWebDbContext dbContext)
         {
-            RuleFor(x => x.RoleId).GreaterThan(0).LessThanOrEqualTo(dbContext.Roles.Count());
-
-            RuleFor(x => x.Email)
+            RuleFor (x => x.Email)
                 .EmailAddress().When(x => !String.IsNullOrEmpty(x.Email))
                 .WithMessage("Invalid email format");
         }

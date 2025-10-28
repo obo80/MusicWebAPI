@@ -43,7 +43,9 @@ namespace MusicWebAPI.Services
 
         public async Task<UserDto> UpdateUserById(int id, UpdateUserDto dto)
         {
-            var updatedUser = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id == id);
+            var updatedUser = await _dbContext.Users
+                .Include(u => u.Role)
+                .FirstOrDefaultAsync(u => u.Id == id);
             if (updatedUser is null) 
                 throw new NotFoundException("User not found");
 
@@ -65,7 +67,7 @@ namespace MusicWebAPI.Services
                 }
                 updatedUser.Email = dto.Email;
             }
-
+            
             if (dto.RoleId.HasValue)
                 updatedUser.RoleId = dto.RoleId.Value;
 

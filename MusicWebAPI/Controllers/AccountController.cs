@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MusicWebAPI.DTO.UserDto;
 using MusicWebAPI.Entities;
 using MusicWebAPI.Services;
@@ -20,8 +21,8 @@ namespace MusicWebAPI.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> RegisterUser ([FromBody] RegisterUserDto dto)
         {
-            await _accountService.RegisterUser(dto);
-            return Ok("User registered successfully.");
+            var userDto =  await _accountService.RegisterUser(dto);
+            return Created($"api/account/{userDto.Id}",userDto);
         }
 
         [HttpPost("login")]
@@ -31,40 +32,34 @@ namespace MusicWebAPI.Controllers
             return Ok(token);
         }
 
-        [HttpPost ("logout")]
-        public async Task<IActionResult> Logout()
-        {
-            await _accountService.Logout();
-            return Ok("User logged out successfully.");
-        }
 
         [HttpPost("change-password")]
-        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDto dto)
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDto dto, [FromHeader] string authorization)
         {
-            await _accountService.ChangePassword(dto);
+            await _accountService.ChangePassword(dto, authorization);
             return Ok("Password changed successfully.");
         }
 
         [HttpGet("me")]
-        public async Task<IActionResult> GetCurrentUser()
+        public async Task<IActionResult> GetCurrentUser([FromHeader] string authorization)
         {
-            var user = await _accountService.GetCurrentUser();
+            var user = await _accountService.GetCurrentUser(authorization);
             return Ok(user);
         }
 
         [HttpPut("me")]
-        public async Task<IActionResult> UpdateCurrentUser([FromBody] UpdateUserDto dto)
+        public async Task<IActionResult> UpdateCurrentUser([FromBody] UpdateCurrentUserDto dto, [FromHeader] string authorization)
         {
-            var updatedUser = await _accountService.UpdateCurrentUser(dto);
-            return Ok("User updated successfully.");
+            var updatedUserDto = await _accountService.UpdateCurrentUser(dto, authorization);
+            return Created ($"api/account/me", updatedUserDto);
         }
 
 
         [HttpDelete("me")]
-        public async Task<IActionResult> DeleteCurrentUser()
+        public async Task<IActionResult> DeleteCurrentUser([FromHeader] string authorization)
         {
-            await _accountService.DeleteCurrentUser();
-            return Ok("Current user deleted successfully.");
+            await _accountService.DeleteCurrentUser(authorization);
+            return NoContent();
         }
 
     }

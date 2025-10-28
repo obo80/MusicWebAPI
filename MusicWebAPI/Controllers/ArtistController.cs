@@ -33,7 +33,6 @@ namespace MusicWebAPI.Controllers
             var artistsDto = await _artistService.GetAllArtists();
 
             return Ok(artistsDto);
-            //return await _dbContext.Artists.ToListAsync();
         }
 
         //GET: api/Artists/5
@@ -44,7 +43,6 @@ namespace MusicWebAPI.Controllers
 
             return Ok(artistDto);
         }
-
 
 
         // POST: api/Artists
@@ -62,22 +60,14 @@ namespace MusicWebAPI.Controllers
         public async Task<IActionResult> PutArtist([FromRoute] int id, [FromBody] UpdateArtistDto updateArtistDto)
         {
             var artist = await _artistService.UpdateArtist(updateArtistDto, id);
-            //await Task.Run(() => _artistService.UpdateArtist(updateArtistDto, id));
-
-            
             return Ok(artist);
         }
-
-
 
         // DELETE: api/Artists/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteArtist(int id)
         {
             await _artistService.DeleteArtistById(id);
-
-            //await Task.Run(() => _artistService.DeleteArtist(id));
-
             return NoContent();
         }
 

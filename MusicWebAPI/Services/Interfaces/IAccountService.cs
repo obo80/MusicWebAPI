@@ -4,12 +4,11 @@ namespace MusicWebAPI.Services.Interfaces
 {
     public interface IAccountService
     {
-        Task RegisterUser(RegisterUserDto dto);
+        Task<UserDto> RegisterUser(RegisterUserDto dto);
         Task<string> Login(LoginDto dto);
-        Task<UserDto> GetCurrentUser();
-        Task<UserDto> UpdateCurrentUser(UpdateUserDto dto);
-        Task DeleteCurrentUser();
-        Task Logout();
-        Task ChangePassword(ChangePasswordDto dto);
+        Task<UserDto> GetCurrentUser(string authorization);
+        Task<UserDto> UpdateCurrentUser(UpdateCurrentUserDto dto, string authorization);
+        Task DeleteCurrentUser(string authorization);
+        Task ChangePassword(ChangePasswordDto dto, string authorization);
     }
 }

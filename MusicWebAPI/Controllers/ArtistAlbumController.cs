@@ -64,8 +64,6 @@ namespace MusicWebAPI.Controllers
         public async Task<IActionResult> DeleteAlbum([FromRoute] int id)
         {
             await _albumService.DeleteAlbumById(id);
-            //await Task.Run(() => _albumService.DeleteAlbumById(id));
-
             return NoContent();
         }
 
@@ -74,8 +72,6 @@ namespace MusicWebAPI.Controllers
         public async Task<IActionResult> DeleteAllAlbums([FromRoute] int artistId)
         {
             await _albumService.DeleteAllAlbums(artistId);
-            //await Task.Run(() => _albumService.DeleteAllAlbums(artistId));
-
             return NoContent();
         }
 
