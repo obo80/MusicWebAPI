@@ -93,21 +93,21 @@ namespace MusicWebAPI.Data
 
             modelBuilder.Entity<ArtistRating>(eb =>
             {
-                eb.Property(r => r.UserId).IsRequired();
+                eb.Property(r => r.CreateUserId).IsRequired();
                 eb.Property(r => r.Value).IsRequired();
                 eb.Property(r => r.ArtistId).IsRequired();
             });
 
             modelBuilder.Entity<AlbumRating>(eb =>
             {
-                eb.Property(r => r.UserId).IsRequired();
+                eb.Property(r => r.CreateUserId).IsRequired();
                 eb.Property(r => r.Value).IsRequired();
                 eb.Property(r => r.AlbumId).IsRequired();
             });
 
             modelBuilder.Entity<SongRating>(eb =>
             {
-                eb.Property(r => r.UserId).IsRequired();
+                eb.Property(r => r.CreateUserId).IsRequired();
                 eb.Property(r => r.Value).IsRequired();
                 eb.Property(r => r.SongId).IsRequired();
             });

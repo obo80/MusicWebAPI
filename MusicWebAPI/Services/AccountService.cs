@@ -7,6 +7,7 @@ using MusicWebAPI.DTO.UserDto;
 using MusicWebAPI.Entities.User;
 using MusicWebAPI.Exceptions;
 using MusicWebAPI.Services.Interfaces;
+using MusicWebAPI.Services.ServiceHelpers;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -91,7 +92,7 @@ namespace MusicWebAPI.Services
 
         public async Task<UserDto> GetCurrentUser(string authorization)
         {
-            var userId = GetUserIdFromClaims(authorization);
+            var userId = ServiceHelper.GetUserIdFromClaims(authorization);
             var user = await _dbContext.Users
                 .Include(u => u.Role)
                 .FirstOrDefaultAsync(u => u.Id == userId);
@@ -104,7 +105,7 @@ namespace MusicWebAPI.Services
 
         public async Task<UserDto> UpdateCurrentUser(UpdateCurrentUserDto dto, string authorization)
         {
-            var userId = GetUserIdFromClaims(authorization);
+            var userId = ServiceHelper.GetUserIdFromClaims(authorization);
             var updatedUser = await _dbContext.Users
                 .Include(u => u.Role)
                 .FirstOrDefaultAsync(u => u.Id == userId);
@@ -140,7 +141,7 @@ namespace MusicWebAPI.Services
 
         public async Task DeleteCurrentUser(string authorization)
         {
-            var userId = GetUserIdFromClaims(authorization);
+            var userId = ServiceHelper.GetUserIdFromClaims(authorization);
             var user = await _dbContext.Users.FindAsync(userId);
             if (user is null)
             {
@@ -150,21 +151,10 @@ namespace MusicWebAPI.Services
             await _dbContext.SaveChangesAsync();
         }
 
-        private int GetUserIdFromClaims(string authorization)
-        {
-            var handler = new JwtSecurityTokenHandler();
-            var jwt = authorization.Replace("Bearer ", "");
-            var token = handler.ReadJwtToken(jwt);
-            var userIdClaim = token.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
-            if (userIdClaim is null)
-            {
-                throw new BadRequestException("Invalid token");
-            }
-            return int.Parse(userIdClaim.Value);
-        }
+
         public async Task ChangePassword(ChangePasswordDto dto, string authorization)
         {
-            var userId = GetUserIdFromClaims(authorization);
+            var userId = ServiceHelper.GetUserIdFromClaims(authorization);
             var user =  _dbContext.Users.Find(userId);
             if (user is null)
             {

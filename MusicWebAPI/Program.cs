@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using MusicWebAPI.Data;
+using MusicWebAPI.DTO;
 using MusicWebAPI.DTO.UserDto;
 using MusicWebAPI.DTO.Validators;
 using MusicWebAPI.Entities.User;
@@ -67,6 +68,7 @@ namespace MusicWebAPI
             builder.Services.AddScoped<IValidator<RegisterUserDto>, RegisterUserDtoValidator>();
             builder.Services.AddScoped<IValidator<UpdateUserDto>, UpdateUserDtoValidator>();
             builder.Services.AddScoped<IValidator<LoginDto>, LoginDtoValidator>();
+            builder.Services.AddScoped<IValidator<RatingDto>, RatingDtoValidator>();
 
             //builder.Services.AddScoped<IValidator<RestaurantQuery>, RestaurantQueryValidator>();
             builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly).AddFluentValidationAutoValidation();
@@ -77,6 +79,9 @@ namespace MusicWebAPI
             builder.Services.AddScoped<ISongService, SongService>();
             builder.Services.AddScoped<IAccountService, AccountService>();
             builder.Services.AddScoped<IUserService, UserService>();
+            builder.Services.AddScoped<IArtistRatingService, ArtistRatingService>();
+            builder.Services.AddScoped<IAlbumRatingService, AlbumRatingService>();
+            builder.Services.AddScoped<ISongRatingService, SongRatingService>();
 
 
             builder.Services.AddScoped<MainSeeder>();

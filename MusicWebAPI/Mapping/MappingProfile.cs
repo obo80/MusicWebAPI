@@ -2,6 +2,7 @@
 using MusicWebAPI.DTO;
 using MusicWebAPI.DTO.UserDto;
 using MusicWebAPI.Entities;
+using MusicWebAPI.Entities.Rating;
 using MusicWebAPI.Entities.User;
 
 namespace MusicWebAPI.Mapping
@@ -20,7 +21,21 @@ namespace MusicWebAPI.Mapping
             CreateMap<CreateAlbumDto, Album>();
             CreateMap<CreateSongDto, Song>();
 
+            CreateMap<RatingDto, ArtistRating>();
+            CreateMap<RatingDto, AlbumRating>();
+            CreateMap<RatingDto, SongRating>();
 
+            CreateMap<UpdateArtistDto, Artist>();
+            CreateMap<UpdateAlbumDto, Album>();
+            CreateMap<UpdateSongDto, Song>();
+
+            CreateMap<ArtistRating, RatingDto>();
+            CreateMap<AlbumRating, RatingDto>();
+            CreateMap<SongRating, RatingDto>();
+
+            CreateMap<RatingDto, ArtistRating>();
+            CreateMap<RatingDto, AlbumRating>();
+            CreateMap<RatingDto, SongRating>();
 
         }
     }

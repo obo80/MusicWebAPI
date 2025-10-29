@@ -21,10 +21,11 @@ namespace MusicWebAPI.Entities
         public  Genre? Genres { get; set; }
         public int GenreId { get; set; }
 
-        
+
         public virtual ICollection<Song>? Songs { get; set; }
 
         public virtual ICollection<AlbumRating>? Ratings { get; set; }
+        public double AverageRating { get; set; }
 
     }
 }
