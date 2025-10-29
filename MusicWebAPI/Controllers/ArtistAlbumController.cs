@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MusicWebAPI.Data;
@@ -15,6 +16,7 @@ using System.Threading.Tasks;
 namespace MusicWebAPI.Controllers
 {
     [Route("api/Artist/{artistId}/Album")]
+    [Authorize(Roles = "Creator")]
     [ApiController]
     public class ArtistAlbumController : ControllerBase
     {
@@ -26,6 +28,7 @@ namespace MusicWebAPI.Controllers
         }
 
         // GET: api/Artist/{artistId}/Album
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AlbumDto>>> GetAlbums(int artistId)
         {
@@ -34,6 +37,7 @@ namespace MusicWebAPI.Controllers
         }
 
         // GET: api/Artist/{artistId}/Album/5
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<ActionResult<Album>> GetAlbum([FromRoute] int id)
         {
@@ -74,9 +78,5 @@ namespace MusicWebAPI.Controllers
             await _albumService.DeleteAllAlbums(artistId);
             return NoContent();
         }
-
-
-
-
     }
 }

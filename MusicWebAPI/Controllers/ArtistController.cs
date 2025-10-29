@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +16,7 @@ using MusicWebAPI.Services.Interfaces;
 namespace MusicWebAPI.Controllers
 {
     [Route("api/Artist")]
+    [Authorize(Roles = "Creator")]
     [ApiController]
     public class ArtistController : ControllerBase
     {
@@ -27,6 +29,7 @@ namespace MusicWebAPI.Controllers
         }
 
         // GET: api/Artists
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ArtistDto>>> GetArtists()
         {
@@ -35,7 +38,9 @@ namespace MusicWebAPI.Controllers
             return Ok(artistsDto);
         }
 
+
         //GET: api/Artists/5
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<ActionResult<Artist>> GetArtist([FromRoute]int id)
         {

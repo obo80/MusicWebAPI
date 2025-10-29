@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MusicWebAPI.DTO.UserDto;
 using MusicWebAPI.Services;
@@ -7,6 +8,7 @@ using MusicWebAPI.Services.Interfaces;
 namespace MusicWebAPI.Controllers
 {
     [Route("api/user")]
+    [Authorize(Roles = "Admin")]
     [ApiController]
     public class UserController : ControllerBase
     {

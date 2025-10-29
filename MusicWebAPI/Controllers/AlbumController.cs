@@ -8,6 +8,7 @@ using MusicWebAPI.Services.Interfaces;
 namespace MusicWebAPI.Controllers
 {
     [Route("api/Album")]
+
     [ApiController]
     public class AlbumController : ControllerBase
     {

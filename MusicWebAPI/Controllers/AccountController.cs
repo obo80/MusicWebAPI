@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MusicWebAPI.DTO.UserDto;
-using MusicWebAPI.Entities;
-using MusicWebAPI.Services;
 using MusicWebAPI.Services.Interfaces;
 
 namespace MusicWebAPI.Controllers
@@ -32,21 +30,21 @@ namespace MusicWebAPI.Controllers
             return Ok(token);
         }
 
-
+        [Authorize]
         [HttpPost("change-password")]
         public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDto dto, [FromHeader] string authorization)
         {
             await _accountService.ChangePassword(dto, authorization);
             return Ok("Password changed successfully.");
         }
-
+        [Authorize]
         [HttpGet("me")]
         public async Task<IActionResult> GetCurrentUser([FromHeader] string authorization)
         {
             var user = await _accountService.GetCurrentUser(authorization);
             return Ok(user);
         }
-
+        [Authorize]
         [HttpPut("me")]
         public async Task<IActionResult> UpdateCurrentUser([FromBody] UpdateCurrentUserDto dto, [FromHeader] string authorization)
         {
@@ -54,7 +52,7 @@ namespace MusicWebAPI.Controllers
             return Created ($"api/account/me", updatedUserDto);
         }
 
-
+        [Authorize]
         [HttpDelete("me")]
         public async Task<IActionResult> DeleteCurrentUser([FromHeader] string authorization)
         {

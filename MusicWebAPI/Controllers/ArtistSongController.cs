@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MusicWebAPI.Data;
@@ -14,6 +15,7 @@ using System.Threading.Tasks;
 namespace MusicWebAPI.Controllers
 {
     [Route("api/Artist/{artistId}/Song")]
+    [Authorize(Roles = "Creator")]
     [ApiController]
     public class ArtistSongController : ControllerBase
     {
@@ -25,6 +27,7 @@ namespace MusicWebAPI.Controllers
         }
 
         // GET: api/Artist/{artistId}/Song
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Song>>> GetSongs(int artistId)
         {
@@ -33,6 +36,7 @@ namespace MusicWebAPI.Controllers
         }
 
         // GET: api/Artist/{artistId}/Song/5
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<ActionResult<Song>> GetSong([FromRoute] int id)
         {
