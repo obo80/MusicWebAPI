@@ -1,43 +1,92 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using MusicWebAPI.DTO;
+using MusicWebAPI.Entities.Rating;
+using MusicWebAPI.Services;
+using MusicWebAPI.Services.Interfaces;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace MusicWebAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/Artist/{artistId}/Song/{songId}/Rating")]
     [ApiController]
+    [Authorize(Roles = "User,Creator")]
     public class SongRatingController : ControllerBase
-    {
-        // GET: api/<SongRatingController>
+    {   
+        private readonly ISongRatingService _songRatingService;
+        public SongRatingController(ISongRatingService songRatingService)
+        {
+            _songRatingService = songRatingService;
+        }
+
+        // GET: api/Artist/{artistId}/Song/{songId}/Rating
+        [AllowAnonymous]
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<ActionResult<IEnumerable<RatingDto>>> GetSongtRatings(int songId)
         {
-            return new string[] { "value1", "value2" };
+            var ratingsDto = await _songRatingService.GetSongRatings(songId);
+            return Ok(ratingsDto);
+        }
+        // GET: api/Artist/{artistId}/Song/{songId}/Rating
+        [HttpGet("my")]
+        public async Task<ActionResult<RatingDto>> GetMySongRatings(int songId, [FromHeader] string authorization)
+        {
+            var ratingDto = await _songRatingService.GetMySongRatings(songId, authorization);
+            return Ok(ratingDto);
         }
 
-        // GET api/<SongRatingController>/5
+
+        // GET api/Artist/{artistId}/Song/{songId}/Rating
+        [AllowAnonymous]
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<ActionResult<RatingDto>> GetSongRating([FromRoute] int id)
         {
-            return "value";
+            var ratingDto = await _songRatingService.GetSongRatingById(id);
+            return Ok(ratingDto);
         }
 
-        // POST api/<SongRatingController>
+        // POST api/Artist/{artistId}/Song/{songId}/Rating
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<ActionResult<ArtistRating>> PostSongRating([FromBody] RatingDto ratingDto, [FromRoute] int songId, [FromHeader] string authorization)
         {
+            var createdRating = await _songRatingService.CreateSongRating(ratingDto, songId, authorization);
+            return Created("", createdRating);
         }
 
-        // PUT api/<SongRatingController>/5
+        // PUT api/Artist/{artistId}/Song/{songId}/Rating/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<ActionResult<ArtistRating>> PutSongRating([FromBody] RatingDto ratingDto, [FromRoute] int id, [FromHeader] string authorization)
         {
+            var updatedRating = await _songRatingService.UpdateSongRatingById(ratingDto, id, authorization);
+            return Ok();
         }
 
-        // DELETE api/<SongRatingController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        // DELETE api/Artist/{artistId}/Song/{songId}/Rating/my
+        [HttpDelete("my")]
+        public async Task<IActionResult> DeleteMySongRating([FromRoute] int songId, [FromHeader] string authorization)
         {
+            await _songRatingService.DeleteMySongRatings(songId, authorization);
+            return NoContent();
+        }
+
+
+        // DELETE api/Artist/{artistId}/Song/{songId}/Rating/5
+        [Authorize(Roles = "Admin")]
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteSongRating([FromRoute] int id)
+        {
+            await _songRatingService.DeleteSongRatingById(id);
+            return NoContent();
+        }
+
+        // DELETE api/Artist/{artistId}/Song/{songId}/Rating/
+        [Authorize(Roles = "Admin")]
+        [HttpDelete]
+        public async Task<IActionResult> DeleteSongRatings([FromRoute] int songId)
+        {
+            await _songRatingService.DeleteAllSongRatings(songId);
+            return NoContent();
         }
     }
 }
