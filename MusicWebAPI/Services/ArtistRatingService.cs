@@ -63,7 +63,7 @@ namespace MusicWebAPI.Services
             var existingRating = await _dbContext.ArtistRatings
                 .FirstOrDefaultAsync(r => r.ArtistId == artistId && r.CreateUserId == currentUserId);
             if (existingRating != null)
-                throw new BadRequestException("User has already rated this artist");
+                throw new ForbidException("User has already rated this artist");
 
             var artist = await GetArtistById(artistId);
             var newRating = _mapper.Map<ArtistRating>(ratingDto);
@@ -83,11 +83,11 @@ namespace MusicWebAPI.Services
             if (updatedRating is null)
                 throw new NotFoundException("Rating not found");
 
-            var artist = await GetArtistById(updatedRating.ArtistId);
+            //var artist = await GetArtistById(updatedRating.ArtistId);
 
             var currentUserId = ServiceHelper.GetUserIdFromClaims(authorization);
             if (updatedRating.CreateUserId != currentUserId)
-                throw new UnauthorizedAccessException("User is not authorized to update this rating");
+                throw new ForbidException("User is not authorized to update this rating");
 
             updatedRating.Value = ratingDto.Value;
             updatedRating.Comment = ratingDto.Comment;
@@ -127,12 +127,16 @@ namespace MusicWebAPI.Services
         public async Task DeleteMyArtistRatings(int artistId, string authorization)
         {
             var currentUserId = ServiceHelper.GetUserIdFromClaims(authorization);
-            var ratings = await _dbContext.ArtistRatings
+            var rating = await _dbContext.ArtistRatings
                 .Where(r => r.ArtistId == artistId && r.CreateUserId == currentUserId)
                 .ToListAsync();
 
-            _dbContext.ArtistRatings.RemoveRange(ratings);
+            if (rating is null)
+                throw new NotFoundException("Rating not found");
+
+            _dbContext.ArtistRatings.RemoveRange(rating);
             await _dbContext.SaveChangesAsync();
+            await UpdateAverageRatingForCurrentArtistInDb(artistId);
         }
 
         private async Task UpdateAverageRatingForCurrentArtistInDb (int artistId)
@@ -149,7 +153,7 @@ namespace MusicWebAPI.Services
                 .Include(a => a.Ratings)
                 .FirstOrDefaultAsync(a => a.Id == artistId);
             if (artist is null)
-                throw new NotFoundException($"Artist not found");
+                throw new NotFoundException("Artist not found");
 
             return artist;
         }
