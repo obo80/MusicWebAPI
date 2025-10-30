@@ -20,10 +20,11 @@ namespace MusicWebAPI.Services
             _logger = logger;
         }
 
-        public async Task<IEnumerable<UserDto>> GetAllUsers()
+        public async Task<IEnumerable<UserDto>> GetAllUsers(string searchPhrase)
         {
             var users = await _dbContext.Users
                 .Include(u => u.Role)
+                .Where(u => u.Name.ToLower().Contains(searchPhrase.ToLower()))
                 .ToListAsync();
 
             var usersDto = _mapper.Map<List<UserDto>>(users);

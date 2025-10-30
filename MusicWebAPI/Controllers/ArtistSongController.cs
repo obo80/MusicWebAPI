@@ -29,9 +29,9 @@ namespace MusicWebAPI.Controllers
         // GET: api/Artist/{artistId}/Song
         [AllowAnonymous]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Song>>> GetSongs(int artistId)
+        public async Task<ActionResult<IEnumerable<Song>>> GetSongs(int artistId, [FromQuery] string searchPhrase)
         {
-            var songsDto = await _songService.GetAllSongs(artistId);
+            var songsDto = await _songService.GetAllSongs(artistId, searchPhrase);
             return Ok(songsDto);
         }
 

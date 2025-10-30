@@ -5,8 +5,8 @@ namespace MusicWebAPI.Services.Interfaces
 {
     public interface ISongService
     {
-        Task<IEnumerable<SongDto>> GetAllSongs();
-        Task<IEnumerable<SongDto>> GetAllSongs(int artistId);
+        Task<IEnumerable<SongDto>> GetAllSongs(string searchPhrase);
+        Task<IEnumerable<SongDto>> GetAllSongs(int artistId, string searchPhrase);
         Task<SongDto> GetSongById(int id);
         Task<Song> CreateSong(CreateSongDto dto, int artistId);
         Task<Song> UpdateSong(UpdateSongDto dto, int id);

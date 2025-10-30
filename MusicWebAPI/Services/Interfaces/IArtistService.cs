@@ -9,7 +9,7 @@ namespace MusicWebAPI.Services.Interfaces
         //Task<int> CreateArtist(CreateArtistDto createArtistDto);
         //Task<ActionResult<Artist>> CreateArtist(CreateArtistDto createArtistDto);
  
-        Task<IEnumerable<ArtistDto>> GetAllArtists();
+        Task<IEnumerable<ArtistDto>> GetAllArtists(string searchPhrase);
         Task<ArtistDto> GetArtistsById(int id);
         Task<Artist> CreateArtist(CreateArtistDto createArtistDto);
         Task<Artist> UpdateArtist(UpdateArtistDto dto, int id);

@@ -20,9 +20,9 @@ namespace MusicWebAPI.Controllers
 
         // GET: api/Album
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<AlbumDto>>> GetAlbums()
+        public async Task<ActionResult<IEnumerable<AlbumDto>>> GetAlbums([FromQuery] string searchPhrase)
         {
-            var albumDto = await _albumService.GetAllAlbums();
+            var albumDto = await _albumService.GetAllAlbums(searchPhrase);
             return Ok(albumDto);
         }
 

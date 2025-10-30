@@ -19,21 +19,22 @@ namespace MusicWebAPI.Services
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<SongDto>> GetAllSongs()
+        public async Task<IEnumerable<SongDto>> GetAllSongs(string searchPhrase)
         {
             var songs = await _dbContext.Songs
                 .Include(s => s.Artist)
+                .Where(s => s.Title.ToLower().Contains(searchPhrase.ToLower()))
                 .ToListAsync();
             var songsDto = _mapper.Map<List<SongDto>>(songs);
 
             return songsDto;
         }
 
-        public async Task<IEnumerable<SongDto>> GetAllSongs(int artistId)
+        public async Task<IEnumerable<SongDto>> GetAllSongs(int artistId, string searchPhrase)
         {
             var songs =  await _dbContext.Songs
                 .Include(s => s.Artist)
-                .Where(s => s.ArtistId == artistId)
+                .Where(s => s.ArtistId == artistId && s.Title.ToLower().Contains(searchPhrase.ToLower()))
                 .ToListAsync();
             var songsDto = _mapper.Map<List<SongDto>>(songs);
 

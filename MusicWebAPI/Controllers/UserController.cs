@@ -20,9 +20,9 @@ namespace MusicWebAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllUsers()
+        public async Task<IActionResult> GetAllUsers([FromQuery] string searchPhrase)
         {
-            var usersDto = await _userService.GetAllUsers();
+            var usersDto = await _userService.GetAllUsers(searchPhrase);
             return Ok(usersDto);
         }
 

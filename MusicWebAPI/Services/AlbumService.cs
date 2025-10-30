@@ -20,19 +20,21 @@ namespace MusicWebAPI.Services
         }
 
 
-        public async Task<IEnumerable<AlbumDto>> GetAllAlbums()
+        public async Task<IEnumerable<AlbumDto>> GetAllAlbums(string searchPhrase)
         {
-            var albums = await _dbContext.Albums.ToListAsync();
+            var albums = await _dbContext.Albums
+                .Where(a => a.Title.ToLower().Contains(searchPhrase.ToLower()))
+                .ToListAsync();
             var albumsDto = _mapper.Map<List<AlbumDto>>(albums);
 
             return albumsDto;
         }
-        public async Task<IEnumerable<AlbumDto>> GetAllAlbums(int artistId)
+        public async Task<IEnumerable<AlbumDto>> GetAllAlbums(int artistId, string searchPhrase)
         {
             var artist = await GetArtistById(artistId);
    
             var albums = await _dbContext.Albums.
-                Where(al => al.ArtistId == artistId)
+                Where(al => al.ArtistId == artistId && al.Title.ToLower().Contains(searchPhrase.ToLower()))
                 .ToListAsync();
             var albumsDto = _mapper.Map<List<AlbumDto>>(albums);
 

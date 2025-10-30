@@ -22,10 +22,12 @@ namespace MusicWebAPI.Services
             _logger = logger;
         }
 
-        public async Task<IEnumerable<ArtistDto>> GetAllArtists()
+        public async Task<IEnumerable<ArtistDto>> GetAllArtists(string searchPhrase)
         {
-            
-            var artists = await _dbContext.Artists.ToListAsync();
+
+            var artists = await _dbContext.Artists
+                .Where(a => a.Name.ToLower().Contains(searchPhrase.ToLower()))
+                .ToListAsync();
             var artistsDto = _mapper.Map<List<ArtistDto>>(artists);
 
             return artistsDto;
