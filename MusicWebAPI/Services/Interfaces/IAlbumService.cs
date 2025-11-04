@@ -1,12 +1,14 @@
 ﻿using MusicWebAPI.DTO;
+using MusicWebAPI.DTO.GetFromQueryOptions;
+using MusicWebAPI.DTO.GetQuery;
 using MusicWebAPI.Entities;
 
 namespace MusicWebAPI.Services.Interfaces
 {
     public interface IAlbumService
     {
-        Task<IEnumerable<AlbumDto>> GetAllAlbums(string searchPhrase);
-        Task<IEnumerable<AlbumDto>> GetAllAlbums(int artistId, string searchPhrase);
+        Task<PagedResult<AlbumDto>> GetAllAlbums(FromQueryOptions queryOptions);
+        Task<PagedResult<AlbumDto>> GetAllAlbums(int artistId, FromQueryOptions queryOptions);
         Task<AlbumDto> GetAlbumById(int id);
         Task<Album> CreateAlbum(CreateAlbumDto dto, int artistId);
         Task<Album> UpdateAlbum(UpdateAlbumDto dto, int id);

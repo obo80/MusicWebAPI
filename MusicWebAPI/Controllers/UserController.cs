@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MusicWebAPI.DTO.GetQuery;
 using MusicWebAPI.DTO.UserDto;
 using MusicWebAPI.Services;
 using MusicWebAPI.Services.Interfaces;
@@ -20,9 +21,9 @@ namespace MusicWebAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllUsers([FromQuery] string searchPhrase)
+        public async Task<IActionResult> GetAllUsers([FromQuery] FromQueryOptions queryOptions)
         {
-            var usersDto = await _userService.GetAllUsers(searchPhrase);
+            var usersDto = await _userService.GetAllUsers(queryOptions);
             return Ok(usersDto);
         }
 

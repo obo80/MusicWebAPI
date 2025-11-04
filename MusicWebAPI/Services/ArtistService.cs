@@ -6,6 +6,8 @@ using MusicWebAPI.Entities;
 using MusicWebAPI.Services.Interfaces;
 using MusicWebAPI.Exceptions;
 using MusicWebAPI.DTO;
+using MusicWebAPI.DTO.GetQuery;
+using MusicWebAPI.DTO.GetFromQueryOptions;
 
 namespace MusicWebAPI.Services
 {
@@ -22,15 +24,22 @@ namespace MusicWebAPI.Services
             _logger = logger;
         }
 
-        public async Task<IEnumerable<ArtistDto>> GetAllArtists(string searchPhrase)
+        public async Task<PagedResult<ArtistDto>> GetAllArtists(FromQueryOptions queryOptions)
         {
+            var artistsQuery = _dbContext.Artists
+                .AsQueryable();
 
-            var artists = await _dbContext.Artists
-                .Where(a => a.Name.ToLower().Contains(searchPhrase.ToLower()))
-                .ToListAsync();
+            var queryHandler = new QueryHandler<Artist>(queryOptions);
+            var artistsQueryApplied = queryHandler.ApplyQueryOptions(artistsQuery);
+
+            var totalItemsCount = queryHandler.SearchPhraseFilteredItems;
+            var artists = await artistsQueryApplied.ToListAsync();
+
             var artistsDto = _mapper.Map<List<ArtistDto>>(artists);
+            var pagedResults = new PagedResult<ArtistDto>(artistsDto, totalItemsCount, queryOptions.PageSize, queryOptions.PageNumber);
+            //var pagedResults = new PagedResult<ArtistDto>(artistsDto, queryOptions);
 
-            return artistsDto;
+            return pagedResults;
         }
 
         public async Task<ArtistDto> GetArtistsById(int id)

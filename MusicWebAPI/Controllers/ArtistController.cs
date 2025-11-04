@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MusicWebAPI.Data;
 using MusicWebAPI.DTO;
+using MusicWebAPI.DTO.GetQuery;
 using MusicWebAPI.Entities;
 using MusicWebAPI.Services;
 using MusicWebAPI.Services.Interfaces;
@@ -31,9 +32,9 @@ namespace MusicWebAPI.Controllers
         // GET: api/Artists
         [AllowAnonymous]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ArtistDto>>> GetArtists([FromQuery] string searchPhrase)
+        public async Task<ActionResult<IEnumerable<ArtistDto>>> GetArtists([FromQuery] FromQueryOptions queryOptions)
         {
-            var artistsDto = await _artistService.GetAllArtists(searchPhrase);
+            var artistsDto = await _artistService.GetAllArtists(queryOptions);
 
             return Ok(artistsDto);
         }

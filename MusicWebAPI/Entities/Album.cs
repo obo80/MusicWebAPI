@@ -25,7 +25,7 @@ namespace MusicWebAPI.Entities
         public virtual ICollection<Song>? Songs { get; set; }
 
         public virtual ICollection<AlbumRating>? Ratings { get; set; }
-        public double AverageRating { get; set; }
+        public double? AverageRating { get; set; }
 
     }
 }

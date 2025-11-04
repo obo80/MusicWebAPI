@@ -1,7 +1,11 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using MusicWebAPI.Data;
+using MusicWebAPI.DTO;
+using MusicWebAPI.DTO.GetFromQueryOptions;
+using MusicWebAPI.DTO.GetQuery;
 using MusicWebAPI.DTO.UserDto;
+using MusicWebAPI.Entities.User;
 using MusicWebAPI.Exceptions;
 using MusicWebAPI.Services.Interfaces;
 
@@ -20,15 +24,18 @@ namespace MusicWebAPI.Services
             _logger = logger;
         }
 
-        public async Task<IEnumerable<UserDto>> GetAllUsers(string searchPhrase)
+        public async Task<PagedResult<UserDto>> GetAllUsers(FromQueryOptions queryOptions)
         {
-            var users = await _dbContext.Users
-                .Include(u => u.Role)
-                .Where(u => u.Name.ToLower().Contains(searchPhrase.ToLower()))
-                .ToListAsync();
+            var usersQuery = _dbContext.Users
+                .Include(u => u.Role).AsQueryable();
+            var usersQueryApplied = new QueryHandler<User>(queryOptions).ApplyQueryOptions(usersQuery);
 
+            var users = await usersQueryApplied.ToListAsync();
             var usersDto = _mapper.Map<List<UserDto>>(users);
-            return usersDto;
+            var totalItemsCount = await usersQuery.CountAsync();
+            var pagedResult = new PagedResult<UserDto>(usersDto, totalItemsCount, queryOptions.PageSize, queryOptions.PageNumber);
+            return pagedResult;
+
         }
         public async Task<UserDto> GetUserById(int id)
         {

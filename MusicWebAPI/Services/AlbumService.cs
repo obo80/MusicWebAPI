@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using MusicWebAPI.Data;
 using MusicWebAPI.DTO;
+using MusicWebAPI.DTO.GetFromQueryOptions;
+using MusicWebAPI.DTO.GetQuery;
 using MusicWebAPI.Entities;
 using MusicWebAPI.Exceptions;
 using MusicWebAPI.Services.Interfaces;
@@ -20,31 +22,33 @@ namespace MusicWebAPI.Services
         }
 
 
-        public async Task<IEnumerable<AlbumDto>> GetAllAlbums(string searchPhrase)
+        public async Task<PagedResult<AlbumDto>> GetAllAlbums(FromQueryOptions queryOptions)
         {
-            var albums = await _dbContext.Albums
-                .Where(a => a.Title.ToLower().Contains(searchPhrase.ToLower()))
-                .ToListAsync();
-            var albumsDto = _mapper.Map<List<AlbumDto>>(albums);
+            var albumsQuery = _dbContext.Albums
+                .AsQueryable();
 
-            return albumsDto;
+            var pagedResult = await GetPagedResultForAlbumQuery(queryOptions, albumsQuery);
+            return pagedResult;
         }
-        public async Task<IEnumerable<AlbumDto>> GetAllAlbums(int artistId, string searchPhrase)
+
+        public async Task<PagedResult<AlbumDto>> GetAllAlbums(int artistId, FromQueryOptions queryOptions)
         {
             var artist = await GetArtistById(artistId);
-   
-            var albums = await _dbContext.Albums.
-                Where(al => al.ArtistId == artistId && al.Title.ToLower().Contains(searchPhrase.ToLower()))
-                .ToListAsync();
-            var albumsDto = _mapper.Map<List<AlbumDto>>(albums);
+            var albumsQuery = _dbContext.Albums
+                .Where(al => al.ArtistId == artistId)
+                .AsQueryable();
 
-            return albumsDto;
+            var pagedResult = await GetPagedResultForAlbumQuery(queryOptions, albumsQuery);
+            return pagedResult;
         }
+
+
 
 
         public async Task<AlbumDto> GetAlbumById(int id)
         {
             var album = await _dbContext.Albums.FindAsync(id);
+    
             if (album is null)
                 throw new NotFoundException("Album not found");
 
@@ -106,6 +110,18 @@ namespace MusicWebAPI.Services
 
             await _dbContext.SaveChangesAsync();
 
+        }
+
+        private async Task<PagedResult<AlbumDto>> GetPagedResultForAlbumQuery(FromQueryOptions queryOptions, IQueryable<Album> albumsQuery)
+        {
+            var queryHandler = new QueryHandler<Album>(queryOptions);
+            var albumQueryApplied = queryHandler.ApplyQueryOptions(albumsQuery);
+
+            var albums = await albumQueryApplied.ToListAsync();
+            var albumsDto = _mapper.Map<List<AlbumDto>>(albums);
+            var totalItemsCount = queryHandler.SearchPhraseFilteredItems;
+            var pagedResult = new PagedResult<AlbumDto>(albumsDto, totalItemsCount, queryOptions.PageSize, queryOptions.PageNumber);
+            return pagedResult;
         }
 
 

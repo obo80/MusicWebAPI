@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MusicWebAPI.DTO;
+using MusicWebAPI.DTO.GetQuery;
 using MusicWebAPI.Entities;
 using MusicWebAPI.Services.Interfaces;
 
@@ -17,9 +18,9 @@ namespace MusicWebAPI.Controllers
         }
         // GET: api/Song
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<SongDto>>> GetSongs([FromQuery] string searchPhrase)
+        public async Task<ActionResult<IEnumerable<SongDto>>> GetSongs([FromQuery] FromQueryOptions queryOptions)
         {
-            var songDto = await _songService.GetAllSongs(searchPhrase);
+            var songDto = await _songService.GetAllSongs(queryOptions);
             return Ok(songDto);
         }
         // GET: api/Song/5

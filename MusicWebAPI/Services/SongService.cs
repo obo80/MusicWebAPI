@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MusicWebAPI.Data;
 using MusicWebAPI.DTO;
+using MusicWebAPI.DTO.GetFromQueryOptions;
+using MusicWebAPI.DTO.GetQuery;
 using MusicWebAPI.Entities;
 using MusicWebAPI.Exceptions;
 using MusicWebAPI.Services.Interfaces;
@@ -19,27 +22,43 @@ namespace MusicWebAPI.Services
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<SongDto>> GetAllSongs(string searchPhrase)
+        public async Task<PagedResult<SongDto>> GetAllSongs(FromQueryOptions queryOptions)
         {
-            var songs = await _dbContext.Songs
-                .Include(s => s.Artist)
-                .Where(s => s.Title.ToLower().Contains(searchPhrase.ToLower()))
-                .ToListAsync();
-            var songsDto = _mapper.Map<List<SongDto>>(songs);
+            var songsQuery = _dbContext.Songs
+                .AsQueryable();
 
-            return songsDto;
+            var pagedSongDto = await GetPagedResultForSongsQuery(queryOptions, songsQuery);
+            return pagedSongDto;
+
         }
 
-        public async Task<IEnumerable<SongDto>> GetAllSongs(int artistId, string searchPhrase)
-        {
-            var songs =  await _dbContext.Songs
-                .Include(s => s.Artist)
-                .Where(s => s.ArtistId == artistId && s.Title.ToLower().Contains(searchPhrase.ToLower()))
-                .ToListAsync();
-            var songsDto = _mapper.Map<List<SongDto>>(songs);
 
-            return songsDto;
+        public async Task<PagedResult<SongDto>> GetAllSongs(int artistId, FromQueryOptions queryOptions)
+        {
+            var artist = await GetArtistById(artistId);
+            var songsQuery = _dbContext.Songs
+                .Where(s => s.ArtistId == artistId)
+                .AsQueryable();
+
+            var pagedSongDto = await GetPagedResultForSongsQuery(queryOptions, songsQuery);
+            return pagedSongDto;
+
         }
+
+        private async Task<PagedResult<SongDto>> GetPagedResultForSongsQuery(FromQueryOptions queryOptions, IQueryable<Song> songsQuery)
+        {
+            var queryHandler = new QueryHandler<Song>(queryOptions);
+            var songsQueryApplied = queryHandler.ApplyQueryOptions(songsQuery);
+
+            var songs = await songsQueryApplied.ToListAsync();
+
+            var songsDto = _mapper.Map<List<SongDto>>(songs);
+            var totalItemsCount = queryHandler.SearchPhraseFilteredItems;
+            var pagedSongDto = new PagedResult<SongDto>(songsDto, totalItemsCount, queryOptions.PageSize, queryOptions.PageNumber);
+            return pagedSongDto;
+        }
+
+
 
         public async Task<SongDto> GetSongById(int id)
         {

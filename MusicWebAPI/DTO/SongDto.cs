@@ -10,6 +10,7 @@ namespace MusicWebAPI.DTO
         public string? Description { get; set; }
         public int? Lenght { get; set; }    // Length in seconds
         public int? ReleasedYear { get; set; }
+        
 
         public int? AlbumId { get; set; }
         public virtual Album? Album { get; set; }
@@ -17,6 +18,7 @@ namespace MusicWebAPI.DTO
         public int ArtistId { get; set; }
         public virtual Artist Artist { get; set; }
 
+        public double? AverageRating { get; set; }
         public virtual ICollection<SongRating>? Ratings { get; set; }
     }
 }

@@ -22,7 +22,7 @@ namespace MusicWebAPI.Entities
         public virtual Artist Artist { get; set; }
 
         public virtual ICollection<SongRating>? Ratings { get; set; }
-        public double AverageRating { get; set; }
+        public double? AverageRating { get; set; }
 
     }
 }
