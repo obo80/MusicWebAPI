@@ -23,7 +23,7 @@ namespace MusicWebAPI.Services
 
         public async Task<PagedResult<AlbumDto>> GetAllAlbums(FromQueryOptions queryOptions)
         {
-            var albumsQuery = _dbContext.Albums
+            var albumsQuery = _dbContext.Albums.Include(a => a.Artist)
                 .AsQueryable();
 
             var pagedResult = await GetPagedResultForAlbumQuery(queryOptions, albumsQuery);

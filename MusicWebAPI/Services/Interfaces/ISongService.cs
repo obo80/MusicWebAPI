@@ -14,5 +14,6 @@ namespace MusicWebAPI.Services.Interfaces
         Task DeleteSongById(int id);
         Task DeleteAllAlbumSongs(int albumId);
         Task DeleteAllArtistSongs(int artistId);
+        Task<IEnumerable<Song>> CrateSongs(IEnumerable<CreateSongDto> createSongsDto, int artistId);
     }
 }

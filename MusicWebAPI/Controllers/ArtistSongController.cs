@@ -55,6 +55,17 @@ namespace MusicWebAPI.Controllers
 
             return Created($"api/Artist/{artistId}/Song/{newSong.Id}", newSong);
         }
+        // POST: api/Artist/{artistId}/Songs  - for list of songs to add instead of one per request
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost()]
+        [Route("/api/Artist/{artistId}/Songs")]
+        public async Task<ActionResult<IEnumerable<Song>>>PostSong([FromBody] IEnumerable <CreateSongDto> createSongsDto, [FromRoute] int artistId)
+        {
+            var newSongs = await _songService.CrateSongs(createSongsDto, artistId);
+            return Created();
+        }
+
+
 
         // PUT: api/Artist/{artistId}/Song/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754

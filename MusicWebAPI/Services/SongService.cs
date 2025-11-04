@@ -85,6 +85,28 @@ namespace MusicWebAPI.Services
             return song;
         }
 
+        public async Task<IEnumerable<Song>> CrateSongs(IEnumerable<CreateSongDto> createSongsDto, int artistId)
+        {
+            List<Song> songs = new List<Song>();
+            foreach(var dto in createSongsDto)
+            {
+                var song = await CreateSong(dto, artistId);
+                songs.Add(song);
+            }
+
+            return songs;
+
+            //var artist = await GetArtistById(artistId);
+            //var songs = new List<Song>();
+            //foreach (var dto in createSongsDto)
+            //{
+            //    var song = _mapper.Map<Song>(dto);
+            //    song.ArtistId = artistId;
+            //    UpdateAlbumId(dto.AlbumId, artist, song);
+
+            //}
+        }
+
         public async Task<Song> UpdateSong(UpdateSongDto dto, int id)
         {
 
