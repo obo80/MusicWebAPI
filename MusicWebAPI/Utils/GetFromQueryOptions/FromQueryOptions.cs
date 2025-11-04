@@ -1,4 +1,4 @@
-﻿namespace MusicWebAPI.DTO.GetQuery
+﻿namespace MusicWebAPI.Utils.GetFromQueryOptions
 {
     public class FromQueryOptions
     {

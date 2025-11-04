@@ -7,7 +7,7 @@ using MusicWebAPI.DTO.UserDto;
 using MusicWebAPI.Entities.User;
 using MusicWebAPI.Exceptions;
 using MusicWebAPI.Services.Interfaces;
-using MusicWebAPI.Services.ServiceHelpers;
+using MusicWebAPI.Utils.ServiceHelpers;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;

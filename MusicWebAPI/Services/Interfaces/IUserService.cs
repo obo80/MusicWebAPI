@@ -1,6 +1,5 @@
-﻿using MusicWebAPI.DTO.GetFromQueryOptions;
-using MusicWebAPI.DTO.GetQuery;
-using MusicWebAPI.DTO.UserDto;
+﻿using MusicWebAPI.DTO.UserDto;
+using MusicWebAPI.Utils.GetFromQueryOptions;
 
 namespace MusicWebAPI.Services.Interfaces
 {

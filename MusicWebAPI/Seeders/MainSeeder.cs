@@ -1,5 +1,7 @@
 ﻿using MusicWebAPI.Data;
+using MusicWebAPI.Entities;
 using MusicWebAPI.Entities.User;
+using System.Data;
 
 namespace MusicWebAPI.Seeders
 {
@@ -22,10 +24,30 @@ namespace MusicWebAPI.Seeders
                     _dbContext.Roles.AddRange(roles);
                     _dbContext.SaveChanges();
                 } 
+                if (!_dbContext.Genres.Any())
+                {
+                    var genres = GetGengers();
+                    _dbContext.Genres.AddRange(genres);
+                    _dbContext.SaveChanges();
+                }
+
             }
         }
 
+        private IEnumerable<Genre> GetGengers()
+        {
+            var genres = new List<Genre>()
+            {
+                new Genre() {Name = "Rock"},
+                new Genre() {Name = "Metal"},
+                new Genre() {Name = "Pop"},
+                new Genre() {Name = "Disco"},
+                new Genre() {Name = "Classic"},
+                new Genre() {Name = "Other"}
+            };
 
+            return genres;
+        }
 
         private IEnumerable<Role> GetRoles()
         {

@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using MusicWebAPI.DTO.GetQuery;
 using MusicWebAPI.DTO.UserDto;
 using MusicWebAPI.Services;
 using MusicWebAPI.Services.Interfaces;
+using MusicWebAPI.Utils.GetFromQueryOptions;
 
 namespace MusicWebAPI.Controllers
 {

@@ -1,8 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MusicWebAPI.DTO.GetQuery;
 using MusicWebAPI.Entities;
 
-namespace MusicWebAPI.DTO.GetFromQueryOptions
+namespace MusicWebAPI.Utils.GetFromQueryOptions
 {
     public class PagedResult<T>
     {
@@ -25,17 +24,17 @@ namespace MusicWebAPI.DTO.GetFromQueryOptions
             }
         }
 
-        public PagedResult(List<T> items, FromQueryOptions queryOptions)
-        {
-            //Items = GetPagedResult(queryOptions, items).Result;
-            Items = items;
-            TotalItemsCount = items.Count();
-            if (queryOptions.PageSize > 0)
-            {
-                TotalPages = (int)Math.Ceiling(TotalItemsCount.Value / (double)queryOptions.PageSize);
-                ItemsFrom = (queryOptions.PageNumber - 1) * queryOptions.PageSize + 1;
-                ItemsTo = Math.Min(queryOptions.PageNumber * queryOptions.PageSize, TotalItemsCount.Value);
-            }
-        }
+        //public PagedResult(List<T> items, FromQueryOptions queryOptions)
+        //{
+        //    //Items = GetPagedResult(queryOptions, items).Result;
+        //    Items = items;
+        //    TotalItemsCount = items.Count();
+        //    if (queryOptions.PageSize > 0)
+        //    {
+        //        TotalPages = (int)Math.Ceiling(TotalItemsCount.Value / (double)queryOptions.PageSize);
+        //        ItemsFrom = (queryOptions.PageNumber - 1) * queryOptions.PageSize + 1;
+        //        ItemsTo = Math.Min(queryOptions.PageNumber * queryOptions.PageSize, TotalItemsCount.Value);
+        //    }
+        //}
     }
 }

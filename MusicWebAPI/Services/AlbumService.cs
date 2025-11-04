@@ -2,11 +2,10 @@
 using Microsoft.EntityFrameworkCore;
 using MusicWebAPI.Data;
 using MusicWebAPI.DTO;
-using MusicWebAPI.DTO.GetFromQueryOptions;
-using MusicWebAPI.DTO.GetQuery;
 using MusicWebAPI.Entities;
 using MusicWebAPI.Exceptions;
 using MusicWebAPI.Services.Interfaces;
+using MusicWebAPI.Utils.GetFromQueryOptions;
 
 namespace MusicWebAPI.Services
 {
@@ -47,12 +46,16 @@ namespace MusicWebAPI.Services
 
         public async Task<AlbumDto> GetAlbumById(int id)
         {
-            var album = await _dbContext.Albums.FindAsync(id);
+            var album = await _dbContext.Albums
+                .Include(al => al.Artist)
+                //.Include(al => al.Songs)
+                .FirstOrDefaultAsync(a => a.Id == id);
     
             if (album is null)
                 throw new NotFoundException("Album not found");
 
             var albumDto = _mapper.Map<AlbumDto>(album);
+            
             return albumDto;
         }
 

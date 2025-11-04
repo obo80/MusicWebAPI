@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using MusicWebAPI.DTO.GetQuery;
+using MusicWebAPI.Utils.GetFromQueryOptions;
 
 namespace MusicWebAPI.DTO.Validators
 {

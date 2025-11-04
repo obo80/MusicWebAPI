@@ -13,10 +13,12 @@ namespace MusicWebAPI.DTO
 
 
         public int ArtistId { get; set; }
-        public virtual Artist Artist { get; set; }
+        //public virtual Artist Artist { get; set; }
+        public string ArtistName { get; set; }
 
         public int GenreId { get; set; }
-        public Genre? Genres { get; set; }
+        public string GenreName { get; set; }
+        //public Genre? Genres { get; set; }
 
         public double? AverageRating { get; set; }
         public virtual ICollection<Song>? Songs { get; set; }

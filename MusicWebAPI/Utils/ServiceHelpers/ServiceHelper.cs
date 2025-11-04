@@ -2,7 +2,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
-namespace MusicWebAPI.Services.ServiceHelpers
+namespace MusicWebAPI.Utils.ServiceHelpers
 {
     public class ServiceHelper
     {

@@ -6,7 +6,7 @@ using MusicWebAPI.Entities;
 using MusicWebAPI.Entities.Rating;
 using MusicWebAPI.Exceptions;
 using MusicWebAPI.Services.Interfaces;
-using MusicWebAPI.Services.ServiceHelpers;
+using MusicWebAPI.Utils.ServiceHelpers;
 
 namespace MusicWebAPI.Services
 {

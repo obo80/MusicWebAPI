@@ -6,8 +6,7 @@ using MusicWebAPI.Entities;
 using MusicWebAPI.Services.Interfaces;
 using MusicWebAPI.Exceptions;
 using MusicWebAPI.DTO;
-using MusicWebAPI.DTO.GetQuery;
-using MusicWebAPI.DTO.GetFromQueryOptions;
+using MusicWebAPI.Utils.GetFromQueryOptions;
 
 namespace MusicWebAPI.Services
 {

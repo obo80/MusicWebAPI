@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MusicWebAPI.DTO;
-using MusicWebAPI.DTO.GetQuery;
 using MusicWebAPI.Entities;
 using MusicWebAPI.Services.Interfaces;
+using MusicWebAPI.Utils.GetFromQueryOptions;
 
 namespace MusicWebAPI.Controllers
 {

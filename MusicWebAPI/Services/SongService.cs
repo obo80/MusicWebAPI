@@ -3,11 +3,10 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MusicWebAPI.Data;
 using MusicWebAPI.DTO;
-using MusicWebAPI.DTO.GetFromQueryOptions;
-using MusicWebAPI.DTO.GetQuery;
 using MusicWebAPI.Entities;
 using MusicWebAPI.Exceptions;
 using MusicWebAPI.Services.Interfaces;
+using MusicWebAPI.Utils.GetFromQueryOptions;
 
 namespace MusicWebAPI.Services
 {
@@ -63,7 +62,9 @@ namespace MusicWebAPI.Services
         public async Task<SongDto> GetSongById(int id)
         {
             var song = await _dbContext.Songs
-                .FindAsync(id);
+                .Include(s => s.Artist)
+                .Include(s => s.Album)
+                .FirstOrDefaultAsync(s => s.Id == id);
             if (song is null)
                 throw new Exception("Song not found");
 

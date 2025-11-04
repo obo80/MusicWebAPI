@@ -2,12 +2,11 @@
 using Microsoft.EntityFrameworkCore;
 using MusicWebAPI.Data;
 using MusicWebAPI.DTO;
-using MusicWebAPI.DTO.GetFromQueryOptions;
-using MusicWebAPI.DTO.GetQuery;
 using MusicWebAPI.DTO.UserDto;
 using MusicWebAPI.Entities.User;
 using MusicWebAPI.Exceptions;
 using MusicWebAPI.Services.Interfaces;
+using MusicWebAPI.Utils.GetFromQueryOptions;
 
 namespace MusicWebAPI.Services
 {
@@ -28,11 +27,12 @@ namespace MusicWebAPI.Services
         {
             var usersQuery = _dbContext.Users
                 .Include(u => u.Role).AsQueryable();
-            var usersQueryApplied = new QueryHandler<User>(queryOptions).ApplyQueryOptions(usersQuery);
+            var queryHandler = new QueryHandler<User>(queryOptions);
+            var usersQueryApplied = queryHandler.ApplyQueryOptions(usersQuery);
 
             var users = await usersQueryApplied.ToListAsync();
             var usersDto = _mapper.Map<List<UserDto>>(users);
-            var totalItemsCount = await usersQuery.CountAsync();
+            var totalItemsCount = queryHandler.SearchPhraseFilteredItems;
             var pagedResult = new PagedResult<UserDto>(usersDto, totalItemsCount, queryOptions.PageSize, queryOptions.PageNumber);
             return pagedResult;
 
