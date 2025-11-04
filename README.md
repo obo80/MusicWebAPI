@@ -45,10 +45,10 @@ This project includes built-in user management and JWT-based authentication.
 
 - Authentication is implemented with JWT. Settings are loaded into `AuthenticationSettings` and registered in `Program.cs`.
 - Passwords are stored using `IPasswordHasher<User>` (hashed + salted).
-- Default roles are seeded by `Seeders/MainSeeder` — `User`, `Creator`, `Admin`.
-  - `User` — standard user (can rate/comment/view).
-  - `Creator` — can add/edit/delete their own content (used by controllers such as `ArtistController`).
-  - `Admin` — full management rights (used by `UserController`).
+- Default roles are seeded by `Seeders/MainSeeder` â€” `User`, `Creator`, `Admin`.
+  - `User` â€” standard user (can rate/comment/view).
+  - `Creator` â€” can add/edit/delete their own content (used by controllers such as `ArtistController`).
+  - `Admin` â€” full management rights (used by `UserController`).
 
 Role-based authorization is enforced with `[Authorize(Roles = "...")]` attributes on controllers:
 - `UserController` (`api/user`) requires `Admin`.
@@ -84,10 +84,10 @@ Authentication-related classes & locations:
   - Delete current user account.
 
 Admin-only user management:
-- GET `/api/user` (Admin) — paginated list of users (`UserService.GetAllUsers`).
-- GET `/api/user/{id}` (Admin) — get user by id.
-- PUT `/api/user/{id}` (Admin) — update user (role assignment allowed).
-- DELETE `/api/user/{id}` (Admin) — delete user.
+- GET `/api/user` (Admin) â€” paginated list of users (`UserService.GetAllUsers`).
+- GET `/api/user/{id}` (Admin) â€” get user by id.
+- PUT `/api/user/{id}` (Admin) â€” update user (role assignment allowed).
+- DELETE `/api/user/{id}` (Admin) â€” delete user.
 
 Note: Exact routes and DTO shapes are defined in `Controllers/` and `DTO/UserDto/`.
 
@@ -135,15 +135,15 @@ Example: create a song
 Note: Exact endpoint routes depend on the controllers in `Controllers/`. Check those files or the Swagger UI for canonical routes.
 
 ## Project structure (high level)
-- `Controllers/` — API controllers (expose endpoints)
-- `DTO/` — data transfer objects (e.g., `SongDto`, `AlbumDto`, `ArtistDto`, `UserDto`)
-- `Entities/` — domain entities and EF models
-- `Services/` — business logic (e.g., `SongService`, `AlbumService`, `UserService`, `AccountService`)
-- `Utils/` — helper classes and utilities
-- `Seeders/` — sample data seeding (`MainSeeder` seeds `Roles` and `Genres`)
+- `Controllers/` â€” API controllers (expose endpoints)
+- `DTO/` â€” data transfer objects (e.g., `SongDto`, `AlbumDto`, `ArtistDto`, `UserDto`)
+- `Entities/` â€” domain entities and EF models
+- `Services/` â€” business logic (e.g., `SongService`, `AlbumService`, `UserService`, `AccountService`)
+- `Utils/` â€” helper classes and utilities
+- `Seeders/` â€” sample data seeding (`MainSeeder` seeds `Roles` and `Genres`)
 
 ## Contributing
 Contributions welcome. Open issues or pull requests. Follow repository coding style and include unit tests for new logic.
 
 ## License
-No license file included in the repository. Add a `LICENSE` file if you want to declare licensing (e.g., MIT).
+No license file included in the repository. 
