@@ -100,6 +100,17 @@ namespace MusicWebAPI
             var seeder = scope.ServiceProvider.GetRequiredService<MainSeeder>();
             seeder.Seed();
 
+            // Redirect root "/" to Swagger UI
+            app.Use(async (context, next) =>
+            {
+                if (context.Request.Path == "/" || string.IsNullOrEmpty(context.Request.Path.Value))
+                {
+                    context.Response.Redirect("/swagger");
+                    return;
+                }
+                await next();
+            });
+
 
             app.UseMiddleware<ErrorHandlingMiddleware>();
 
