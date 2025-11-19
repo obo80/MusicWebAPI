@@ -57,7 +57,7 @@ namespace MusicWebAPI
             builder.Services.AddControllers()
                 .AddJsonOptions(option => option.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
             builder.Services.AddDbContext<MusicWebDbContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("MusicWebAPILocalDbConnection")));
+                options.UseSqlServer(builder.Configuration.GetConnectionString("MusicWebAPIDbConnection")));
 
             builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 

@@ -1,4 +1,5 @@
-﻿using MusicWebAPI.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using MusicWebAPI.Data;
 using MusicWebAPI.Entities;
 using MusicWebAPI.Entities.User;
 using System.Data;
@@ -18,12 +19,14 @@ namespace MusicWebAPI.Seeders
         {
             if (_dbContext.Database.CanConnect())
             {
+                UpdateDatabaseForPendingMigrations();
+
                 if (!_dbContext.Roles.Any())
                 {
                     var roles = GetRoles();
                     _dbContext.Roles.AddRange(roles);
                     _dbContext.SaveChanges();
-                } 
+                }
                 if (!_dbContext.Genres.Any())
                 {
                     var genres = GetGengers();
@@ -31,6 +34,15 @@ namespace MusicWebAPI.Seeders
                     _dbContext.SaveChanges();
                 }
 
+            }
+        }
+
+        private void UpdateDatabaseForPendingMigrations()
+        {
+            var pendingMigrations = _dbContext.Database.GetPendingMigrations();
+            if (pendingMigrations != null && pendingMigrations.Any())
+            {
+                _dbContext.Database.Migrate();
             }
         }
 
