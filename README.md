@@ -147,3 +147,17 @@ Contributions welcome. Open issues or pull requests. Follow repository coding st
 
 ## License
 No license file included in the repository. 
+
+
+## Live demo / Azure deployment
+
+The API is published to Azure App Service and is available at:
+
+- Live site: https://musicwebapi-app.azurewebsites.net/ (App Service: `musicwebapi-app`)
+
+![Live](https://img.shields.io/website?down_color=red&down_message=down&up_message=up&url=https%3A%2F%2Fmusicwebapi-app.azurewebsites.net)
+
+Deployment details:
+- Hosting: Azure App Service (`musicwebapi-app`)
+- Target framework: .NET 9
+- Recommended: keep production secrets in Azure App Service Configuration or Azure Key Vault and use a staging slot for zero-downtime deployments.
