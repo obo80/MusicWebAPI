@@ -44,7 +44,7 @@ namespace MusicWebAPI.DTO.Validators
                 .MinimumLength(6).WithMessage("Password needs at least 6 characters");
 
             RuleFor(x => x.ConfirmPassword)
-                .NotEmpty().WithMessage("Confirm Password is required")
+                .NotEmpty().WithMessage("Confirmed password is required")
                 .Equal(e => e.Password).WithMessage("Password does not match");
         }
     }

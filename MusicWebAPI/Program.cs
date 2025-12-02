@@ -3,6 +3,7 @@ using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using MusicWebAPI.Data;
 using MusicWebAPI.DTO;
 using MusicWebAPI.DTO.UserDto;
@@ -89,8 +90,27 @@ namespace MusicWebAPI
             builder.Services.AddScoped<MainSeeder>();
 
 
+            //authorization in Swagger
+            builder.Services.AddSwaggerGen(c =>
+            {
+                c.AddSecurityDefinition("bearerAuth", new OpenApiSecurityScheme
+                {
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "Bearer"
+                });
 
-            builder.Services.AddSwaggerGen();
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "bearerAuth"}
+                        },
+                        []
+                    }
+
+                });
+            });
 
 
             var app = builder.Build();

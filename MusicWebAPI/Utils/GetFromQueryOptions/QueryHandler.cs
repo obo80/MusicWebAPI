@@ -1,9 +1,6 @@
 ﻿using MusicWebAPI.Entities;
 using MusicWebAPI.Entities.User;
 using System.Linq.Expressions;
-using System.Security.Cryptography.Xml;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace MusicWebAPI.Utils.GetFromQueryOptions
 {
