@@ -1,6 +1,6 @@
 ﻿namespace MusicWebAPI.DTO.UserDto
 {
-    public class ChangePasswordDto
+    public record ChangePasswordDto
     {
         public string Password { get; set; }
 

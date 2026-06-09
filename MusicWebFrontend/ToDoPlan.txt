@@ -1,0 +1,34 @@
+﻿Co mam do zrobienia:
+Listy artystów, albumów i utowrów
+- zrobić dla nich wywołanie metod - zrobiłem funkcje ale trzeba je zaimplementować
+	- ocena - tylko dla zalogowanych
+		- jeżeli już użytkownik wpisał ocene to wyświetlić okienko modalne z jedo danymi z możlowością edycji - wtedy podmienić okienko aby mógł wprowadzić zmiany i wysłać na serwer.
+		- jeżeli już oceniłeś - to wyświetlić alert - że już oceniono i pytanie czy edytować - wtedy otworzyć okienko edycji z danymi które już tam są
+		- jęzeli bez oceny to przygotować okienko modalne do wpisania oceny i opinii
+
+Panel wyszukiwania i funkcje do obsługi plus CSS.
+
+
+------	Logowanie użytkownika:
+- naprawić przycisk zaloguj
+- porobić zmiany wyglądu i pól w zależności czy użytkownik jest zalogowany i tego w jakiej jest roli
+- wg roli pododawać dodatkowe opcje
+
+
+Do strony głównej dodać coś w main kontenerze:
+- pierwszy pomysł to 3 kolumny z kilkoma (top10) artysatmi, albumami, piosenkami
+- ale to po zaimplementowaniu szukania
+
+
+------	Panel użytkownika który jest twrócą i może edytować i tworzyć nowe elementy
+- po zalogowaniu, jężeli użytkownik ma taką rolę to będzie się otwierać panel użytkownika, w którym bedą dostępne te wszystkie opcje
+- jeszcze nie wiem jak to zorganizować - trzeba się przujrzeć co można robić i jakie opcje są potrzebne, wtedy:
+	- zaprojektować stronę takiego panelu
+	- porobić funcjie post, delete i put/patch
+
+
+
+
+ZROBIONE:
+- dodać liste albumów i utworów - kafelki podobne do artystów
+- ostylować dodane przyciski

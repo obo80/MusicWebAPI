@@ -32,7 +32,7 @@ namespace MusicWebAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Song>>> GetSongs(int artistId, [FromQuery] FromQueryOptions queryOptions)
         {
-            var songsDto = await _songService.GetAllSongs(artistId, queryOptions);
+            var songsDto = await _songService.GetAllArtistSongs(artistId, queryOptions);
             return Ok(songsDto);
         }
 

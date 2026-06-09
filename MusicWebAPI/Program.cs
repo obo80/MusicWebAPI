@@ -112,6 +112,15 @@ namespace MusicWebAPI
                 });
             });
 
+            //add cors policy to allow all origins, methods and headers (for development purposes)
+            builder.Services.AddCors(options => {
+                options.AddPolicy("AllowAll", policy =>
+                {
+                    policy.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+                });
+            });
 
             var app = builder.Build();
 
@@ -151,6 +160,7 @@ namespace MusicWebAPI
 
 
             app.MapControllers();
+            app.UseCors("AllowAll");
 
             app.Run();
         }

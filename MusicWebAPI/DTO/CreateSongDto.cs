@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MusicWebAPI.DTO
 {
-    public class CreateSongDto
+    public record CreateSongDto
     {
         [Required]
         public string Title { get; set; }

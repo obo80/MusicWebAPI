@@ -1,6 +1,6 @@
 ﻿namespace MusicWebAPI.DTO
 {
-    public class UpdateSongDto
+    public record UpdateSongDto
     {
         public string Title { get; set; }
         public string? Description { get; set; }

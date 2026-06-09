@@ -1,0 +1,89 @@
+﻿
+/* --- PANEL UŻYTKOWNIKA (DROPDOWN) --- */
+.user-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Przycisk "Konto" */
+.dropdown-trigger, .login-btn {
+    background: #ff9400;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+    .dropdown-trigger:hover, .login-btn:hover {
+        background-color: #c25508;
+    }
+
+/* Ukryte menu rozwijane */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0; /* Wyrównanie rozwijanego menu do prawej krawędzi przycisku */
+    top: 100%;
+    margin-top: 8px;
+    background-color: #ff9400;
+    min-width: 140px;
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+    border-radius: 4px;
+    list-style: none;
+    z-index: 10;
+    overflow: hidden;
+}
+
+/* Pokazywanie menu po najechaniu myszką */
+.user-dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Elementy wewnątrz rozwijanego menu */
+.dropdown-content li {
+    color: #333;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    letter-spacing: 0.2px;
+}
+
+.dropdown-content li:hover {/*
+    background-color: #f1f1f1;*/
+}
+.pass-change-btn, .user-settings-btn{
+    color: blueviolet;
+    border-radius: 10px;
+}
+    .pass-change-btn:hover, .user-settings-btn:hover {
+        color: blue;
+        border-radius: 10px;
+        background-color: #ffebee;
+    }
+
+/* Linia oddzielająca (np. przed Wyloguj) */
+.divider {
+    padding: 0;
+    height: 0px;
+    background-color: #ff9400;
+    margin: 4px 0;
+    border: solid 1px;
+}
+
+.dropdown-content .logout-btn {
+    color: #d32f2f;
+}
+
+    .dropdown-content .logout-btn:hover {
+        background-color: #ffebee;
+        color: #2f41d3;
+    }

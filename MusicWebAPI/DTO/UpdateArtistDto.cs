@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MusicWebAPI.DTO
 {
-    public class UpdateArtistDto
+    public record UpdateArtistDto
     {
         public string Name { get; set; }
         public string? Description { get; set; }

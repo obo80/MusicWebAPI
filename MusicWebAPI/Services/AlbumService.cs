@@ -49,6 +49,7 @@ namespace MusicWebAPI.Services
             var album = await _dbContext.Albums
                 .Include(al => al.Artist)
                 //.Include(al => al.Songs)
+                .Include(al => al.Genres)
                 .FirstOrDefaultAsync(a => a.Id == id);
     
             if (album is null)
@@ -58,6 +59,8 @@ namespace MusicWebAPI.Services
             
             return albumDto;
         }
+
+
 
         public async Task<Album> CreateAlbum(CreateAlbumDto dto, int artistId)
         {
@@ -138,6 +141,7 @@ namespace MusicWebAPI.Services
 
             return artist;
         }
+
 
     }
 }

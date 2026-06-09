@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MusicWebAPI.Data;
 using MusicWebAPI.DTO;
@@ -24,6 +23,7 @@ namespace MusicWebAPI.Services
         public async Task<PagedResult<SongDto>> GetAllSongs(FromQueryOptions queryOptions)
         {
             var songsQuery = _dbContext.Songs
+                .Include(s => s.Artist).Include(s => s.Album)
                 .AsQueryable();
 
             var pagedSongDto = await GetPagedResultForSongsQuery(queryOptions, songsQuery);
@@ -32,11 +32,23 @@ namespace MusicWebAPI.Services
         }
 
 
-        public async Task<PagedResult<SongDto>> GetAllSongs(int artistId, FromQueryOptions queryOptions)
+        public async Task<PagedResult<SongDto>> GetAllArtistSongs(int artistId, FromQueryOptions queryOptions)
         {
             var artist = await GetArtistById(artistId);
             var songsQuery = _dbContext.Songs
                 .Where(s => s.ArtistId == artistId)
+                .AsQueryable();
+
+            var pagedSongDto = await GetPagedResultForSongsQuery(queryOptions, songsQuery);
+            return pagedSongDto;
+
+        }
+
+        public async Task<PagedResult<SongDto>> GetAllAlbumSongs(int albumId, FromQueryOptions queryOptions)
+        {
+            var album = await GetAlbumById(albumId);
+            var songsQuery = _dbContext.Songs
+                .Where(s => s.AlbumId == albumId)
                 .AsQueryable();
 
             var pagedSongDto = await GetPagedResultForSongsQuery(queryOptions, songsQuery);

@@ -1,16 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using MusicWebAPI.Data;
 using MusicWebAPI.DTO;
 using MusicWebAPI.Entities;
-using MusicWebAPI.Services;
 using MusicWebAPI.Services.Interfaces;
 using MusicWebAPI.Utils.GetFromQueryOptions;
 

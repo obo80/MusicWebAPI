@@ -7,7 +7,8 @@ namespace MusicWebAPI.Services.Interfaces
     public interface ISongService
     {
         Task<PagedResult<SongDto>> GetAllSongs(FromQueryOptions queryOptions);
-        Task<PagedResult<SongDto>> GetAllSongs(int artistId, FromQueryOptions queryOptions);
+        Task<PagedResult<SongDto>> GetAllArtistSongs(int artistId, FromQueryOptions queryOptions);
+        Task<PagedResult<SongDto>> GetAllAlbumSongs(int albumId, FromQueryOptions queryOptions);
         Task<SongDto> GetSongById(int id);
         Task<Song> CreateSong(CreateSongDto dto, int artistId);
         Task<Song> UpdateSong(UpdateSongDto dto, int id);

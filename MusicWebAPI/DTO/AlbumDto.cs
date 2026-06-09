@@ -1,10 +1,9 @@
 ﻿using MusicWebAPI.Entities;
 using MusicWebAPI.Entities.Rating;
-using System.ComponentModel.DataAnnotations;
 
 namespace MusicWebAPI.DTO
 {
-    public class AlbumDto
+    public record AlbumDto
     {
         public int Id { get; set; }
         public string Title { get; set; }

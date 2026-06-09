@@ -1,0 +1,149 @@
+﻿/* Kontener siatki - kafelki obok siebie */
+.tiles-grid {
+    display: grid;
+    padding: 20px 0;
+    /* Tworzy kolumny o szerokości min 280px, automatycznie mieszczące się w oknie */
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px; /* Odstępy między kafelkami */
+    width: 100%;
+}
+
+/* Pojedynczy kafelek */
+.tile-card {
+    background-color: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    cursor: pointer;
+    transition: box-shadow 0.3s, transform 0.2s;
+    /* Ważne dla układu: kafelek dopasowuje wysokość do zawartości */
+    align-self: start;
+}
+
+.tile-card:hover {
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    transform: translateY(-2px);
+}
+
+/* Część zawsze widoczna */
+.tile-summary {
+    padding: 10px 15px;
+    position: relative;
+}
+
+.tile-first-name {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.tile-second-name {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 4px;
+    font-style: italic;
+}
+
+
+.tile-rating {
+    color: #888;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.tile-arrow {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #aaa;
+    transition: transform 0.3s;
+}
+
+/* Nowoczesny mechanizm płynnego rozwijania (CSS Grid wewnątrz kafelka) */
+.tile-details {
+    display: grid;
+    grid-template-rows: 0fr; /* Domyślnie wysokość to 0 */
+    transition: grid-template-rows 0.3s ease-out;
+    background-color: #fafafa;
+    padding: 10px 15px;
+}
+
+/* Dodatkowy wrapper wewnątrz, wymagany do poprawnego działania triku z 0fr->1fr */
+.details-inner {
+    overflow: hidden;
+}
+
+    /* Styl zawartości ukrytej */
+    .details-inner p {
+        padding: 0 0 1px 0;
+        font-size: 14px;
+        color: #666;
+    }
+
+        .details-inner p:first-child {
+            padding-top: 5px; /* Margines tylko dla pierwszego elementu wewnątrz */
+        }
+
+/* --- STAN AKTYWNY (Po kliknięciu) --- */
+
+/* Płynne rozwinięcie ukrytej zawartości */
+.tile-card.active .tile-details {
+    grid-template-rows: 1fr;
+}
+
+/* Obrócenie strzałki */
+.tile-card.active .tile-arrow {
+    transform: translateY(-50%) rotate(180deg);
+    color: #00bcd4;
+}
+
+/* Opcjonalnie: wyróżnienie aktywnego kafelka */
+.tile-card.active {
+    border-color: #4cc0cf;
+    border-width: 2px;
+}
+
+.tile-description {
+    padding-bottom: 15px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #666;
+    width: 100%;
+    height: 150px; /* Stała wysokość dla opisu, aby nie wpływał na układ */
+    overflow-y: auto; /* Dodaje pasek przewijania, jeśli opis jest zbyt długi */
+    overflow-x: hidden; /* Ukrywa poziomy pasek przewijania, jeśli jest */
+    word-break: break-word; /* Zapobiega rozrywaniu słów, jeśli są zbyt długie */
+}
+.details-buttons {
+    display: flex;
+    flex-direction: row; /* Układ w poziomie */
+    gap: 8px; /* Odstęp między przyciskami */
+    margin-top: auto; /* Wypycha cały kontener na sam dół kafelka */
+    width: 100%;
+}
+.btn-detail {
+    flex: 1; /* Każdy przycisk ma identyczną szerokość */
+    padding: 10px 8px;
+    border: 1px solid #bfc9d9; /* Subtelna, jasnoszara ramka */
+    border-radius: 6px;
+    background-color: #dddddd; /* Bardzo jasny szary startowy */
+    color: #3b3b3c; /* Ciemnoszary, czytelny tekst */
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    text-align: center;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+}
+    .btn-detail:hover {
+        background-color: #f3f4f6; /* Średni szary */
+        border-color: #9ca3af; /* Ciemniejsza ramka przy hoverze */
+        color: #111827; /* Prawie czarny tekst dla lepszego kontrastu */
+    }
+    .btn-detail:active {
+        background-color: #888; /* Jeszcze ciemniejszy szary przy kliknięciu */
+        border-color: #6b7280; /* Jeszcze ciemniejsza ramka */
+        color: #111827; /* Utrzymanie ciemnego tekstu */
+    }

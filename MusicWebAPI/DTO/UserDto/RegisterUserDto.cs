@@ -2,7 +2,7 @@
 
 namespace MusicWebAPI.DTO.UserDto
 {
-    public class RegisterUserDto
+    public record RegisterUserDto
     {
         public string Name { get; set; } //nick of user
         public string Email { get; set; }

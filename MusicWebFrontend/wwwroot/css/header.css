@@ -1,0 +1,103 @@
+﻿
+
+/* STYL NAGŁÓWKA STRONY */
+.page-header {
+    position: sticky; /* Przykleja nagłówek, ale nie pozwala mu wyjść poza .page-wrapper */
+    top: 0;
+    width: 100%;
+    background-color: #333;
+    z-index: 1000;
+}
+/* 1. GÓRNY RZĄD: Podział na 3 strefy */
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 55px;
+    padding: 0px 30px;
+    border-bottom: 1px solid #444;
+}
+/* Boczne bloki górnego panelu o identycznej szerokości */
+.header-top-left,
+.header-top-right {
+    flex: 0 0 200px; /* Sztywne 200px szerokości zapewnia idealną symetrię */
+}
+/* ŚRODEK GÓRNEGO PANELU: Logo + Tekst powitalny */
+.header-top-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px; /* Odstęp między logo a tekstem przywitalnym */
+    flex: 1;
+    cursor: pointer;
+}
+
+.logo {
+    color: white;
+    font-weight: bold;
+    font-size: 30px;
+    background-color: #555; /* Dodany kontrastujący kolor tła dla lepszej widoczności logo */
+}
+.logo-icon {
+    width: 30px; /* Ustawienie szerokości */
+    height: 30px; /* Ustawienie wysokości */
+    color: white; /* Domyślny kolor ikony */
+    transition: color 0.3s;
+}
+
+.welcome-text {
+    color: #aaa; /* Delikatniejszy kolor dla tekstu powitalnego */
+    font-size: 30px;
+}
+.subheader{
+    margin: 5px;
+    padding: 4px;
+    letter-spacing : 0,8px;
+}
+/* Główny pasek nawigacji */
+.navbar {
+    display: flex;
+    justify-content: center;
+    height: 50px;
+    width: 100%;
+}
+/* Boczne kontenery (muszą mieć identyczną szerokość dla idealnego wycentrowania środka) */
+.navbar-left,
+.navbar-right {
+    flex: 0 0 30px; /* Sztywna szerokość 30px zapobiega przesunięciom menu */
+}
+
+.navbar-right {
+    display: flex;
+    justify-content: flex-end; /* Wypycha zawartość panelu użytkownika do prawej krawędzi */
+}
+
+.main-menu {
+    background-color: #ffffff;
+    display: flex;
+    flex: 1;
+    width: auto;
+    list-style: none;
+    height: 100%;
+}
+
+/* Teraz całe stylowanie przycisku trafia bezpośrednio do elementu listy */
+.menu-item {
+    flex: 1; /* Równa szerokość kafelków */
+    display: flex;
+    align-items: center; /* Centrowanie tekstu w pionie */
+    justify-content: center; /* Centrowanie tekstu w poziomie */
+    color: #333;
+    font-weight: bold;
+    font-size: 20px;
+    transition: background-color 0.3s;
+    /* KLUCZOWE DODATKI DLA ZASTĘPSTWA LINKÓW: */
+    cursor: pointer; /* Kursor zmienia się w rączkę */
+    user-select: none; /* Blokuje przypadkowe zaznaczanie tekstu przy klikaniu */
+}
+
+    /* Efekt po najechaniu myszką */
+    .menu-item:hover {
+        background-color: #444;
+        color: #fff;
+    }

@@ -3,7 +3,7 @@ using MusicWebAPI.Entities.Rating;
 
 namespace MusicWebAPI.DTO
 {
-    public class UpdateAlbumDto
+    public record UpdateAlbumDto
     {
         public string Title { get; set; }
         public string? Description { get; set; }

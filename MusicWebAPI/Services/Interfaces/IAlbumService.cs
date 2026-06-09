@@ -13,5 +13,6 @@ namespace MusicWebAPI.Services.Interfaces
         Task<Album> UpdateAlbum(UpdateAlbumDto dto, int id);
         Task DeleteAlbumById(int id);
         Task DeleteAllAlbums(int artistId);
+        
     }
 }

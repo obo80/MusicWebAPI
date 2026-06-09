@@ -1,0 +1,53 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+	<!--<TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>-->
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="wwwroot\dist\Entities\**" />
+    <Content Remove="wwwroot\dist\Entities\**" />
+    <EmbeddedResource Remove="wwwroot\dist\Entities\**" />
+    <None Remove="wwwroot\dist\Entities\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="TypeScript\src\app.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="TypeScript\src\Entities\Album.ts" />
+    <None Remove="TypeScript\src\Entities\song.ts" />
+    <None Remove="TypeScript\src\pages\subpages\albumIdDetailsSubpage.ts" />
+    <None Remove="TypeScript\src\pages\subpages\artistIdDetailsSubpage.ts" />
+    <None Remove="TypeScript\src\pages\subpages\sharedDetailsSubpage.ts" />
+    <None Remove="TypeScript\src\pages\subpages\songIdDetailsSubpage.ts" />
+    <None Remove="TypeScript\src\pages\user\userButton.ts" />
+    <None Remove="TypeScript\src\pages\user\userForms.ts" />
+    <None Remove="TypeScript\src\pages\user\userfunctions.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\dist\" />
+    <Folder Include="wwwroot\dist\DTO\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="TypeScript\src\app.ts" />
+    <TypeScriptCompile Include="TypeScript\src\Entities\Album.ts" />
+    <TypeScriptCompile Include="TypeScript\src\Entities\Artist.ts" />
+    <TypeScriptCompile Include="TypeScript\src\Entities\Song.ts" />
+    <TypeScriptCompile Include="TypeScript\src\pages\homePage.ts" />
+    <TypeScriptCompile Include="TypeScript\src\pages\subpages\albumIdDetailsSubpage.ts" />
+    <TypeScriptCompile Include="TypeScript\src\pages\subpages\artistIdDetailsSubpage.ts" />
+    <TypeScriptCompile Include="TypeScript\src\pages\subpages\sharedDetailsSubpage.ts" />
+    <TypeScriptCompile Include="TypeScript\src\pages\subpages\songIdDetailsSubpage.ts" />
+    <TypeScriptCompile Include="TypeScript\src\pages\user\userButton.ts" />
+    <TypeScriptCompile Include="TypeScript\src\pages\user\userForms.ts" />
+    <TypeScriptCompile Include="TypeScript\src\pages\user\userfunctions.ts" />
+  </ItemGroup>
+
+</Project>

@@ -3,7 +3,7 @@ using MusicWebAPI.Entities.Rating;
 
 namespace MusicWebAPI.DTO
 {
-    public class SongDto
+    public record SongDto
     {
         public int Id { get; set; }
         public string Title { get; set; }
@@ -13,7 +13,7 @@ namespace MusicWebAPI.DTO
         
 
         public int? AlbumId { get; set; }
-        public string? AlbumName { get; set; }
+        public string? AlbumTitle { get; set; }
         //public virtual Album? Album { get; set; }
 
         public int ArtistId { get; set; }

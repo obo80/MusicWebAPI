@@ -1,0 +1,71 @@
+﻿@import url('reset.css');
+@import url('header.css');
+@import url('user.css');
+@import url('tile.css');
+@import url('itemDetailsPage.css');
+
+
+
+
+body {
+    /*    font-family: sans-serif;
+    background-color: #f5f5f5;
+    padding-top: 60px;
+    justify-content: start;*/
+    padding-top: 60px;
+    padding-bottom: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centruje w poziomie wszystko, co jest wewnątrz body */
+    justify-content: flex-start;
+    width: 100%;
+    /*font-family: "Trebuchet MS", sans-serif;*/
+}
+/* GŁÓWNY KONTENER STRONY */
+.page-wrapper {
+    width: 100%;
+    max-width: 1400px; /* Maksymalna szerokość Twojej strony (możesz zmienić np. na 1400px) */
+    margin: 0 auto; /* Magiczna reguła: 0 z góry/dołu, AUTO po bokach centruje całą stronę */
+    background-color: #f5f5f592; /* Kolor tła właściwej zawartości strony */
+    min-height: 100vh; /* Gwarantuje, że strona zawsze zajmie min. pełną wysokość ekranu */
+    box-shadow: 0 0 20px rgba(0,0,0,0.1); /* Opcjonalnie: cień po bokach strony dla lepszego efektu */
+}
+
+
+/* STYL DLA ELEMENTU GŁÓWNEGO <main> */
+.main-content {
+    padding: 40px 30px; /* Przestrzeń wewnątrz strony pod menu, aby tekst nie dotykał krawędzi */
+}
+
+.main-header {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.tiles-grid-header {
+    display: flex;
+    justify-content: space-between;
+    justify-self: center;
+    align-items: center;
+    margin-top: 12px;
+    margin-bottom: 12px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+
+/*.tiles-query-grid {
+    background-color: #754c4c92;
+}*/
+
+.query-container {
+    justify-content: center;
+    display: flex;
+    gap: 20px;
+    padding: 10px;
+    height: 80px;
+    align-items: center;
+    background-color: #ffd800ff;
+}

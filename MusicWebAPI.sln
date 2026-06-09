@@ -1,9 +1,16 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.14.36518.9
+# Visual Studio Version 18
+VisualStudioVersion = 18.6.11806.211
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicWebAPI", "MusicWebAPI\MusicWebAPI.csproj", "{03871B6B-EF13-4F52-A6A5-781571C8BC92}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Frontend", "Frontend", "{4A839D0A-36DE-4DCC-A1E6-63F5F69C6352}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicWebFrontend", "MusicWebFrontend\MusicWebFrontend.csproj", "{92F3D44F-83C6-4AF0-87BD-6626245043BC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{03871B6B-EF13-4F52-A6A5-781571C8BC92} = {03871B6B-EF13-4F52-A6A5-781571C8BC92}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +22,16 @@ Global
 		{03871B6B-EF13-4F52-A6A5-781571C8BC92}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{03871B6B-EF13-4F52-A6A5-781571C8BC92}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{03871B6B-EF13-4F52-A6A5-781571C8BC92}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92F3D44F-83C6-4AF0-87BD-6626245043BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92F3D44F-83C6-4AF0-87BD-6626245043BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92F3D44F-83C6-4AF0-87BD-6626245043BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92F3D44F-83C6-4AF0-87BD-6626245043BC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{92F3D44F-83C6-4AF0-87BD-6626245043BC} = {4A839D0A-36DE-4DCC-A1E6-63F5F69C6352}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {20B1D514-D49B-4859-8E63-BA9BEC3944A5}

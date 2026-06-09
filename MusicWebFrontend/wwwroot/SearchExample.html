@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista z Wyszukiwaniem i Sortowaniem</title>
+    <style>
+        /* Proste stylowanie dla lepszej czytelności */
+        body { font-family: sans-serif; margin: 2rem; }
+        .controls { display: flex; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+        .control-group { display: flex; flex-direction: column; gap: 0.25rem; }
+        .items-list { list-style: none; padding: 0; }
+        .items-list li { padding: 0.5rem; border-bottom: 1px solid #ccc; }
+    </style>
+</head>
+<body>
+
+    <!-- Sekcja kontrolek (wyszukiwanie, sortowanie) -->
+    <div class="controls">
+        <div class="control-group">
+            <label for="search">Wyszukaj:</label>
+            <input type="search" id="search" placeholder="Wpisz frazę...">
+        </div>
+
+        <div class="control-group">
+            <label for="sort-by">Sortuj według:</label>
+            <select id="sort-by">
+                <option value="name">Nazwa</option>
+                <option value="date">Data</option>
+                <option value="price">Cena</option>
+            </select>
+        </div>
+
+        <div class="control-group">
+            <label for="sort-order">Kolejność:</label>
+            <select id="sort-order">
+                <option value="asc">Rosnąco (A-Z)</option>
+                <option value="desc">Malejąco (Z-A)</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Lista elementów -->
+    <ul class="items-list" id="items-list">
+        <li data-name="Laptop" data-date="2026-05-15" data-price="4500">Laptop - 4500 PLN</li>
+        <li data-name="Myszka" data-date="2026-05-20" data-price="150">Myszka - 150 PLN</li>
+        <li data-name="Klawiatura" data-date="2026-05-10" data-price="300">Klawiatura - 300 PLN</li>
+        <li data-name="Monitor" data-date="2026-05-25" data-price="1200">Monitor - 1200 PLN</li>
+    </ul>
+
+</body>
+</html>
