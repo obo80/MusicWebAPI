@@ -1,0 +1,54 @@
+﻿/* Styl dla tła blokującego stronę pod spodem */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+/* Styl samego okienka logowania */
+.modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    width: 400px;
+}
+
+.user-form {
+    margin-bottom: 15px;
+}
+
+
+    .user-form label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .user-form input {
+        width: 100%;
+        padding: 8px;
+        box-sizing: border-box;
+        margin-bottom: 15px;
+    }
+
+.modal-content h2 {
+    padding-bottom: 20px;
+    color: dimgray;
+}
+
+.error-msg {
+    color: red;
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+.success-msg {
+    color: green;
+    margin-top: 10px;
+}

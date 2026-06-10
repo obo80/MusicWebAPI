@@ -1,6 +1,7 @@
 ﻿@import url('reset.css');
 @import url('header.css');
-@import url('user.css');
+@import url('userDropdown.css');
+@import url('userForm.css');
 @import url('tile.css');
 @import url('itemDetailsPage.css');
 

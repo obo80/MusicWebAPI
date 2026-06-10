@@ -45,4 +45,27 @@ export function getItemFromApi(url) {
         }
     });
 }
+export function loginUserToApi(loginDto) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const bodyJson = JSON.stringify(loginDto);
+            console.log("bodyJson", bodyJson);
+            const response = yield fetch('https://twoje-api.com', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                //body: JSON.stringify({ loginDto })
+                body: bodyJson
+            });
+            if (!response.ok) {
+                throw new Error('Błędne dane logowania');
+            }
+            const data = yield response.json();
+            localStorage.setItem('jwt_token', data.accessToken);
+            return true;
+        }
+        catch (error) {
+            throw error;
+        }
+    });
+}
 //# sourceMappingURL=apiCommunication.js.map

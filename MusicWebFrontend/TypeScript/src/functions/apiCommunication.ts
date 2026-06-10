@@ -1,5 +1,6 @@
 import type { ItemDTO } from "../DTO/ItemsDto.js";
 import type { PagedResultDto } from "../DTO/PagedResultDto.js";
+import { LoginDto } from "../DTO/UserDtos.js";
 
 export async function getPagedItemsFromApi(url: string): Promise<PagedResultDto<ItemDTO>> | null {
     try {
@@ -32,5 +33,32 @@ export async function getItemFromApi(url: string): Promise<ItemDTO> | null {
     } catch (error) {
         console.error("Error fetching items:", error);
         return null;
+    }
+}
+
+interface LoginResponse {
+    accessToken: string;
+}
+
+export async function loginUserToApi(loginDto: LoginDto): Promise<boolean> {
+    try {
+        const bodyJson = JSON.stringify(loginDto);
+        console.log("bodyJson", bodyJson);
+        const response = await fetch('https://twoje-api.com', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            //body: JSON.stringify({ loginDto })
+            body: bodyJson
+        });
+
+        if (!response.ok) {
+            throw new Error('Błędne dane logowania');
+        }
+
+        const data: LoginResponse = await response.json();
+        localStorage.setItem('jwt_token', data.accessToken);
+        return true;
+    } catch (error) {
+        throw error;
     }
 }

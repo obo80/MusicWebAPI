@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="TypeScript\src\DTO\UserDtos.ts" />
     <None Remove="TypeScript\src\Entities\Album.ts" />
     <None Remove="TypeScript\src\Entities\song.ts" />
     <None Remove="TypeScript\src\pages\subpages\albumIdDetailsSubpage.ts" />
@@ -26,8 +27,6 @@
     <None Remove="TypeScript\src\pages\subpages\sharedDetailsSubpage.ts" />
     <None Remove="TypeScript\src\pages\subpages\songIdDetailsSubpage.ts" />
     <None Remove="TypeScript\src\pages\user\userButton.ts" />
-    <None Remove="TypeScript\src\pages\user\userForms.ts" />
-    <None Remove="TypeScript\src\pages\user\userfunctions.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -37,6 +36,7 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="TypeScript\src\app.ts" />
+    <TypeScriptCompile Include="TypeScript\src\DTO\UserDtos.ts" />
     <TypeScriptCompile Include="TypeScript\src\Entities\Album.ts" />
     <TypeScriptCompile Include="TypeScript\src\Entities\Artist.ts" />
     <TypeScriptCompile Include="TypeScript\src\Entities\Song.ts" />
@@ -46,8 +46,8 @@
     <TypeScriptCompile Include="TypeScript\src\pages\subpages\sharedDetailsSubpage.ts" />
     <TypeScriptCompile Include="TypeScript\src\pages\subpages\songIdDetailsSubpage.ts" />
     <TypeScriptCompile Include="TypeScript\src\pages\user\userButton.ts" />
-    <TypeScriptCompile Include="TypeScript\src\pages\user\userForms.ts" />
-    <TypeScriptCompile Include="TypeScript\src\pages\user\userfunctions.ts" />
+    <TypeScriptCompile Include="TypeScript\src\pages\user\userLoginForm.ts" />
+    <TypeScriptCompile Include="TypeScript\src\pages\user\userButtonFunctions.ts" />
   </ItemGroup>
 
 </Project>

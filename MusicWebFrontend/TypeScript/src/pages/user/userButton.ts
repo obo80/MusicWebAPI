@@ -1,4 +1,4 @@
-﻿import { getUserName, isUserLoggedIn, loginUser, logoutUser } from "./userfunctions.js";
+﻿import { getUserName, isUserLoggedIn, loginUser, logoutUser } from "./userButtonFunctions.js";
 
 let userName: string = getUserName()
 
