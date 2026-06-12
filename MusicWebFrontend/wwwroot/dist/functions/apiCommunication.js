@@ -45,27 +45,88 @@ export function getItemFromApi(url) {
         }
     });
 }
-export function loginUserToApi(loginDto) {
+export function ApiGetMethodObjectDtoWithAuthorization(url, token) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const bodyJson = JSON.stringify(loginDto);
-            console.log("bodyJson", bodyJson);
-            const response = yield fetch('https://twoje-api.com', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                //body: JSON.stringify({ loginDto })
-                body: bodyJson
+            const response = yield fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
             });
-            if (!response.ok) {
-                throw new Error('Błędne dane logowania');
-            }
-            const data = yield response.json();
-            localStorage.setItem('jwt_token', data.accessToken);
-            return true;
+            const responseResult = yield handleResponse(response);
+            return responseResult;
         }
         catch (error) {
-            throw error;
+            console.error("Error fetching items:", error);
+            //return 500;
         }
+    });
+}
+export function loginUserToApi(url, loginDto) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const response = yield fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(loginDto)
+            });
+            const responseResult = yield handleResponse(response);
+            const resultStatusCode = responseResult.status;
+            if (resultStatusCode === 200) {
+                localStorage.setItem("token", responseResult.data);
+                return 200;
+            }
+            else {
+                return resultStatusCode;
+            }
+        }
+        catch (error) {
+            console.error("Error fetching items:", error);
+            return 500;
+        }
+    });
+}
+// D - type of DTO object
+//T - type of data response
+export function ApiPostMethodObjectDto(url, objectDto) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const response = yield fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(objectDto)
+            });
+            const responseResult = yield handleResponse(response);
+            console.log("responseResult:", responseResult);
+            //const resultStatusCode = responseResult.status;
+            return responseResult;
+        }
+        catch (error) {
+            console.error("Error fetching items:", error);
+            //return 500;
+        }
+    });
+}
+function handleResponse(rawResponse) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const contentType = rawResponse.headers.get('content-type') || '';
+        let data;
+        if (contentType.includes('application/json')) {
+            data = yield rawResponse.json();
+        }
+        else {
+            data = yield rawResponse.text();
+        }
+        return {
+            status: rawResponse.status,
+            ok: rawResponse.ok,
+            url: rawResponse.url,
+            body: rawResponse.body,
+            headers: rawResponse.headers,
+            data: data
+        };
     });
 }
 //# sourceMappingURL=apiCommunication.js.map

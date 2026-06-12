@@ -1,13 +1,13 @@
-import { getUserName, isUserLoggedIn, loginUser, logoutUser } from "./userButtonFunctions.js";
-let userName = getUserName();
-function renderUserButton() {
+import { CurrentUser } from "./currentUser.js";
+import { loginUserBtnFunction, logoutUserBtnFunction } from "./userButtonFunctions.js";
+export function renderUserButton() {
     const userButtonContainer = getUserButtonContainer();
     const headerTopRight = document.querySelector(".header-top-right");
     headerTopRight.innerHTML = "";
     headerTopRight.appendChild(userButtonContainer);
 }
 export function getUserButtonContainer() {
-    if (isUserLoggedIn) {
+    if (CurrentUser.getUserLoggingStatus()) {
         return createUserDropdown();
     }
     else {
@@ -24,17 +24,19 @@ function createLoginButton() {
     loginButton.textContent = "Zaloguj";
     loginButton.addEventListener("click", () => {
         // Handle login button click
-        loginUser();
+        loginUserBtnFunction();
         renderUserButton();
-        console.log("Login button clicked");
+        //console.log("Login button clicked");
     });
     userLoginContainer.appendChild(loginButton);
     return userLoginContainer;
 }
 function createUserDropdown() {
+    var _a;
     // Create the dropdown container
     const dropdownContainer = document.createElement("div");
     dropdownContainer.classList.add("user-dropdown");
+    const userName = (_a = CurrentUser.getCurrentUser()) === null || _a === void 0 ? void 0 : _a.name;
     // Create the dropdown trigger button
     const dropdownTrigger = document.createElement("button");
     dropdownTrigger.classList.add("dropdown-trigger");
@@ -77,8 +79,7 @@ function createUserDropdown() {
     dropdownContent.appendChild(logoutButton);
     logoutButton.addEventListener("click", () => {
         // Handle logout button click
-        logoutUser();
-        console.log("Logout button clicked");
+        logoutUserBtnFunction();
         renderUserButton();
         hideDropdown();
     });
@@ -94,14 +95,16 @@ function createUserDropdown() {
 }
 // Function to hide the dropdown
 function hideDropdown() {
-    if (isUserLoggedIn) {
+    //if (isUserLoggedIn) {
+    if (CurrentUser.getUserLoggingStatus()) {
         const dropdownContent = document.querySelector(".dropdown-content");
         dropdownContent.style.display = "none";
     }
 }
 // Event listener for clicking outside the dropdown
 document.addEventListener("click", (event) => {
-    if (isUserLoggedIn) {
+    //if (isUserLoggedIn) {
+    if (CurrentUser.getUserLoggingStatus()) {
         const dropdownContent = document.querySelector(".dropdown-content");
         const dropdownTrigger = document.querySelector(".dropdown-trigger");
         const dropdownContainer = document.querySelector(".user-dropdown");

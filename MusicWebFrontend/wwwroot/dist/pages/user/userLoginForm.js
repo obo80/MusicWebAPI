@@ -7,21 +7,115 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { loginUserToApi } from "../../functions/apiCommunication.js";
+import { mainURL } from "../../app.js";
 import { createDivByClassName } from "../../functions/helpers.js";
+import { CurrentUser } from "./currentUser.js";
+import { renderUserButton } from "./userButton.js";
 //let isLoginSuccess: boolean = false;
 export class UserLoginForm {
     constructor() {
-        this.isLoginSuccess = false;
+        this.url = mainURL + "account/login";
+        this.isUserCurrentlyLogged = false;
+        //     private async loginEventHandler2(form: HTMLFormElement, loginModal: HTMLDivElement, errorBox: HTMLDivElement, submitButton: HTMLButtonElement) {
+        //         console.log("start event listener dla formy logowania");
+        //         const email = form.querySelector("#email") as HTMLInputElement;
+        //         const password = form.querySelector("#password") as HTMLInputElement;
+        //         const loginDto: LoginDto = { email: email.value, password: password.value };
+        //         let result: boolean = false;
+        //         try {
+        //             const responseData = await ApiPostMethodObjectDto<LoginDto, string>(this.url, loginDto);
+        //             const responseCode = responseData.status;
+        //             //const success = true;
+        //             if (responseCode === 200) {
+        //                 this.isUserCurrentlyLogged = true;
+        //                 console.log("isLoginSuccess", this.isUserCurrentlyLogged);
+        //                 loginModal.remove();
+        //                 CurrentUser.
+        //                 CurrentUser.setAnyUserLoggingStatus(true); // ustawienie wartosci w CurrentUser.
+        //                 renderUserButton();
+        //                 result = true;
+        //             }
+        //             else if (responseCode === 400 || responseCode === 401) {
+        //                 this.isUserCurrentlyLogged = false;
+        //                 errorBox.textContent = `Eroor: ${responseCode}. Nieprawidłowy email lub hasło.`;
+        //                 submitButton.disabled = false;
+        //                 //submitButton.textContent = "Zaloguj się";
+        //             }
+        //             else {
+        //                 this.isUserCurrentlyLogged = false;
+        //                 //submitButton.textContent = "Zaloguj się";;
+        //                 errorBox.textContent = `Eroor: ${responseCode}. Wystąpił błąd serwera.`;
+        //                 submitButton.disabled = false;
+        //                 //submitButton.textContent = "Zaloguj się";
+        //             }
+        //         }
+        //         catch (err: any) {
+        //             errorBox.textContent = err.message || "Wystąpił błąd serwera.";
+        //             submitButton.disabled = false;
+        //             submitButton.textContent = "Zaloguj się";
+        //         }
+        //         //await new Promise(resolve => setTimeout(resolve, 1000)); return result;
+        //     }
+        // }
+        // }
+        // private async loginFormHandling(loginModal: HTMLDivElement): Promise<void> {
+        //     return new Promise((resolve) => {
+        //         const form = loginModal.querySelector("#loginForm") as HTMLFormElement;
+        //         const errorBox = loginModal.querySelector("#errorBox") as HTMLDivElement;
+        //         const submitButton = form.querySelector("#loginBtn") as HTMLButtonElement;
+        //         form.addEventListener("submit", async (e: Event) => {
+        //             e.preventDefault();
+        //             const email = form.querySelector("#email") as HTMLInputElement;
+        //             const password = form.querySelector("#password") as HTMLInputElement;
+        //             const loginDto: LoginDto = { email: email.value, password: password.value };
+        //             try {
+        //                 const responseCode = await loginUserToApi(this.url, loginDto);
+        //                 //const success = true;
+        //                 if (responseCode === 200) {
+        //                     this.isUserCurrentlyLogged = true;
+        //                     console.log("isLoginSuccess", this.isUserCurrentlyLogged);
+        //                     loginModal.remove();
+        //                     resolve();
+        //                     //getUserButtonContainer();
+        //                 }
+        //                 else if (responseCode === 400 || responseCode === 401) {
+        //                     this.isUserCurrentlyLogged = false;
+        //                     errorBox.textContent = `Eroor: ${responseCode}. Nieprawidłowy email lub hasło.`;
+        //                     submitButton.disabled = false;
+        //                     //submitButton.textContent = "Zaloguj się";
+        //                 }
+        //                 else {
+        //                     this.isUserCurrentlyLogged = false
+        //                     //submitButton.textContent = "Zaloguj się";;
+        //                     errorBox.textContent = `Eroor: ${responseCode}. Wystąpił błąd serwera.`;
+        //                     submitButton.disabled = false;
+        //                     //submitButton.textContent = "Zaloguj się";
+        //                 }
+        //             }
+        //             catch (err: any) {
+        //                 errorBox.textContent = err.message || "Wystąpił błąd serwera.";
+        //                 submitButton.disabled = false;
+        //                 submitButton.textContent = "Zaloguj się";
+        //             }
+        //         }, { once: true });
+        //     });
+        // }
     }
-    showLoginModalForm() {
-        console.log("showLoginModal");
-        const loginModal = this.createLoginForm();
-        this.loginFormHandling(loginModal);
-        document.body.appendChild(loginModal);
+    loginUser() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const loginModal = this.createLoginForm();
+            yield this.loginFormHandling(loginModal);
+            const pageWrapper = document.body.querySelector(".page-wrapper");
+            pageWrapper.appendChild(loginModal);
+            //return this.isUserCurrentlyLogged;
+        });
     }
-    getLoginSuccessInfo() {
-        return this.isLoginSuccess;
+    // public getLoginSuccessInfo(): boolean {
+    //     return this.isUserCurrentlyLogged;
+    // }
+    logoutUser() {
+        CurrentUser.logoutCurrentUser();
+        renderUserButton();
     }
     createLoginForm() {
         const headerText = "Logowanie";
@@ -51,12 +145,31 @@ export class UserLoginForm {
         passwordInput.id = "password";
         passwordInput.required = true;
         loginForm.appendChild(passwordInput);
+        const loggingFormButtonsContainer = createDivByClassName("login-buttons-container");
+        loginForm.appendChild(loggingFormButtonsContainer);
         const loginButton = document.createElement("button");
         loginButton.type = "submit";
         loginButton.classList.add("login-btn");
         loginButton.id = "loginBtn";
-        loginButton.textContent = "Zaloguj";
-        loginForm.appendChild(loginButton);
+        loginButton.textContent = "Zaloguj się";
+        loggingFormButtonsContainer.appendChild(loginButton);
+        const cancelButton = document.createElement("button");
+        cancelButton.type = "button";
+        cancelButton.classList.add("cancel-btn");
+        cancelButton.id = "cancelBtn";
+        cancelButton.textContent = "Anuluj";
+        loggingFormButtonsContainer.appendChild(cancelButton);
+        const registerContainer = createDivByClassName("login-register-container");
+        const registerHeader = createDivByClassName("login-register-header");
+        registerHeader.textContent = "Nie masz jeszcze konta?";
+        const registerButton = document.createElement("button");
+        registerButton.type = "button";
+        registerButton.classList.add("login-register-btn");
+        registerButton.id = "loginRegisterBtn";
+        registerButton.textContent = "Zarejestruj się";
+        registerContainer.appendChild(registerHeader);
+        registerContainer.appendChild(registerButton);
+        loginForm.appendChild(registerContainer);
         const errorMsg = createDivByClassName("error-msg");
         errorMsg.id = "errorBox";
         loginForm.appendChild(errorMsg);
@@ -65,20 +178,45 @@ export class UserLoginForm {
         return overlay;
     }
     loginFormHandling(loginModal) {
-        const form = loginModal.querySelector("#loginForm");
-        const errorBox = loginModal.querySelector("#errorBox");
-        const submitButton = form.querySelector("#loginBtn");
-        form.addEventListener("submit", (e) => __awaiter(this, void 0, void 0, function* () {
-            e.preventDefault();
+        return __awaiter(this, void 0, void 0, function* () {
+            const form = loginModal.querySelector("#loginForm");
+            const errorBox = loginModal.querySelector("#errorBox");
+            const submitButton = form.querySelector("#loginBtn");
+            const cancelButton = form.querySelector("#cancelBtn");
+            const registerButton = form.querySelector("#loginRegisterBtn");
+            form.addEventListener("submit", (e) => __awaiter(this, void 0, void 0, function* () {
+                e.preventDefault();
+                this.isUserCurrentlyLogged = yield this.loginEventHandler(form, loginModal, errorBox, submitButton);
+            }));
+            cancelButton.addEventListener("click", () => {
+                loginModal.remove();
+            });
+            registerButton.addEventListener("click", () => {
+                console.log("Przekierowanie do strony rejestracji.");
+                //consolelog await metoda do rejestracji w osobnej klasie
+                loginModal.remove();
+            });
+        });
+    }
+    loginEventHandler(form, loginModal, errorBox, submitButton) {
+        return __awaiter(this, void 0, void 0, function* () {
             const email = form.querySelector("#email");
             const password = form.querySelector("#password");
             const loginDto = { email: email.value, password: password.value };
+            let result = false;
             try {
-                const success = yield loginUserToApi(loginDto);
-                //const success = true;
-                if (success) {
+                const responseCode = yield CurrentUser.loginCurrentUser(loginDto);
+                if (responseCode === 200) {
                     loginModal.remove();
-                    this.isLoginSuccess = true;
+                    renderUserButton();
+                }
+                else if (responseCode === 400 || responseCode === 401) {
+                    errorBox.textContent = `Eroor: ${responseCode}. Nieprawidłowy email lub hasło.`;
+                    submitButton.disabled = false;
+                }
+                else {
+                    errorBox.textContent = `Eroor: ${responseCode}. Wystąpił błąd serwera.`;
+                    submitButton.disabled = false;
                 }
             }
             catch (err) {
@@ -86,110 +224,9 @@ export class UserLoginForm {
                 submitButton.disabled = false;
                 submitButton.textContent = "Zaloguj się";
             }
-        }));
+            yield new Promise(resolve => setTimeout(resolve, 1000));
+            return result;
+        });
     }
 }
-/*
-export function showLoginModalForm(): void {
-    console.log("showLoginModal");
-    const loginModal = createLoginForm();
-
-    loginFormHandling(loginModal);
-    document.body.appendChild(loginModal);
-
-}
-
-export function getLoginSuccess(): boolean {
-    return isLoginSuccess;
-}
-
-
-function loginFormHandling(loginModal: HTMLDivElement): void{
-    const form = loginModal.querySelector("#loginForm") as HTMLFormElement;
-    const errorBox = loginModal.querySelector("#errorBox") as HTMLDivElement;
-    const submitButton = form.querySelector("#loginBtn") as HTMLButtonElement;
-    
-
-    form.addEventListener("submit", async (e: Event) => {
-        e.preventDefault();
-        const email = form.querySelector("#email") as HTMLInputElement;
-        const password = form.querySelector("#password") as HTMLInputElement;
-
-        const loginDto: LoginDto = { email: email.value, password: password.value };
-
-        try {
-            const success = await loginUserToApi(loginDto);
-            //const success = true;
-
-            if (success) {
-                loginModal.remove();
-                isLoginSuccess = true;
-            }
-
-        }
-        catch (err: any) {
-            errorBox.textContent = err.message || "Wystąpił błąd serwera.";
-            submitButton.disabled = false;
-            submitButton.textContent = "Zaloguj się";
-        }
-    });
-
-}
-
-
-function createLoginForm(): HTMLDivElement {
-    const headerText = "Logowanie";
-
-    const overlay = createDivByClassName("modal-overlay");
-
-    const modalContent = createDivByClassName("modal-content");
-    const modalHeader = document.createElement("h2");
-    modalHeader.textContent = headerText;
-    modalContent.appendChild(modalHeader);
-
-    const loginForm = document.createElement("form");
-    loginForm.classList.add("user-form");
-    loginForm.id = "loginForm";
-
-    const emailLabel = document.createElement("label");
-    emailLabel.textContent = "Email:";
-    emailLabel.htmlFor = "email";
-    loginForm.appendChild(emailLabel);
-
-    const emailInput = document.createElement("input");
-    emailInput.type = "email";
-    emailInput.id = "email";
-    emailInput.required = true;
-    loginForm.appendChild(emailInput);
-
-    
-
-    const passwordLabel = document.createElement("label");
-    passwordLabel.textContent = "Hasło:";
-    passwordLabel.htmlFor = "password";
-    loginForm.appendChild(passwordLabel);
-
-    const passwordInput = document.createElement("input");
-    passwordInput.type = "password";
-    passwordInput.id = "password";
-    passwordInput.required = true;
-    loginForm.appendChild(passwordInput);
-
-    const loginButton = document.createElement("button");
-    loginButton.type = "submit";
-    loginButton.classList.add("login-btn");
-    loginButton.id = "loginBtn";
-    loginButton.textContent = "Zaloguj";
-    loginForm.appendChild(loginButton);
-
-    const errorMsg = createDivByClassName("error-msg");
-    errorMsg.id = "errorBox"
-    loginForm.appendChild(errorMsg);
-
-    modalContent.appendChild(loginForm);
-    overlay.appendChild(modalContent);
-    return overlay;
-}
-
-*/
 //# sourceMappingURL=userLoginForm.js.map
