@@ -1,42 +1,35 @@
-﻿import { UserLoginForm } from "./userLoginForm.js";
+﻿import { CurrentUser } from "./currentUser.js";
+import { UserLoginForm } from "./userLoginForm.js";
 
 export let isUserLoggedIn: boolean = false;
 
-export function loginUser(): void {
+export function loginUserBtnFunction(): void {
 
     //add user to session
     //implement loggin using session and communiation with api
     const userLoginForm = new UserLoginForm();
-
-    userLoginForm.showLoginModalForm();
-
-    isUserLoggedIn = userLoginForm.getLoginSuccessInfo()
-    console.log("loginUser", isUserLoggedIn);
+    userLoginForm.loginUser();
 }
 
-export function logoutUser():void {
+export function logoutUserBtnFunction():void {
     //remove user from session
     //implement loggin using session and communiation with api
-    isUserLoggedIn = false;
+    const userLoginForm = new UserLoginForm();
+    userLoginForm.logoutUser();
 }
 
-export function getUserName(): string {
-    //get user name from session
-    //implement loggin using session and communiation with api
-    return "Użytkowniku";
-}
 
-export function changePassword(): void {
+export function changePasswordBtnFunction(): void {
     //change password
     //implement loggin using session and communiation with api
 }
 
-export function changeSettings() : void {
+export function changeSettingsBtnFunction() : void {
     //change settings
     //implement loggin using session and communiation with api
 }
 
-export function registerUser(): void {
+export function registerUserBtnFunction(): void {
     //register user
     //implement loggin using session and communiation with api
 }

@@ -1,15 +1,15 @@
-﻿import { getUserName, isUserLoggedIn, loginUser, logoutUser } from "./userButtonFunctions.js";
+﻿import { CurrentUser } from "./currentUser.js";
+import { loginUserBtnFunction, logoutUserBtnFunction } from "./userButtonFunctions.js";
 
-let userName: string = getUserName()
-
-function renderUserButton(): void {
+export function renderUserButton(): void {
     const userButtonContainer = getUserButtonContainer();
     const headerTopRight = document.querySelector(".header-top-right");
     headerTopRight.innerHTML = "";
     headerTopRight.appendChild(userButtonContainer);
 }
 export function getUserButtonContainer() {
-    if (isUserLoggedIn) {
+
+    if (CurrentUser.getUserLoggingStatus()) {
         return createUserDropdown();
     } else {
         return createLoginButton();
@@ -25,9 +25,9 @@ function createLoginButton(): HTMLDivElement {
     loginButton.textContent = "Zaloguj";
     loginButton.addEventListener("click", () => {
         // Handle login button click
-        loginUser();
+        loginUserBtnFunction();
         renderUserButton();
-        console.log("Login button clicked");
+        //console.log("Login button clicked");
     });
 
     userLoginContainer.appendChild(loginButton);
@@ -40,6 +40,7 @@ function createUserDropdown(): HTMLDivElement {
     // Create the dropdown container
     const dropdownContainer = document.createElement("div");
     dropdownContainer.classList.add("user-dropdown");
+    const userName = CurrentUser.getCurrentUser()?.name;
 
     // Create the dropdown trigger button
     const dropdownTrigger = document.createElement("button");
@@ -88,8 +89,7 @@ function createUserDropdown(): HTMLDivElement {
     dropdownContent.appendChild(logoutButton);
     logoutButton.addEventListener("click", () => {
         // Handle logout button click
-        logoutUser();
-        console.log("Logout button clicked");
+        logoutUserBtnFunction();
         renderUserButton();
         hideDropdown();
     });
@@ -109,7 +109,8 @@ function createUserDropdown(): HTMLDivElement {
 
 // Function to hide the dropdown
 function hideDropdown(): void {
-    if (isUserLoggedIn) {
+    //if (isUserLoggedIn) {
+    if (CurrentUser.getUserLoggingStatus()) {
         const dropdownContent = document.querySelector(".dropdown-content");
         (dropdownContent as HTMLElement).style.display = "none";
     }
@@ -117,7 +118,8 @@ function hideDropdown(): void {
 
 // Event listener for clicking outside the dropdown
 document.addEventListener("click", (event) => {
-    if (isUserLoggedIn) {
+    //if (isUserLoggedIn) {
+    if (CurrentUser.getUserLoggingStatus()) {
         const dropdownContent = document.querySelector(".dropdown-content");
         const dropdownTrigger = document.querySelector(".dropdown-trigger");
         const dropdownContainer = document.querySelector(".user-dropdown");
