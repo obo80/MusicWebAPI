@@ -13,11 +13,11 @@
 }
 /* Styl samego okienka logowania */
 .modal-content {
-    background: white;
+    background: #fafafa;
     padding: 30px;
     border-radius: 8px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    width: 400px;
+    width: 350px;
 }
 
 .user-form {
@@ -37,10 +37,55 @@
         margin-bottom: 15px;
     }
 
-.modal-content h2 {
-    padding-bottom: 20px;
-    color: dimgray;
-}
+    .user-form button {
+        flex: 1; /* Każdy przycisk ma identyczną szerokość */
+        padding: 10px 8px;
+        border: 1px solid #bfc9d9; /* Subtelna, jasnoszara ramka */
+        border-radius: 6px;
+        background-color: #dddddd; /* Bardzo jasny szary startowy */
+        color: #3b3b3c; /* Ciemnoszary, czytelny tekst */
+        font-weight: 600;
+        font-size: 13px;
+        cursor: pointer;
+        text-align: center;
+        white-space: nowrap;
+        transition: all 0.2s ease;
+    }
+        .user-form .login-btn {
+            background-color: darkgrey;
+            font-weight: bold;
+
+        }
+        .user-form .login-register-btn {
+            width: 80%;
+            margin: 10px;
+
+        }
+
+    .user-form .login-register-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-top: 30px;
+        color: oldlace;
+        background-color: #4800ff;
+        padding: 10px;
+        box-shadow: 1px;
+        border-radius: 8px;
+    }
+
+    .user-form button:hover {
+        background-color: #f3f4f6; /* Średni szary */
+        border-color: #9ca3af; /* Ciemniejsza ramka przy hoverze */
+        color: #111827; /* Prawie czarny tekst dla lepszego kontrastu */
+    }
+
+
+        .modal-content h2 {
+            padding-bottom: 20px;
+            color: dimgray;
+        }
 
 .error-msg {
     color: red;
@@ -51,4 +96,12 @@
 .success-msg {
     color: green;
     margin-top: 10px;
+}
+
+.login-buttons-container {
+    display: flex;
+    flex-direction: row; /* Układ w poziomie */
+    gap: 8px; /* Odstęp między przyciskami */
+    margin-top: auto; /* Wypycha cały kontener na sam dół kafelka */
+    width: 100%;
 }
