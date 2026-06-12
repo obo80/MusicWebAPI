@@ -1,6 +1,8 @@
 import type { ItemDTO } from "../DTO/ItemsDto.js";
 import type { PagedResultDto } from "../DTO/PagedResultDto.js";
 import { LoginDto } from "../DTO/UserDtos.js";
+import { isUserLoggedIn } from "../pages/user/userButtonFunctions.js";
+
 
 export async function getPagedItemsFromApi(url: string): Promise<PagedResultDto<ItemDTO>> | null {
     try {
@@ -36,29 +38,103 @@ export async function getItemFromApi(url: string): Promise<ItemDTO> | null {
     }
 }
 
-interface LoginResponse {
-    accessToken: string;
-}
-
-export async function loginUserToApi(loginDto: LoginDto): Promise<boolean> {
+export async function ApiGetMethodObjectDtoWithAuthorization<responseDataType>(url: string, token: string): Promise<IApiResponse<responseDataType>> {
     try {
-        const bodyJson = JSON.stringify(loginDto);
-        console.log("bodyJson", bodyJson);
-        const response = await fetch('https://twoje-api.com', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            //body: JSON.stringify({ loginDto })
-            body: bodyJson
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
         });
 
-        if (!response.ok) {
-            throw new Error('Błędne dane logowania');
-        }
-
-        const data: LoginResponse = await response.json();
-        localStorage.setItem('jwt_token', data.accessToken);
-        return true;
-    } catch (error) {
-        throw error;
+        const responseResult = await handleResponse<responseDataType>(response);
+        return responseResult;
     }
+    catch (error) {
+        console.error("Error fetching items:", error);
+        //return 500;
+    }
+}
+
+
+
+export async function loginUserToApi(url: string, loginDto: LoginDto): Promise<number> {
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(loginDto)
+        });
+
+        const responseResult = await handleResponse<string>(response);
+
+        const resultStatusCode = responseResult.status;
+        if (resultStatusCode === 200) {
+            localStorage.setItem("token", responseResult.data);
+            return 200;
+        }
+        else {
+            return resultStatusCode;
+        }
+    }
+    catch (error) {
+        console.error("Error fetching items:", error);
+        return 500;
+    }
+
+}
+
+// D - type of DTO object
+//T - type of data response
+export async function ApiPostMethodObjectDto<DtoType, responseDataType>(url: string, objectDto: DtoType): Promise<IApiResponse<responseDataType>> {
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(objectDto)
+        });
+
+        const responseResult = await handleResponse<responseDataType>(response);
+        console.log("responseResult:", responseResult);
+
+        //const resultStatusCode = responseResult.status;
+        return responseResult;
+
+    }
+    catch (error) {
+        console.error("Error fetching items:", error);
+        //return 500;
+    }
+
+}
+
+
+export interface IApiResponse<T> {
+    status: number;
+    ok: boolean;
+    url: string;
+    body: ReadableStream<Uint8Array> | null;
+    headers: Headers;
+    data: T; 
+}
+
+async function handleResponse<responseDataType>(rawResponse: Response): Promise<IApiResponse<responseDataType>> {
+    const contentType = rawResponse.headers.get('content-type') || '';
+    let data: any;
+
+    if (contentType.includes('application/json')) {
+        data = await rawResponse.json();
+    } else {
+        data = await rawResponse.text();
+    }
+
+    return {
+        status: rawResponse.status,
+        ok: rawResponse.ok,
+        url: rawResponse.url,
+        body: rawResponse.body,
+        headers: rawResponse.headers,
+        data: data as responseDataType
+    };
 }
