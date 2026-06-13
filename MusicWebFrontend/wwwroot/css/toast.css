@@ -1,0 +1,51 @@
+﻿/* Kontener pozycjonujący toasty w prawym górnym rogu */
+#toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 12px; /* Odstęp między kilkoma powiadomieniami */
+}
+
+/* Bazowe style dla pojedynczego powiadomienia */
+.toast {
+    min-width: 250px;
+    max-width: 450px;
+    padding: 16px 20px;
+    border-radius: 8px;
+    font-family: sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    /* Logika animacji: domyślnie niewidoczne i przesunięte w prawo */
+    opacity: 0;
+    transform: translateX(50px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+
+
+/* Klasa aktywowana przez TypeScript, która wyzwala animację wejścia */
+.toast-show {
+    opacity: 1;
+    transform: translateX(0);
+}
+/* Wygląd powiadomienia o sukcesie (zielone tło) */
+.toast-success {
+    background-color: #10b981; /* Nowoczesny zielony (Emerald z Tailwind) */
+    border-left: 5px solid #047857;
+}
+
+.toast-error {
+    background-color: #ef4444; 
+    border-left: 5px solid #b91c1c;
+}
+
+
+.toast-info {
+    background-color: #3b82f6; 
+    border-left: 5px solid #1d4ed8;
+}
