@@ -3,6 +3,7 @@ import { LoginDto } from "../../DTO/UserDtos.js";
 import { createDivByClassName } from "../../functions/helpers.js";
 import { CurrentUser } from "./currentUser.js";
 import { renderUserButton } from "./userButton.js";
+import { UserPasswordChangeForm } from "./UserPasswordChangeForm.js";
 
 
 //let isLoginSuccess: boolean = false;
@@ -18,7 +19,7 @@ export class UserLoginForm
 
         const loginModal = this.createLoginForm();
 
-        await this.loginFormHandling(loginModal);
+        await this.loginFormEventListener(loginModal);
 
         const pageWrapper = document.body.querySelector(".page-wrapper");
         pageWrapper.appendChild(loginModal);
@@ -78,7 +79,7 @@ export class UserLoginForm
 
         const loginButton = document.createElement("button");
         loginButton.type = "submit";
-        loginButton.classList.add("login-btn");
+        loginButton.classList.add("confirm-btn");
         loginButton.id = "loginBtn";
         loginButton.textContent = "Zaloguj się";
         loggingFormButtonsContainer.appendChild(loginButton);
@@ -95,7 +96,7 @@ export class UserLoginForm
         registerHeader.textContent = "Nie masz jeszcze konta?";
         const registerButton = document.createElement("button");
         registerButton.type = "button";
-        registerButton.classList.add("login-register-btn");
+        registerButton.classList.add("confirm-register-btn");
         registerButton.id = "loginRegisterBtn";
         registerButton.textContent = "Zarejestruj się";
         registerContainer.appendChild(registerHeader);
@@ -112,7 +113,7 @@ export class UserLoginForm
     }
 
 
-    private async loginFormHandling(loginModal: HTMLDivElement): Promise<void> {
+    private async loginFormEventListener(loginModal: HTMLDivElement): Promise<void> {
         const form = loginModal.querySelector("#loginForm") as HTMLFormElement;
         const errorBox = loginModal.querySelector("#errorBox") as HTMLDivElement;
         const submitButton = form.querySelector("#loginBtn") as HTMLButtonElement;
@@ -121,7 +122,7 @@ export class UserLoginForm
 
         form.addEventListener("submit", async (e: Event) => {
             e.preventDefault();
-            this.isUserCurrentlyLogged = await this.loginEventHandler(form, loginModal, errorBox, submitButton);
+            await this.loginEventHandler(form, loginModal, errorBox, submitButton);
         });
         cancelButton.addEventListener("click", () => {
             loginModal.remove();
@@ -129,6 +130,7 @@ export class UserLoginForm
 
         registerButton.addEventListener("click", () => {
             console.log("Przekierowanie do strony rejestracji.");
+            //new UserPasswordChangeForm().changePassword();
             //consolelog await metoda do rejestracji w osobnej klasie
             
             loginModal.remove();
@@ -141,7 +143,6 @@ export class UserLoginForm
         const password = form.querySelector("#password") as HTMLInputElement;
 
         const loginDto: LoginDto = { email: email.value, password: password.value };
-        let result: boolean = false;
 
         try {
             const responseCode = await CurrentUser.loginCurrentUser(loginDto);
@@ -164,7 +165,7 @@ export class UserLoginForm
             submitButton.disabled = false;
             submitButton.textContent = "Zaloguj się";
         }
-        await new Promise(resolve => setTimeout(resolve, 1000)); return result;
+        //await new Promise(resolve => setTimeout(resolve, 1000)); return result;
     }
 
 

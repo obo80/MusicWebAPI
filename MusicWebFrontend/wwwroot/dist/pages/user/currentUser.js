@@ -7,7 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { ApiGetMethodObjectDtoWithAuthorization, ApiPostMethodObjectDto } from "../../functions/apiCommunication.js";
+import { ApiGetMethodObjectDtoWithAuthorization, ApiPostMethodObjectDto, ApiPostMethodObjectDtoWithAuthorization } from "../../functions/apiCommunication.js";
 //const currentmainURL = mainURL;
 const mainURL = 'https://localhost:7192/api/';
 const accountUrl = mainURL + "account";
@@ -26,13 +26,13 @@ export class CurrentUser {
     static loginCurrentUser(loginDto) {
         return __awaiter(this, void 0, void 0, function* () {
             const newCurrentUser = new CurrentUser();
-            this._currentUser = newCurrentUser;
             const responseData = yield newCurrentUser.getTokenFromApi(loginUrl, loginDto);
             if (typeof responseData === "string") {
                 this._token = responseData;
                 this.setTokenInStorage(true);
                 yield newCurrentUser.setCurrentUserByToken();
                 console.log(`Użytkownik ${newCurrentUser.name} został zalogowany.`);
+                this._currentUser = newCurrentUser;
                 return 200;
             }
             else {
@@ -48,6 +48,32 @@ export class CurrentUser {
         this._token = null;
         this.setTokenInStorage(false);
         console.log(`Użytkownik ${currentUserName} został wylogowany.`);
+    }
+
+    static changePasswordCurrentUser(changePasswordDto) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const currentUser = this._currentUser;
+            const token = CurrentUser.getTokenFromStorage();
+            if (currentUser === null || token === null) {
+                return 401;
+            }
+            else {
+                try {
+                    const reposnseData = yield ApiPostMethodObjectDtoWithAuthorization(passwordChangeUrl, changePasswordDto, token);
+                    const responseCode = reposnseData.status;
+                    if (responseCode === 200) {
+                        console.log(`Hasło użytkownika ${currentUser.name} zostało zmienione.`);
+                        //user logout if password change was successfully
+                        CurrentUser.logoutCurrentUser();
+                    }
+                    return responseCode;
+                }
+                catch (error) {
+                    console.log("Bład podczas pobierania danych z API", error);
+                    return 500;
+                }
+            }
+        });
     }
     setCurrentUserByToken() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -70,7 +96,10 @@ export class CurrentUser {
         });
     }
     static setTokenInStorage(updateOrClear) {
-        updateOrClear ? localStorage.setItem("token", CurrentUser._token) : localStorage.removeItem("token");
+        updateOrClear ? sessionStorage.setItem("token", CurrentUser._token) : sessionStorage.removeItem("token");
+    }
+    static getTokenFromStorage() {
+        return sessionStorage.getItem("token");
     }
     getTokenFromApi(url, loginDto) {
         return __awaiter(this, void 0, void 0, function* () {

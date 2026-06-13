@@ -88,8 +88,28 @@ export function loginUserToApi(url, loginDto) {
         }
     });
 }
-// D - type of DTO object
-//T - type of data response
+export function ApiPostMethodObjectDtoWithAuthorization(url, objectDto, token) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const response = yield fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(objectDto)
+            });
+            const responseResult = yield handleResponse(response);
+            //console.log("responseResult:", responseResult);
+            //const resultStatusCode = responseResult.status;
+            return responseResult;
+        }
+        catch (error) {
+            console.error("Error fetching items:", error);
+            //return 500;
+        }
+    });
+}
 export function ApiPostMethodObjectDto(url, objectDto) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -99,7 +119,7 @@ export function ApiPostMethodObjectDto(url, objectDto) {
                 body: JSON.stringify(objectDto)
             });
             const responseResult = yield handleResponse(response);
-            console.log("responseResult:", responseResult);
+            //console.log("responseResult:", responseResult);
             //const resultStatusCode = responseResult.status;
             return responseResult;
         }

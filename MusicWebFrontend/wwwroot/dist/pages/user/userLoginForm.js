@@ -104,7 +104,7 @@ export class UserLoginForm {
     loginUser() {
         return __awaiter(this, void 0, void 0, function* () {
             const loginModal = this.createLoginForm();
-            yield this.loginFormHandling(loginModal);
+            yield this.loginFormEventListener(loginModal);
             const pageWrapper = document.body.querySelector(".page-wrapper");
             pageWrapper.appendChild(loginModal);
             //return this.isUserCurrentlyLogged;
@@ -149,7 +149,7 @@ export class UserLoginForm {
         loginForm.appendChild(loggingFormButtonsContainer);
         const loginButton = document.createElement("button");
         loginButton.type = "submit";
-        loginButton.classList.add("login-btn");
+        loginButton.classList.add("confirm-btn");
         loginButton.id = "loginBtn";
         loginButton.textContent = "Zaloguj się";
         loggingFormButtonsContainer.appendChild(loginButton);
@@ -164,7 +164,7 @@ export class UserLoginForm {
         registerHeader.textContent = "Nie masz jeszcze konta?";
         const registerButton = document.createElement("button");
         registerButton.type = "button";
-        registerButton.classList.add("login-register-btn");
+        registerButton.classList.add("confirm-register-btn");
         registerButton.id = "loginRegisterBtn";
         registerButton.textContent = "Zarejestruj się";
         registerContainer.appendChild(registerHeader);
@@ -177,7 +177,7 @@ export class UserLoginForm {
         overlay.appendChild(modalContent);
         return overlay;
     }
-    loginFormHandling(loginModal) {
+    loginFormEventListener(loginModal) {
         return __awaiter(this, void 0, void 0, function* () {
             const form = loginModal.querySelector("#loginForm");
             const errorBox = loginModal.querySelector("#errorBox");
@@ -186,13 +186,14 @@ export class UserLoginForm {
             const registerButton = form.querySelector("#loginRegisterBtn");
             form.addEventListener("submit", (e) => __awaiter(this, void 0, void 0, function* () {
                 e.preventDefault();
-                this.isUserCurrentlyLogged = yield this.loginEventHandler(form, loginModal, errorBox, submitButton);
+                yield this.loginEventHandler(form, loginModal, errorBox, submitButton);
             }));
             cancelButton.addEventListener("click", () => {
                 loginModal.remove();
             });
             registerButton.addEventListener("click", () => {
                 console.log("Przekierowanie do strony rejestracji.");
+                //new UserPasswordChangeForm().changePassword();
                 //consolelog await metoda do rejestracji w osobnej klasie
                 loginModal.remove();
             });
@@ -203,7 +204,6 @@ export class UserLoginForm {
             const email = form.querySelector("#email");
             const password = form.querySelector("#password");
             const loginDto = { email: email.value, password: password.value };
-            let result = false;
             try {
                 const responseCode = yield CurrentUser.loginCurrentUser(loginDto);
                 if (responseCode === 200) {
@@ -224,8 +224,7 @@ export class UserLoginForm {
                 submitButton.disabled = false;
                 submitButton.textContent = "Zaloguj się";
             }
-            yield new Promise(resolve => setTimeout(resolve, 1000));
-            return result;
+            //await new Promise(resolve => setTimeout(resolve, 1000)); return result;
         });
     }
 }

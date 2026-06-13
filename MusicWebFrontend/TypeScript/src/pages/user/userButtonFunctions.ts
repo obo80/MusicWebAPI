@@ -1,5 +1,6 @@
 ﻿import { CurrentUser } from "./currentUser.js";
 import { UserLoginForm } from "./userLoginForm.js";
+import { UserPasswordChangeForm } from "./UserPasswordChangeForm.js";
 
 export let isUserLoggedIn: boolean = false;
 
@@ -20,6 +21,7 @@ export function logoutUserBtnFunction():void {
 
 
 export function changePasswordBtnFunction(): void {
+    new UserPasswordChangeForm().changePassword();
     //change password
     //implement loggin using session and communiation with api
 }

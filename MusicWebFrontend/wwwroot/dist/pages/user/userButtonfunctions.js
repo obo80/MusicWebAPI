@@ -1,4 +1,5 @@
 import { UserLoginForm } from "./userLoginForm.js";
+import { UserPasswordChangeForm } from "./UserPasswordChangeForm.js";
 export let isUserLoggedIn = false;
 export function loginUserBtnFunction() {
     //add user to session
@@ -13,6 +14,7 @@ export function logoutUserBtnFunction() {
     userLoginForm.logoutUser();
 }
 export function changePasswordBtnFunction() {
+    new UserPasswordChangeForm().changePassword();
     //change password
     //implement loggin using session and communiation with api
 }

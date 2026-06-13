@@ -1,6 +1,6 @@
 ﻿//import { mainURL } from "../../app.js";
-import { LoginDto, UserDto } from "../../DTO/UserDtos.js";
-import { ApiGetMethodObjectDtoWithAuthorization, ApiPostMethodObjectDto } from "../../functions/apiCommunication.js";
+import { ChangePasswordDto, LoginDto, UserDto } from "../../DTO/UserDtos.js";
+import { ApiGetMethodObjectDtoWithAuthorization, ApiPostMethodObjectDto, ApiPostMethodObjectDtoWithAuthorization } from "../../functions/apiCommunication.js";
 
 //const currentmainURL = mainURL;
 
@@ -22,6 +22,7 @@ export class CurrentUser {
     email: string;
     roleId: number;
     roleName?: string;
+    private static tempCode: 400;
 
     private static _currentUser: CurrentUser  | null = null;
     private static _token: string | null = null;
@@ -36,21 +37,21 @@ export class CurrentUser {
         return this._token;
     }
 
+
+
     public static async loginCurrentUser(loginDto: LoginDto) {
         const newCurrentUser = new CurrentUser();
-        this._currentUser = newCurrentUser;
-
         const responseData = await newCurrentUser.getTokenFromApi(loginUrl, loginDto);
         if (typeof responseData === "string") {
             this._token = responseData;
             this.setTokenInStorage(true);
             await newCurrentUser.setCurrentUserByToken();
             console.log(`Użytkownik ${newCurrentUser.name} został zalogowany.`);
+            this._currentUser = newCurrentUser;
             return 200;
         }
         else {
             CurrentUser._token = null;
-
             return responseData;
         }
 
@@ -62,6 +63,35 @@ export class CurrentUser {
         this._token = null;
         this.setTokenInStorage(false);
         console.log(`Użytkownik ${currentUserName} został wylogowany.`);
+    }
+
+    // public static async changePasswordCurrentUser_test(changePasswordDto: ChangePasswordDto) {
+    //     return Math.random() < 0.01 ? 200 : Math.random() > 0.5 ? 400 : 401;
+    // }
+
+    public static async changePasswordCurrentUser(changePasswordDto: ChangePasswordDto) {
+        const currentUser = this._currentUser;
+        const token = CurrentUser.getTokenFromStorage();
+        if (currentUser === null || token === null) {
+            return 401;
+        }
+        else {
+            try {
+                const reposnseData = await ApiPostMethodObjectDtoWithAuthorization<ChangePasswordDto, UserDto>(passwordChangeUrl, changePasswordDto, token);
+                const responseCode = reposnseData.status;
+                if (responseCode === 200) {
+                    console.log(`Hasło użytkownika ${currentUser.name} zostało zmienione.`);
+
+                    //user logout if password change was successfully
+                    CurrentUser.logoutCurrentUser();
+                }
+                
+                return responseCode;
+            } catch (error) {
+                console.log("Bład podczas pobierania danych z API", error);
+                return 500;
+            }
+        }
     }
 
     private async setCurrentUserByToken()  {
@@ -85,7 +115,10 @@ export class CurrentUser {
     }
 
     private static setTokenInStorage(updateOrClear: boolean): void {
-        updateOrClear ? localStorage.setItem("token", CurrentUser._token) : localStorage.removeItem("token");
+        updateOrClear ? sessionStorage.setItem("token", CurrentUser._token) : sessionStorage.removeItem("token");
+    }
+    private static getTokenFromStorage(): string | null {
+        return sessionStorage.getItem("token");
     }
 
     private async getTokenFromApi(url: string, loginDto: LoginDto) {

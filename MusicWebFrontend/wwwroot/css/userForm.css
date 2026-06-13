@@ -51,14 +51,15 @@
         white-space: nowrap;
         transition: all 0.2s ease;
     }
-        .user-form .login-btn {
+        .user-form .confirm-btn {
             background-color: darkgrey;
             font-weight: bold;
 
         }
-        .user-form .login-register-btn {
+        .user-form .confirm-register-btn {
             width: 80%;
             margin: 10px;
+            margin-top: 15px;
 
         }
 

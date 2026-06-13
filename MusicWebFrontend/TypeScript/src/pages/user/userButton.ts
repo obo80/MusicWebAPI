@@ -1,5 +1,5 @@
 ﻿import { CurrentUser } from "./currentUser.js";
-import { loginUserBtnFunction, logoutUserBtnFunction } from "./userButtonFunctions.js";
+import { changePasswordBtnFunction, loginUserBtnFunction, logoutUserBtnFunction } from "./userButtonFunctions.js";
 
 export function renderUserButton(): void {
     const userButtonContainer = getUserButtonContainer();
@@ -72,6 +72,7 @@ function createUserDropdown(): HTMLDivElement {
     dropdownContent.appendChild(passwordChangeLink);
     passwordChangeLink.addEventListener("click", () => {
         // Handle password change link click
+        changePasswordBtnFunction();
         console.log("Password change link clicked");
         hideDropdown();
     });
@@ -129,3 +130,5 @@ document.addEventListener("click", (event) => {
         }
     }
 });
+
+

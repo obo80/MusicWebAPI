@@ -85,18 +85,20 @@ export async function loginUserToApi(url: string, loginDto: LoginDto): Promise<n
 
 }
 
-// D - type of DTO object
-//T - type of data response
-export async function ApiPostMethodObjectDto<DtoType, responseDataType>(url: string, objectDto: DtoType): Promise<IApiResponse<responseDataType>> {
+
+export async function ApiPostMethodObjectDtoWithAuthorization<DtoType, responseDataType>(url: string, objectDto: DtoType, token: string): Promise<IApiResponse<responseDataType>> {
     try {
         const response = await fetch(url, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
             body: JSON.stringify(objectDto)
         });
 
         const responseResult = await handleResponse<responseDataType>(response);
-        console.log("responseResult:", responseResult);
+        //console.log("responseResult:", responseResult);
 
         //const resultStatusCode = responseResult.status;
         return responseResult;
@@ -106,7 +108,27 @@ export async function ApiPostMethodObjectDto<DtoType, responseDataType>(url: str
         console.error("Error fetching items:", error);
         //return 500;
     }
+}
 
+export async function ApiPostMethodObjectDto<DtoType, responseDataType>(url: string, objectDto: DtoType): Promise<IApiResponse<responseDataType>> {
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(objectDto)
+        });
+
+        const responseResult = await handleResponse<responseDataType>(response);
+        //console.log("responseResult:", responseResult);
+
+        //const resultStatusCode = responseResult.status;
+        return responseResult;
+
+    }
+    catch (error) {
+        console.error("Error fetching items:", error);
+        //return 500;
+    }
 }
 
 

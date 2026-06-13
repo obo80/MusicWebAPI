@@ -22,12 +22,16 @@
     <None Remove="TypeScript\src\DTO\UserDtos.ts" />
     <None Remove="TypeScript\src\Entities\Album.ts" />
     <None Remove="TypeScript\src\Entities\song.ts" />
+    <None Remove="TypeScript\src\functions\toast.ts" />
     <None Remove="TypeScript\src\pages\subpages\albumIdDetailsSubpage.ts" />
     <None Remove="TypeScript\src\pages\subpages\artistIdDetailsSubpage.ts" />
     <None Remove="TypeScript\src\pages\subpages\sharedDetailsSubpage.ts" />
     <None Remove="TypeScript\src\pages\subpages\songIdDetailsSubpage.ts" />
+    <None Remove="TypeScript\src\pages\subpages\UserRegisterForm.ts" />
     <None Remove="TypeScript\src\pages\user\currentUser.ts" />
     <None Remove="TypeScript\src\pages\user\userButton.ts" />
+    <None Remove="TypeScript\src\pages\user\UserPasswordChangeForm.ts" />
+    <None Remove="TypeScript\src\pages\user\UserUpdateForm.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -41,15 +45,19 @@
     <TypeScriptCompile Include="TypeScript\src\Entities\Album.ts" />
     <TypeScriptCompile Include="TypeScript\src\Entities\Artist.ts" />
     <TypeScriptCompile Include="TypeScript\src\Entities\Song.ts" />
+    <TypeScriptCompile Include="TypeScript\src\functions\toast.ts" />
     <TypeScriptCompile Include="TypeScript\src\pages\homePage.ts" />
     <TypeScriptCompile Include="TypeScript\src\pages\subpages\albumIdDetailsSubpage.ts" />
     <TypeScriptCompile Include="TypeScript\src\pages\subpages\artistIdDetailsSubpage.ts" />
     <TypeScriptCompile Include="TypeScript\src\pages\subpages\sharedDetailsSubpage.ts" />
     <TypeScriptCompile Include="TypeScript\src\pages\subpages\songIdDetailsSubpage.ts" />
+    <TypeScriptCompile Include="TypeScript\src\pages\user\UserPasswordChangeForm.ts" />
+    <TypeScriptCompile Include="TypeScript\src\pages\user\userRegisterForm.ts" />
     <TypeScriptCompile Include="TypeScript\src\pages\user\currentUser.ts" />
     <TypeScriptCompile Include="TypeScript\src\pages\user\userButton.ts" />
     <TypeScriptCompile Include="TypeScript\src\pages\user\userLoginForm.ts" />
     <TypeScriptCompile Include="TypeScript\src\pages\user\userButtonFunctions.ts" />
+    <TypeScriptCompile Include="TypeScript\src\pages\user\userUpdateForm.ts" />
   </ItemGroup>
 
 </Project>
