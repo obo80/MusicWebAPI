@@ -1,5 +1,4 @@
 // toast.ts
-// 1. Główna, uniwersalna funkcja bazowa (wewnętrzna)
 function createToast(message, type, options = {}) {
     var _a;
     const duration = (_a = options.duration) !== null && _a !== void 0 ? _a : 5000;
@@ -10,7 +9,6 @@ function createToast(message, type, options = {}) {
         document.body.appendChild(container);
     }
     const toast = document.createElement('div');
-    // Dynamicznie dodajemy klasy, np. 'toast toast-success' lub 'toast toast-error'
     toast.className = `toast toast-${type}`;
     toast.textContent = message;
     container.appendChild(toast);
@@ -27,7 +25,6 @@ function createToast(message, type, options = {}) {
         });
     }, duration);
 }
-// 2. Eksportujemy wygodne funkcje pomocnicze dla programisty
 export const toast = {
     success: (message, options) => createToast(message, 'success', options),
     error: (message, options) => createToast(message, 'error', options),

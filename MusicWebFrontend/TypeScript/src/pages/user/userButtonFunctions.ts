@@ -1,6 +1,8 @@
-﻿import { CurrentUser } from "./currentUser.js";
+﻿import { toast } from "../../functions/toast.js";
+import { CurrentUser } from "./currentUser.js";
 import { UserLoginForm } from "./userLoginForm.js";
 import { UserPasswordChangeForm } from "./UserPasswordChangeForm.js";
+import { UserRegisterForm } from "./userRegisterForm.js";
 
 export let isUserLoggedIn: boolean = false;
 
@@ -26,12 +28,13 @@ export function changePasswordBtnFunction(): void {
     //implement loggin using session and communiation with api
 }
 
-export function changeSettingsBtnFunction() : void {
+export function changeSettingsBtnFunction(): void {
     //change settings
     //implement loggin using session and communiation with api
 }
 
 export function registerUserBtnFunction(): void {
+    new UserRegisterForm().registerUser();
     //register user
     //implement loggin using session and communiation with api
 }

@@ -29,10 +29,12 @@
     right: 0; /* Wyrównanie rozwijanego menu do prawej krawędzi przycisku */
     top: 100%;
     margin-top: 8px;
-    background-color: #ff9400;
+    background-color: #f1f1f1;
     min-width: 140px;
     box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
     border-radius: 4px;
+    border-color: chocolate;
+    border: 2px;
     list-style: none;
     z-index: 10;
     overflow: hidden;
@@ -57,33 +59,31 @@
     letter-spacing: 0.2px;
 }
 
-.dropdown-content li:hover {/*
-    background-color: #f1f1f1;*/
+.dropdown-content li:hover {
+    background-color: #ebe2dc;
 }
 .pass-change-btn, .user-settings-btn{
     color: blueviolet;
     border-radius: 10px;
 }
     .pass-change-btn:hover, .user-settings-btn:hover {
-        color: blue;
+        color: chocolate;
         border-radius: 10px;
         background-color: #ffebee;
     }
 
 /* Linia oddzielająca (np. przed Wyloguj) */
 .divider {
-    padding: 0;
-    height: 0px;
-    background-color: #ff9400;
-    margin: 4px 0;
-    border: solid 1px;
+    height : 3px;
+    background-color: grey;
+    margin: 12px;
 }
 
 .dropdown-content .logout-btn {
-    color: #d32f2f;
+        color: #d32f2f;
 }
 
     .dropdown-content .logout-btn:hover {
-        background-color: #ffebee;
-        color: #2f41d3;
+        background-color: #ebe2dc;
+        color: chocolate;
     }

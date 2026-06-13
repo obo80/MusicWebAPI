@@ -8,6 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { createDivByClassName } from "../../functions/helpers.js";
+import { toast } from "../../functions/toast.js";
 import { CurrentUser } from "./currentUser.js";
 import { renderUserButton } from "./userButton.js";
 export class UserPasswordChangeForm {
@@ -46,6 +47,7 @@ export class UserPasswordChangeForm {
             const passwordDto = { password: password.value, newPassword: newPassword.value, confirmPassword: confirmPassword.value };
             try {
                 if (newPassword.value !== confirmPassword.value) {
+                    toast.error("Hasła nie pasują do siebie.");
                     errorBox.textContent = "Hasła nie pasują do siebie.";
                     submitButton.disabled = false;
                     //return;
@@ -53,20 +55,23 @@ export class UserPasswordChangeForm {
                 const status = yield CurrentUser.changePasswordCurrentUser(passwordDto);
                 if (status === 200) {
                     changePasswordModal.remove();
-                    alert("Hasło zostało zmienione. Zaloguj się ponownie.");
+                    toast.success("Hasło zostało zmienione.");
+                    // alert("Hasło zostało zmienione. Zaloguj się ponownie.");
                     renderUserButton();
                 }
                 else if (status === 400 || status === 401) {
+                    toast.error("Nieprawidłowe hasło.");
                     errorBox.textContent = `Eroor: ${status}. Nieprawidłowe hasło.`;
                     submitButton.disabled = false;
-                    console.log("ale dalej klikam", confirmPassword.value);
                 }
                 else {
+                    toast.error("Wystąpił błąd serwera.");
                     errorBox.textContent = `Eroor: ${status}. Wystąpił błąd serwera.`;
                     submitButton.disabled = false;
                 }
             }
             catch (err) {
+                toast.error("Wystąpił błąd serwera.");
                 errorBox.textContent = err.message || "Wystąpił błąd serwera.";
                 submitButton.disabled = false;
                 submitButton.textContent = "Potwierdz zmianę hasła";
@@ -119,7 +124,7 @@ export class UserPasswordChangeForm {
         confirmPasswordInput.id = "confirmPassword";
         confirmPasswordInput.required = true;
         changePasswordForm.appendChild(confirmPasswordInput);
-        const loggingFormButtonsContainer = createDivByClassName("login-buttons-container");
+        const loggingFormButtonsContainer = createDivByClassName("user-buttons-container");
         changePasswordForm.appendChild(loggingFormButtonsContainer);
         const confirmButton = document.createElement("button");
         confirmButton.type = "submit";

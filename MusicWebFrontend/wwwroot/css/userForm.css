@@ -1,4 +1,11 @@
-﻿/* Styl dla tła blokującego stronę pod spodem */
+﻿/*Dodaję czerwoną gwiazdkę do labeli przed inputem z required*/
+label:has(+ input[required])::after {
+    content: " *";
+    color: red;
+    font-weight: bold;
+}
+
+/* Styl dla tła blokującego stronę pod spodem */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -51,11 +58,10 @@
         white-space: nowrap;
         transition: all 0.2s ease;
     }
-        .user-form .confirm-btn {
-            background-color: darkgrey;
-            font-weight: bold;
-
-        }
+    .user-form .confirm-btn {
+        background-color: #cfcfcf;
+        font-weight: bold;
+    }
         .user-form .confirm-register-btn {
             width: 80%;
             margin: 10px;
@@ -69,11 +75,11 @@
         justify-content: center;
         align-items: center;
         margin-top: 30px;
-        color: oldlace;
-        background-color: #4800ff;
+        /*        color: oldlace;*/
+        background-color: #eeeeee;
         padding: 10px;
         box-shadow: 1px;
-        border-radius: 8px;
+        border-radius: 5px;
     }
 
     .user-form button:hover {
@@ -99,10 +105,11 @@
     margin-top: 10px;
 }
 
-.login-buttons-container {
+.user-buttons-container {
     display: flex;
     flex-direction: row; /* Układ w poziomie */
     gap: 8px; /* Odstęp między przyciskami */
     margin-top: auto; /* Wypycha cały kontener na sam dół kafelka */
     width: 100%;
 }
+

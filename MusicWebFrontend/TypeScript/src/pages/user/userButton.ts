@@ -1,5 +1,5 @@
 ﻿import { CurrentUser } from "./currentUser.js";
-import { changePasswordBtnFunction, loginUserBtnFunction, logoutUserBtnFunction } from "./userButtonFunctions.js";
+import { changePasswordBtnFunction, changeSettingsBtnFunction, loginUserBtnFunction, logoutUserBtnFunction } from "./userButtonFunctions.js";
 
 export function renderUserButton(): void {
     const userButtonContainer = getUserButtonContainer();
@@ -23,6 +23,7 @@ function createLoginButton(): HTMLDivElement {
     loginButton.classList.add("login-btn");
     loginButton.id = "login-btn";
     loginButton.textContent = "Zaloguj";
+
     loginButton.addEventListener("click", () => {
         // Handle login button click
         loginUserBtnFunction();
@@ -58,8 +59,10 @@ function createUserDropdown(): HTMLDivElement {
     settingsLink.id = "user-settings";
     settingsLink.textContent = "Ustawienia";
     dropdownContent.appendChild(settingsLink);
+
     settingsLink.addEventListener("click", () => {
         // Handle settings link click
+        changeSettingsBtnFunction();
         console.log("Settings link clicked");
         hideDropdown();
     });
@@ -70,6 +73,7 @@ function createUserDropdown(): HTMLDivElement {
     passwordChangeLink.id = "change-password";
     passwordChangeLink.textContent = "Zmień hasło";
     dropdownContent.appendChild(passwordChangeLink);
+
     passwordChangeLink.addEventListener("click", () => {
         // Handle password change link click
         changePasswordBtnFunction();
@@ -78,7 +82,7 @@ function createUserDropdown(): HTMLDivElement {
     });
 
     // Add the divider
-    const divider = document.createElement("li");
+    const divider = document.createElement("div");
     divider.classList.add("divider");
     dropdownContent.appendChild(divider);
 

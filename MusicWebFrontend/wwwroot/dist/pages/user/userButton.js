@@ -1,5 +1,5 @@
 import { CurrentUser } from "./currentUser.js";
-import { changePasswordBtnFunction, loginUserBtnFunction, logoutUserBtnFunction } from "./userButtonFunctions.js";
+import { changePasswordBtnFunction, changeSettingsBtnFunction, loginUserBtnFunction, logoutUserBtnFunction } from "./userButtonFunctions.js";
 export function renderUserButton() {
     const userButtonContainer = getUserButtonContainer();
     const headerTopRight = document.querySelector(".header-top-right");
@@ -53,6 +53,7 @@ function createUserDropdown() {
     dropdownContent.appendChild(settingsLink);
     settingsLink.addEventListener("click", () => {
         // Handle settings link click
+        changeSettingsBtnFunction();
         console.log("Settings link clicked");
         hideDropdown();
     });
@@ -69,7 +70,7 @@ function createUserDropdown() {
         hideDropdown();
     });
     // Add the divider
-    const divider = document.createElement("li");
+    const divider = document.createElement("div");
     divider.classList.add("divider");
     dropdownContent.appendChild(divider);
     // Add the logout button

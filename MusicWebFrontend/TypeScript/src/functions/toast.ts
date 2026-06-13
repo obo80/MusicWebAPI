@@ -7,7 +7,7 @@ interface ToastOptions {
     duration?: number;
 }
 
-// 1. Główna, uniwersalna funkcja bazowa (wewnętrzna)
+
 function createToast(message: string, type: ToastType, options: ToastOptions = {}): void {
     const duration = options.duration ?? 5000;
 
@@ -19,7 +19,6 @@ function createToast(message: string, type: ToastType, options: ToastOptions = {
     }
 
     const toast = document.createElement('div');
-    // Dynamicznie dodajemy klasy, np. 'toast toast-success' lub 'toast toast-error'
     toast.className = `toast toast-${type}`;
     toast.textContent = message;
 
@@ -40,7 +39,7 @@ function createToast(message: string, type: ToastType, options: ToastOptions = {
     }, duration);
 }
 
-// 2. Eksportujemy wygodne funkcje pomocnicze dla programisty
+
 export const toast = {
     success: (message: string, options?: ToastOptions) => createToast(message, 'success', options),
     error: (message: string, options?: ToastOptions) => createToast(message, 'error', options),

@@ -9,8 +9,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import { mainURL } from "../../app.js";
 import { createDivByClassName } from "../../functions/helpers.js";
+import { toast } from "../../functions/toast.js";
 import { CurrentUser } from "./currentUser.js";
 import { renderUserButton } from "./userButton.js";
+import { UserRegisterForm } from "./userRegisterForm.js";
 //let isLoginSuccess: boolean = false;
 export class UserLoginForm {
     constructor() {
@@ -116,6 +118,7 @@ export class UserLoginForm {
     logoutUser() {
         CurrentUser.logoutCurrentUser();
         renderUserButton();
+        toast.info("Wylogowano.");
     }
     createLoginForm() {
         const headerText = "Logowanie";
@@ -145,7 +148,7 @@ export class UserLoginForm {
         passwordInput.id = "password";
         passwordInput.required = true;
         loginForm.appendChild(passwordInput);
-        const loggingFormButtonsContainer = createDivByClassName("login-buttons-container");
+        const loggingFormButtonsContainer = createDivByClassName("user-buttons-container");
         loginForm.appendChild(loggingFormButtonsContainer);
         const loginButton = document.createElement("button");
         loginButton.type = "submit";
@@ -193,6 +196,7 @@ export class UserLoginForm {
             });
             registerButton.addEventListener("click", () => {
                 console.log("Przekierowanie do strony rejestracji.");
+                new UserRegisterForm().registerUser();
                 //new UserPasswordChangeForm().changePassword();
                 //consolelog await metoda do rejestracji w osobnej klasie
                 loginModal.remove();
@@ -207,19 +211,23 @@ export class UserLoginForm {
             try {
                 const responseCode = yield CurrentUser.loginCurrentUser(loginDto);
                 if (responseCode === 200) {
+                    toast.success("Zalogowano.");
                     loginModal.remove();
                     renderUserButton();
                 }
                 else if (responseCode === 400 || responseCode === 401) {
+                    toast.error("Bład logowania. Nieprawidłowy email lub hasło.", { duration: 7000 });
                     errorBox.textContent = `Eroor: ${responseCode}. Nieprawidłowy email lub hasło.`;
                     submitButton.disabled = false;
                 }
                 else {
+                    toast.error("Błąd serwera podczas próby logowania użytkownika.", { duration: 7000 });
                     errorBox.textContent = `Eroor: ${responseCode}. Wystąpił błąd serwera.`;
                     submitButton.disabled = false;
                 }
             }
             catch (err) {
+                toast.error("Błąd serwera podczas próby logowania użytkownika.", { duration: 7000 });
                 errorBox.textContent = err.message || "Wystąpił błąd serwera.";
                 submitButton.disabled = false;
                 submitButton.textContent = "Zaloguj się";
