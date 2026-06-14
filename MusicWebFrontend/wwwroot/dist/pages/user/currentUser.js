@@ -49,7 +49,25 @@ export class CurrentUser {
         this.setTokenInStorage(false);
         console.log(`Użytkownik ${currentUserName} został wylogowany.`);
     }
-
+    // public static async changePasswordCurrentUser_test(changePasswordDto: ChangePasswordDto) {
+    //     return Math.random() < 0.01 ? 200 : Math.random() > 0.5 ? 400 : 401;
+    // }
+    static registerUserCurrentUser(registerUserDto) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const responseData = yield ApiPostMethodObjectDto(registerUrl, registerUserDto);
+                const responseCode = responseData.status;
+                if (responseCode === 201) {
+                    console.log(`Użytkownik ${registerUserDto.name} został zarejestrowany.`);
+                }
+                return responseCode;
+            }
+            catch (error) {
+                console.log("Bład podczas pobierania danych z API", error);
+                return 500;
+            }
+        });
+    }
     static changePasswordCurrentUser(changePasswordDto) {
         return __awaiter(this, void 0, void 0, function* () {
             const currentUser = this._currentUser;

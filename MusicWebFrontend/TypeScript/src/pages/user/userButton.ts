@@ -57,7 +57,7 @@ function createUserDropdown(): HTMLDivElement {
     const settingsLink = document.createElement("li");
     settingsLink.classList.add("user-settings-btn");
     settingsLink.id = "user-settings";
-    settingsLink.textContent = "Ustawienia";
+    settingsLink.textContent = "Ustawienia konta";
     dropdownContent.appendChild(settingsLink);
 
     settingsLink.addEventListener("click", () => {

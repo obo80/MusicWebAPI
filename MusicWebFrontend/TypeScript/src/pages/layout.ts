@@ -1,4 +1,4 @@
-import { createDivByClassName } from "../functions/helpers.js";
+import { createDivByClassName } from "../Utils/helpers.js";
 import { createSvgFromString } from "./createSvgFromString.js";
 import { renderMainPage } from "./homePage.js";
 import { displayAlbumsPage } from "./subpages/albumSubpage.js";

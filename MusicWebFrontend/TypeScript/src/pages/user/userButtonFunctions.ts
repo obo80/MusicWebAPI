@@ -1,4 +1,4 @@
-﻿import { toast } from "../../functions/toast.js";
+﻿import { toast } from "../../Utils/toast.js";
 import { CurrentUser } from "./currentUser.js";
 import { UserLoginForm } from "./userLoginForm.js";
 import { UserPasswordChangeForm } from "./UserPasswordChangeForm.js";

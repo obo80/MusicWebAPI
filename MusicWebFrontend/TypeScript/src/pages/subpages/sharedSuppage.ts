@@ -1,5 +1,5 @@
 import type { ItemDTO } from "../../DTO/ItemsDto.js";
-import { createDivByClassName } from "../../functions/helpers.js";
+import { createDivByClassName } from "../../Utils/helpers.js";
 import { renderDetailsSubpage, renderRatingSubpage } from "./sharedDetailsSubpage.js";
 
 export function createMainContentContainerElement(header: string, subheader: string): HTMLElement {

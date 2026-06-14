@@ -8,23 +8,40 @@ Listy artystów, albumów i utowrów
 
 Panel wyszukiwania i funkcje do obsługi plus CSS.
 
-
 ------	Logowanie użytkownika:
-- naprawić przycisk zaloguj
-- porobić zmiany wyglądu i pól w zależności czy użytkownik jest zalogowany i tego w jakiej jest roli
-- wg roli pododawać dodatkowe opcje
+	- zrobić metody w CurrentUser, które zwracają czy jest w roli kreator i admin
 
+Redirect z danego miejsca w inne
+- chodzi o to aby mozna było używać paska adresu. 
+Czyli aby do adresu był podlink pokazujący gdzie jest aplikacja
+oraz aby zmieniając adres można było wejść w daną strone
+- jeżeli się da to również wstecz i dalej obsłużyć.
 
-Do strony głównej dodać coś w main kontenerze:
-- pierwszy pomysł to 3 kolumny z kilkoma (top10) artysatmi, albumami, piosenkami
-- ale to po zaimplementowaniu szukania
+--Panel użytkownika
+- ma zawierać:
+	-informacje o koncie z możliwością edycji niektórych pól - ikonka ołówka
+	-jeżeli jest kreatorem to div na jakieś odniesienia do edycji elementów - TODO - wymyśleć jak mają wyglądać takie okienka i przekierowanie do edytora
 
+Edycja elementów:
+1) trzy miejsca wejściowe (może jeszcze mi się przypomni)
+	- na liście elementów (np artyści):
+		-dodać i obsłużyć przycisk Dodaj (nowy)
+		- dla każdego elementu dodac przycisk edytuj i usuń - Może zamiast napisów zrobić mały panel z ikonami dla edit i koszem
+	- w konkretnym elemencie dodać przyciski edytuj i usuń (dla całego elementu)
 
-------	Panel użytkownika który jest twrócą i może edytować i tworzyć nowe elementy
-- po zalogowaniu, jężeli użytkownik ma taką rolę to będzie się otwierać panel użytkownika, w którym bedą dostępne te wszystkie opcje
-- jeszcze nie wiem jak to zorganizować - trzeba się przujrzeć co można robić i jakie opcje są potrzebne, wtedy:
-	- zaprojektować stronę takiego panelu
-	- porobić funcjie post, delete i put/patch
+2) sposób edycji - otwieranie okienka ze szczegółami i tam dwie opcje do wyboru dla użytkownika:
+	- edytuj wszystko - zrobić wyskakujące okienko (na zasadzie logowania) które wyświetli odpowiednie labele i inputy do zmiany danych
+	- edycja poszczególnych elementów - także wyskakujące okienko - label nazwa elementu, input na wprowadzenie zmian 
+3) sposób na podelementy (albumy u artysty i utwory w albumie)
+	TODO- obmyśleć jak to zrobić (pamiętaj że album nie istnieje bez artysty, więc można go tylko skasować a nie usunąc z listy artysty)
+
+Sposób implementacji:
+1) Wyskakujące okienko
+	- zrobić jedną klasę która:
+		- będzie tworzyć wspólne okienko edycji i tworzenia elementu dla wszystkich itemów
+		- dodawanie poszczególnych par label i input przekazane w tabeli i dodane pętlą foreach
+		- zrobić klasę pomocniczą fromElements, któa stworzy poszczególe elementy i doda do petli powyżej.
+	- dla każdego typu inputu tworzymy listę elementów do edycji (może po odpowiednim Dto properties)	
 
 
 
@@ -32,3 +49,11 @@ Do strony głównej dodać coś w main kontenerze:
 ZROBIONE:
 - dodać liste albumów i utworów - kafelki podobne do artystów
 - ostylować dodane przyciski
+------	Logowanie użytkownika:
+- naprawić przycisk zaloguj 
+- porobić zmiany wyglądu i pól w zależności czy użytkownik jest zalogowany i tego w jakiej jest roli
+- wg roli pododawać dodatkowe opcje
+
+Do strony głównej dodać coś w main kontenerze:
+- pierwszy pomysł to 3 kolumny z kilkoma (top10) artysatmi, albumami, piosenkami
+- ale to po zaimplementowaniu szukania

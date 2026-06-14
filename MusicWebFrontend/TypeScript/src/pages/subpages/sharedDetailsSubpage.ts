@@ -1,4 +1,4 @@
-﻿import { createDivByClassName } from "../../functions/helpers.js";
+﻿import { createDivByClassName } from "../../Utils/helpers.js";
 import { renderAlbumDetailsPage } from "./albumIdDetailsSubpage.js";
 import { renderArtistDetailsPage } from "./artistIdDetailsSubpage.js";
 import { renderSongDetailsPage } from "./songIdDetailsSubpage.js";

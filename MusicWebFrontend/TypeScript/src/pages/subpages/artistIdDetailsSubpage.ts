@@ -1,8 +1,8 @@
 ﻿import { mainURL } from "../../app.js";
 import { AlbumDto, ArtistDto } from "../../DTO/ItemsDto.js";
 import { Artist } from "../../Entities/Artist.js";
-import { getItemFromApi, getPagedItemsFromApi } from "../../functions/apiCommunication.js";
-import { createDivByClassName } from "../../functions/helpers.js";
+import { getItemFromApi, getPagedItemsFromApi } from "../../Utils/apiCommunication.js";
+import { createDivByClassName } from "../../Utils/helpers.js";
 import { renderAlbumDetailsContainer } from "./albumIdDetailsSubpage.js";
 
 let activeAlbum: HTMLDivElement | null = null;

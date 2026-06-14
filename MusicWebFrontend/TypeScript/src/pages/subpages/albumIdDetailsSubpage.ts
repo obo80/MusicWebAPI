@@ -1,8 +1,8 @@
 ﻿import { mainURL } from "../../app.js";
 import { AlbumDto, SongDto } from "../../DTO/ItemsDto.js";
 import { PagedResultDto } from "../../DTO/PagedResultDto.js";
-import { getItemFromApi, getPagedItemsFromApi } from "../../functions/apiCommunication.js";
-import { createDivByClassName, createLiByClassName} from "../../functions/helpers.js";
+import { getItemFromApi, getPagedItemsFromApi } from "../../Utils/apiCommunication.js";
+import { createDivByClassName, createLiByClassName} from "../../Utils/helpers.js";
 
 
 

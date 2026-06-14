@@ -1,7 +1,7 @@
 import { mainURL } from "../../app.js";
 import { SongDto } from "../../DTO/ItemsDto.js";
-import { getPagedItemsFromApi } from "../../functions/apiCommunication.js";
-import { createDivByClassName } from "../../functions/helpers.js";
+import { getPagedItemsFromApi } from "../../Utils/apiCommunication.js";
+import { createDivByClassName } from "../../Utils/helpers.js";
 import {
         createTileCard,
         createDetailsButtonsDiv, createMainContentContainerElement

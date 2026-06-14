@@ -1,5 +1,5 @@
-﻿import { createDivByClassName } from "../../functions/helpers.js";
-import { toast } from "../../functions/toast.js";
+﻿import { createDivByClassName } from "../../Utils/helpers.js";
+import { toast } from "../../Utils/toast.js";
 import { CurrentUser } from "./currentUser.js";
 import { renderUserButton } from "./userButton.js";
 
@@ -15,7 +15,6 @@ export class UserPasswordChangeForm {
 
     }
     private async changePasswordEventListener(changePasswordModal: HTMLDivElement) {
-        console.log("changePasswordFormHandling", "Method not implemented.");
         const form = changePasswordModal.querySelector("#changePasswordForm") as HTMLFormElement;
         const errorBox = changePasswordModal.querySelector("#errorBox") as HTMLDivElement;
         const submitButton = form.querySelector("#confirmBtn") as HTMLButtonElement;
@@ -32,7 +31,6 @@ export class UserPasswordChangeForm {
     }
     private async changePasswordEventHandler(form: HTMLFormElement, changePasswordModal: HTMLDivElement, errorBox: HTMLDivElement, submitButton: HTMLButtonElement) {
 
-        console.log("changePasswordEventHandler", "Method not implemented.");
         const password = form.querySelector("#password") as HTMLInputElement;
         const newPassword = form.querySelector("#newPassword") as HTMLInputElement;
         const confirmPassword = form.querySelector("#confirmPassword") as HTMLInputElement;
@@ -45,7 +43,7 @@ export class UserPasswordChangeForm {
                 toast.error("Hasła nie pasują do siebie.");
                 errorBox.textContent = "Hasła nie pasują do siebie.";
                 submitButton.disabled = false;
-                //return;
+                return;
             }
             const status = await CurrentUser.changePasswordCurrentUser(passwordDto);
  

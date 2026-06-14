@@ -23,7 +23,6 @@ export class UserPasswordChangeForm {
     }
     changePasswordEventListener(changePasswordModal) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log("changePasswordFormHandling", "Method not implemented.");
             const form = changePasswordModal.querySelector("#changePasswordForm");
             const errorBox = changePasswordModal.querySelector("#errorBox");
             const submitButton = form.querySelector("#confirmBtn");
@@ -39,7 +38,6 @@ export class UserPasswordChangeForm {
     }
     changePasswordEventHandler(form, changePasswordModal, errorBox, submitButton) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log("changePasswordEventHandler", "Method not implemented.");
             const password = form.querySelector("#password");
             const newPassword = form.querySelector("#newPassword");
             const confirmPassword = form.querySelector("#confirmPassword");
@@ -50,7 +48,7 @@ export class UserPasswordChangeForm {
                     toast.error("Hasła nie pasują do siebie.");
                     errorBox.textContent = "Hasła nie pasują do siebie.";
                     submitButton.disabled = false;
-                    //return;
+                    return;
                 }
                 const status = yield CurrentUser.changePasswordCurrentUser(passwordDto);
                 if (status === 200) {

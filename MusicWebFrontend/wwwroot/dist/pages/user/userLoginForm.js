@@ -18,90 +18,6 @@ export class UserLoginForm {
     constructor() {
         this.url = mainURL + "account/login";
         this.isUserCurrentlyLogged = false;
-        //     private async loginEventHandler2(form: HTMLFormElement, loginModal: HTMLDivElement, errorBox: HTMLDivElement, submitButton: HTMLButtonElement) {
-        //         console.log("start event listener dla formy logowania");
-        //         const email = form.querySelector("#email") as HTMLInputElement;
-        //         const password = form.querySelector("#password") as HTMLInputElement;
-        //         const loginDto: LoginDto = { email: email.value, password: password.value };
-        //         let result: boolean = false;
-        //         try {
-        //             const responseData = await ApiPostMethodObjectDto<LoginDto, string>(this.url, loginDto);
-        //             const responseCode = responseData.status;
-        //             //const success = true;
-        //             if (responseCode === 200) {
-        //                 this.isUserCurrentlyLogged = true;
-        //                 console.log("isLoginSuccess", this.isUserCurrentlyLogged);
-        //                 loginModal.remove();
-        //                 CurrentUser.
-        //                 CurrentUser.setAnyUserLoggingStatus(true); // ustawienie wartosci w CurrentUser.
-        //                 renderUserButton();
-        //                 result = true;
-        //             }
-        //             else if (responseCode === 400 || responseCode === 401) {
-        //                 this.isUserCurrentlyLogged = false;
-        //                 errorBox.textContent = `Eroor: ${responseCode}. Nieprawidłowy email lub hasło.`;
-        //                 submitButton.disabled = false;
-        //                 //submitButton.textContent = "Zaloguj się";
-        //             }
-        //             else {
-        //                 this.isUserCurrentlyLogged = false;
-        //                 //submitButton.textContent = "Zaloguj się";;
-        //                 errorBox.textContent = `Eroor: ${responseCode}. Wystąpił błąd serwera.`;
-        //                 submitButton.disabled = false;
-        //                 //submitButton.textContent = "Zaloguj się";
-        //             }
-        //         }
-        //         catch (err: any) {
-        //             errorBox.textContent = err.message || "Wystąpił błąd serwera.";
-        //             submitButton.disabled = false;
-        //             submitButton.textContent = "Zaloguj się";
-        //         }
-        //         //await new Promise(resolve => setTimeout(resolve, 1000)); return result;
-        //     }
-        // }
-        // }
-        // private async loginFormHandling(loginModal: HTMLDivElement): Promise<void> {
-        //     return new Promise((resolve) => {
-        //         const form = loginModal.querySelector("#loginForm") as HTMLFormElement;
-        //         const errorBox = loginModal.querySelector("#errorBox") as HTMLDivElement;
-        //         const submitButton = form.querySelector("#loginBtn") as HTMLButtonElement;
-        //         form.addEventListener("submit", async (e: Event) => {
-        //             e.preventDefault();
-        //             const email = form.querySelector("#email") as HTMLInputElement;
-        //             const password = form.querySelector("#password") as HTMLInputElement;
-        //             const loginDto: LoginDto = { email: email.value, password: password.value };
-        //             try {
-        //                 const responseCode = await loginUserToApi(this.url, loginDto);
-        //                 //const success = true;
-        //                 if (responseCode === 200) {
-        //                     this.isUserCurrentlyLogged = true;
-        //                     console.log("isLoginSuccess", this.isUserCurrentlyLogged);
-        //                     loginModal.remove();
-        //                     resolve();
-        //                     //getUserButtonContainer();
-        //                 }
-        //                 else if (responseCode === 400 || responseCode === 401) {
-        //                     this.isUserCurrentlyLogged = false;
-        //                     errorBox.textContent = `Eroor: ${responseCode}. Nieprawidłowy email lub hasło.`;
-        //                     submitButton.disabled = false;
-        //                     //submitButton.textContent = "Zaloguj się";
-        //                 }
-        //                 else {
-        //                     this.isUserCurrentlyLogged = false
-        //                     //submitButton.textContent = "Zaloguj się";;
-        //                     errorBox.textContent = `Eroor: ${responseCode}. Wystąpił błąd serwera.`;
-        //                     submitButton.disabled = false;
-        //                     //submitButton.textContent = "Zaloguj się";
-        //                 }
-        //             }
-        //             catch (err: any) {
-        //                 errorBox.textContent = err.message || "Wystąpił błąd serwera.";
-        //                 submitButton.disabled = false;
-        //                 submitButton.textContent = "Zaloguj się";
-        //             }
-        //         }, { once: true });
-        //     });
-        // }
     }
     loginUser() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -109,12 +25,8 @@ export class UserLoginForm {
             yield this.loginFormEventListener(loginModal);
             const pageWrapper = document.body.querySelector(".page-wrapper");
             pageWrapper.appendChild(loginModal);
-            //return this.isUserCurrentlyLogged;
         });
     }
-    // public getLoginSuccessInfo(): boolean {
-    //     return this.isUserCurrentlyLogged;
-    // }
     logoutUser() {
         CurrentUser.logoutCurrentUser();
         renderUserButton();
@@ -197,8 +109,6 @@ export class UserLoginForm {
             registerButton.addEventListener("click", () => {
                 console.log("Przekierowanie do strony rejestracji.");
                 new UserRegisterForm().registerUser();
-                //new UserPasswordChangeForm().changePassword();
-                //consolelog await metoda do rejestracji w osobnej klasie
                 loginModal.remove();
             });
         });
@@ -232,7 +142,6 @@ export class UserLoginForm {
                 submitButton.disabled = false;
                 submitButton.textContent = "Zaloguj się";
             }
-            //await new Promise(resolve => setTimeout(resolve, 1000)); return result;
         });
     }
 }

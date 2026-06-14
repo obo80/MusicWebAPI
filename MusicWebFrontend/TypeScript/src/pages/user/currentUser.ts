@@ -1,6 +1,6 @@
 ﻿//import { mainURL } from "../../app.js";
-import { ChangePasswordDto, LoginDto, UserDto } from "../../DTO/UserDtos.js";
-import { ApiGetMethodObjectDtoWithAuthorization, ApiPostMethodObjectDto, ApiPostMethodObjectDtoWithAuthorization } from "../../functions/apiCommunication.js";
+import { ChangePasswordDto, LoginDto, RegisterUserDto, UserDto } from "../../DTO/UserDtos.js";
+import { ApiGetMethodObjectDtoWithAuthorization, ApiPostMethodObjectDto, ApiPostMethodObjectDtoWithAuthorization, IApiResponse } from "../../Utils/apiCommunication.js";
 
 //const currentmainURL = mainURL;
 
@@ -13,8 +13,6 @@ const currentUserUrl = accountUrl + "/me";
 
 
 export class CurrentUser {
-
-
     id: number;
     name: string;
     firstName?: string;
@@ -68,6 +66,22 @@ export class CurrentUser {
     // public static async changePasswordCurrentUser_test(changePasswordDto: ChangePasswordDto) {
     //     return Math.random() < 0.01 ? 200 : Math.random() > 0.5 ? 400 : 401;
     // }
+
+    public static async registerUserCurrentUser(registerUserDto: RegisterUserDto): Promise<number>{
+        try {
+            const responseData = await ApiPostMethodObjectDto<RegisterUserDto, UserDto>(registerUrl, registerUserDto);
+            const responseCode = responseData.status;
+            if (responseCode === 201) {
+                console.log(`Użytkownik ${registerUserDto.name} został zarejestrowany.`);
+            }
+            return responseCode;
+        } catch (error) {
+            console.log("Bład podczas pobierania danych z API", error);
+            return 500;
+        }
+
+    }
+
 
     public static async changePasswordCurrentUser(changePasswordDto: ChangePasswordDto) {
         const currentUser = this._currentUser;

@@ -1,4 +1,4 @@
-﻿import { getPagedItemsFromApi } from "../../functions/apiCommunication.js";
+﻿import { getPagedItemsFromApi } from "../../Utils/apiCommunication.js";
 import type { ArtistDto } from "../../DTO/ItemsDto.js";
 import {createDetailsButtonsDiv,
         createMainContentContainerElement,

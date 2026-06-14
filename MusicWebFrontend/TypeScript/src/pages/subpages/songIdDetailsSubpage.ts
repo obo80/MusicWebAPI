@@ -1,7 +1,7 @@
 ﻿import { mainURL } from "../../app.js";
 import { SongDto } from "../../DTO/ItemsDto.js";
-import { getItemFromApi } from "../../functions/apiCommunication.js";
-import { createDivByClassName } from "../../functions/helpers.js";
+import { getItemFromApi } from "../../Utils/apiCommunication.js";
+import { createDivByClassName } from "../../Utils/helpers.js";
 
 
 
