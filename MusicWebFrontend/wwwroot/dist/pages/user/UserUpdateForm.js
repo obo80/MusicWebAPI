@@ -14,4 +14,4 @@ export class UserUpdateForm {
         });
     }
 }
-//# sourceMappingURL=UserUpdateForm.js.map
+//# sourceMappingURL=userUpdateForm.js.map

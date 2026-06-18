@@ -7,7 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { ApiGetMethodObjectDtoWithAuthorization, ApiPostMethodObjectDto, ApiPostMethodObjectDtoWithAuthorization } from "../../functions/apiCommunication.js";
+import { ApiGetMethodObjectDtoWithAuthorization, ApiPostMethodObjectDto, ApiPostMethodObjectDtoWithAuthorization } from "../../Utils/apiCommunication.js";
 //const currentmainURL = mainURL;
 const mainURL = 'https://localhost:7192/api/';
 const accountUrl = mainURL + "account";
@@ -145,6 +145,14 @@ export class CurrentUser {
     }
     static getUserLoggingStatus() {
         return this._currentUser !== null;
+    }
+    static isCurrentUserAdmin() {
+        var _a;
+        return ((_a = this._currentUser) === null || _a === void 0 ? void 0 : _a.roleId) === 3;
+    }
+    static isCurrentUserCreator() {
+        var _a, _b;
+        return ((_a = this._currentUser) === null || _a === void 0 ? void 0 : _a.roleId) === 2 || ((_b = this._currentUser) === null || _b === void 0 ? void 0 : _b.roleId) === 3;
     }
     static getCurrentUser() {
         const currentUser = this._currentUser;

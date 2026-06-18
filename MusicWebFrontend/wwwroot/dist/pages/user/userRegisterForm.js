@@ -7,8 +7,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { createDivByClassName } from "../../functions/helpers.js";
-import { toast } from "../../functions/toast.js";
+import { createDivByClassName } from "../../Utils/helpers.js";
+import { toast } from "../../Utils/toast.js";
 import { CurrentUser } from "./currentUser.js";
 import { UserLoginForm } from "./userLoginForm.js";
 export class UserRegisterForm {

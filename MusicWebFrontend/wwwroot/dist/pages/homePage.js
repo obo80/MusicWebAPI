@@ -5,7 +5,7 @@ export const renderMainPage = () => {
     const subhader = `<div class="subheader"><p>Witaj w naszej aplikacji muzycznej!</p>
                         <p> Na tej stronie znajdziesz informacje o artystach, albumach i utworach.</p>
                         <p>Kliknij na odpowiednią sekcję w menu, aby rozpocząć eksplorację naszej biblioteki muzycznej.</p></div>`;
-    const mainContentContainer = createMainContentContainerElement(header, subhader);
+    const mainContentContainer = createMainContentContainerElement(header, subhader, null);
     const bodyElement = document.querySelector("body");
     const newPageWrapper = createLayout(header, subhader);
     if (bodyElement) {

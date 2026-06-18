@@ -8,8 +8,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { mainURL } from "../../app.js";
-import { getPagedItemsFromApi } from "../../functions/apiCommunication.js";
-import { createDivByClassName } from "../../functions/helpers.js";
+import { getPagedItemsFromApi } from "../../Utils/apiCommunication.js";
+import { createDivByClassName } from "../../Utils/helpers.js";
 import { createTileCard, createDetailsButtonsDiv, createMainContentContainerElement } from "./sharedSuppage.js";
 export function createAlbumCard(albumDto) {
     const cardTile = createTileCard(albumDto);
@@ -56,7 +56,7 @@ export const displayAlbumsPage = () => __awaiter(void 0, void 0, void 0, functio
     const subheader = `<p>Ta strona zawiera listę albumów, które są dostępne w naszej bibliotece.</p>
     <p>Wybierz album, aby dowiedzieć się wiecej.</p>`;
     let mainContent = document.querySelector(".main-content");
-    const newMainContent = createMainContentContainerElement(header, subheader);
+    const newMainContent = createMainContentContainerElement(header, subheader, "album");
     const TilesGrid = newMainContent.querySelector(".tiles-grid");
     const padedResult = yield getPagedItemsFromApi(mainURL + "album");
     if (!padedResult) {

@@ -2,6 +2,7 @@
 import { LoginDto } from "../../DTO/UserDtos.js";
 import { createDivByClassName } from "../../Utils/helpers.js";
 import { toast } from "../../Utils/toast.js";
+import { renderMainPage } from "../homePage.js";
 import { CurrentUser } from "./currentUser.js";
 import { renderUserButton } from "./userButton.js";
 import { UserRegisterForm } from "./userRegisterForm.js";
@@ -32,6 +33,7 @@ export class UserLoginForm
         CurrentUser.logoutCurrentUser();
         renderUserButton();
         toast.info("Wylogowano.");
+        renderMainPage();
     }
 
 
@@ -148,6 +150,7 @@ export class UserLoginForm
                 toast.success("Zalogowano.");
                 loginModal.remove();                
                 renderUserButton();
+                renderMainPage();
             }
             else if (responseCode === 400 || responseCode === 401) {
                 toast.error("Bład logowania. Nieprawidłowy email lub hasło.", { duration: 7000 });

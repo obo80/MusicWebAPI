@@ -3,10 +3,8 @@ import { renderAlbumDetailsPage } from "./albumIdDetailsSubpage.js";
 import { renderArtistDetailsPage } from "./artistIdDetailsSubpage.js";
 import { renderSongDetailsPage } from "./songIdDetailsSubpage.js";
 
-type ItemType = "artist" | "album" | "song";
+export type ItemType = "artist" | "album" | "song" | null;
 export function renderDetailsSubpage(id: number, itemType: ItemType) {
-
-
     console.log("renderDetailsSubpage");
     createItemDetaisTemplateInMainContent();
 
@@ -28,6 +26,70 @@ export function renderDetailsSubpage(id: number, itemType: ItemType) {
 
         default:
             console.error(`Nieobsługiwany typ: ${itemType}`);
+    }
+}
+
+
+export function renderEditItemSubpage(id: number, itemType: ItemType) {
+    switch (itemType) {
+        case "artist":
+            
+            console.log("Edycja szczegółów artysty o id:", id);
+            break;
+
+        case "album":
+            
+            console.log("Edycja szczegółów albumu o id:", id);
+            break;
+
+        case "song":
+            
+            console.log("Edycja szczegółów utworu o id:", id);
+            break;
+
+        default:
+            console.error(`Nieobsługiwany typ: ${itemType}`);
+    }
+}
+
+export function renderCreateItemSubpage(itemType: ItemType) {
+    switch (itemType) {
+        case "artist":
+
+            console.log("Tworzenie nowego artysty");
+            break;
+
+        case "album":
+
+            console.log("Tworzenie nowego albumu");
+            break;
+
+        case "song":
+
+            console.log("Tworzenie nowego utworu");
+            break;
+
+        default:
+            console.error(`Nieobsługiwany typ: ${itemType}`);
+    }
+}
+export function renderDeleteItemSubpage(id: number, itemType: ItemType) {
+    switch (itemType) {
+        case "artist":
+            console.log("Usuwanie artysty o id:", id);
+            break;
+
+        case "album":
+            console.log("Usuwanie albumu o id:", id);
+            break;
+
+        case "song":
+            console.log("Usuwanie utworu o id:", id);
+            break;
+
+        default:
+            console.error(`Nieobsługiwany typ: ${itemType}`);
+
     }
 }
 

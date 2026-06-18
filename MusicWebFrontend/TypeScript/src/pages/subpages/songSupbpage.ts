@@ -68,7 +68,7 @@ export const displaySongsPage = async () => {
     <p>Wybierz utwór, aby dowiedzieć się wiecej.</p>`;
 
     let mainContent = document.querySelector(".main-content") as HTMLElement;
-    const newMainContent = createMainContentContainerElement(header, subheader);
+    const newMainContent = createMainContentContainerElement(header, subheader,"song");
 
     const TilesGrid = newMainContent.querySelector(".tiles-grid") as HTMLElement;
     const padedResult = await getPagedItemsFromApi(mainURL + "song");

@@ -8,8 +8,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { mainURL } from "../../app.js";
-import { getItemFromApi } from "../../functions/apiCommunication.js";
-import { createDivByClassName, createLiByClassName } from "../../functions/helpers.js";
+import { getItemFromApi } from "../../Utils/apiCommunication.js";
+import { createDivByClassName, createLiByClassName } from "../../Utils/helpers.js";
 export function renderAlbumDetailsPage(albumId) {
     return __awaiter(this, void 0, void 0, function* () {
         const mainDetailsContainer = document.querySelector(".main-details-container");

@@ -64,7 +64,7 @@ export const displayAlbumsPage = async () => {
     <p>Wybierz album, aby dowiedzieć się wiecej.</p>`;
 
     let mainContent = document.querySelector(".main-content") as HTMLElement;   
-    const newMainContent = createMainContentContainerElement(header, subheader);
+    const newMainContent = createMainContentContainerElement(header, subheader, "album");
     
     const TilesGrid = newMainContent.querySelector(".tiles-grid") as HTMLElement;
     const padedResult = await getPagedItemsFromApi(mainURL + "album");

@@ -7,7 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { getPagedItemsFromApi } from "../../functions/apiCommunication.js";
+import { getPagedItemsFromApi } from "../../Utils/apiCommunication.js";
 import { createDetailsButtonsDiv, createMainContentContainerElement, createTileCard } from "./sharedSuppage.js";
 import { mainURL } from "../../app.js";
 export function createArtistCard(artistDto) {
@@ -47,7 +47,7 @@ export const displayArtistsPage = () => __awaiter(void 0, void 0, void 0, functi
     const subheader = `<p>Ta strona zawiera listę artystów, którzy są dostępni w naszej bibliotece.</p>
     <p>Wybierz artystę, aby dowiedzieć się wiecej.</p>`;
     let mainContent = document.querySelector(".main-content");
-    const newMainContent = createMainContentContainerElement(header, subheader);
+    const newMainContent = createMainContentContainerElement(header, subheader, "artist");
     const TilesGrid = newMainContent.querySelector(".tiles-grid");
     const padedResult = yield getPagedItemsFromApi(mainURL + "artist");
     if (!padedResult) {

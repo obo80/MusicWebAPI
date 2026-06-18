@@ -3,7 +3,7 @@
     display: grid;
     padding: 20px 0;
     /* Tworzy kolumny o szerokości min 280px, automatycznie mieszczące się w oknie */
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     gap: 20px; /* Odstępy między kafelkami */
     width: 100%;
 }
@@ -19,6 +19,7 @@
     transition: box-shadow 0.3s, transform 0.2s;
     /* Ważne dla układu: kafelek dopasowuje wysokość do zawartości */
     align-self: start;
+    min-width: 300px;
 }
 
 .tile-card:hover {
@@ -124,6 +125,7 @@
     width: 100%;
 }
 .btn-detail {
+    position: relative;
     flex: 1; /* Każdy przycisk ma identyczną szerokość */
     padding: 10px 8px;
     border: 1px solid #bfc9d9; /* Subtelna, jasnoszara ramka */
@@ -147,3 +149,51 @@
         border-color: #6b7280; /* Jeszcze ciemniejsza ramka */
         color: #111827; /* Utrzymanie ciemnego tekstu */
     }
+.top-buttons-container {
+    /*display: flex;
+    flex-direction: row;*/ /* Układ w poziomie */
+    /*gap: 8px;*/ /* Odstęp między przyciskami */
+    /*margin-top: auto;*/ /* Wypycha cały kontener na sam dół kafelka */
+    /*width: 100%;*/
+}
+
+.btn-new-item {
+    padding: 10px 16px;
+    margin-top: 20px;
+    min-width: 120px;
+    font-size: large;
+    background-color: orange;
+    font-weight: bolder;
+}
+/* Tworzenie tooltipa przy użyciu pseudoelementu ::after */
+.has-tooltip::after {
+    content: attr(data-tooltip); /* Pobiera tekst z atrybutu HTML */
+    position: absolute;
+    bottom: 125%; /* Pokazuje tooltip nad przyciskiem */
+    left: 50%;
+    transform: translateX(-50%) scale(0.9); /* Wyśrodkowanie i delikatne zmniejszenie */
+    /* Wygląd dymka */
+    background-color: #555;
+    color: #ffffff;
+    padding: 8px 7px;
+    font-family: sans-serif;
+    font-size: 12px;
+    line-height: 1.4;
+    /*white-space: nowrap;*/ /* Zapobiega łamaniu tekstu */
+    white-space: normal; /* Pozwala na łamanie tekstu do nowej linii */
+    width: max-content; /* Dopasowuje szerokość do tekstu, ale... */
+    max-width: 100px; /* ...blokuje szerokość na max 200px i wtedy łamie linię */
+    text-align: center; /* Estetyczne wyśrodkowanie tekstu wewnątrz dymka */
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    /* Ukrycie tooltipa na starcie */
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.15s ease-in-out;
+}
+
+/* Pokazanie tooltipa po najechaniu myszką */
+.has-tooltip:hover::after {
+  opacity: 1;
+  transform: translateX(-50%) scale(1); /* Płynne powiększenie do normalnego rozmiaru */
+}

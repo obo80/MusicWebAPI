@@ -53,7 +53,7 @@ export const displayArtistsPage = async () => {
     <p>Wybierz artystę, aby dowiedzieć się wiecej.</p>`;
 
     let mainContent = document.querySelector(".main-content") as HTMLElement;
-    const newMainContent = createMainContentContainerElement(header, subheader);
+    const newMainContent = createMainContentContainerElement(header, subheader, "artist");
 
     const TilesGrid = newMainContent.querySelector(".tiles-grid") as HTMLElement;
     const padedResult = await getPagedItemsFromApi(mainURL + "artist");

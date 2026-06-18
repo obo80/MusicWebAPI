@@ -162,6 +162,14 @@ export class CurrentUser {
         return this._currentUser !== null;
     }
 
+    public static isCurrentUserAdmin(): boolean {
+        return this._currentUser?.roleId === 3;
+    }
+
+    public static isCurrentUserCreator(): boolean {
+        return this._currentUser?.roleId === 2 || this._currentUser?.roleId === 3;
+    }
+
     public static getCurrentUser(): CurrentUser | null {
         const currentUser = this._currentUser;
         //console.log(`Użytkownik ${currentUser?.name} został wyświetlony w konsoli.`);

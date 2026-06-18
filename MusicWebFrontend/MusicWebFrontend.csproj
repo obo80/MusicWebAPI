@@ -22,6 +22,7 @@
     <None Remove="TypeScript\src\DTO\UserDtos.ts" />
     <None Remove="TypeScript\src\Entities\Album.ts" />
     <None Remove="TypeScript\src\Entities\song.ts" />
+    <None Remove="TypeScript\src\Utils\sharedSVgIcons.ts" />
     <None Remove="TypeScript\src\Utils\toast.ts" />
     <None Remove="TypeScript\src\pages\subpages\albumIdDetailsSubpage.ts" />
     <None Remove="TypeScript\src\pages\subpages\artistIdDetailsSubpage.ts" />
@@ -45,6 +46,8 @@
     <TypeScriptCompile Include="TypeScript\src\Entities\Album.ts" />
     <TypeScriptCompile Include="TypeScript\src\Entities\Artist.ts" />
     <TypeScriptCompile Include="TypeScript\src\Entities\Song.ts" />
+    <TypeScriptCompile Include="TypeScript\src\pages\creatorForms\ItemSharedForm.ts" />
+    <TypeScriptCompile Include="TypeScript\src\Utils\sharedSVgIcons.ts" />
     <TypeScriptCompile Include="TypeScript\src\Utils\toast.ts" />
     <TypeScriptCompile Include="TypeScript\src\pages\homePage.ts" />
     <TypeScriptCompile Include="TypeScript\src\pages\subpages\albumIdDetailsSubpage.ts" />

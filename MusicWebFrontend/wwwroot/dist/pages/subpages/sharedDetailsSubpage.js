@@ -1,4 +1,4 @@
-import { createDivByClassName } from "../../functions/helpers.js";
+import { createDivByClassName } from "../../Utils/helpers.js";
 import { renderAlbumDetailsPage } from "./albumIdDetailsSubpage.js";
 import { renderArtistDetailsPage } from "./artistIdDetailsSubpage.js";
 import { renderSongDetailsPage } from "./songIdDetailsSubpage.js";
@@ -17,6 +17,51 @@ export function renderDetailsSubpage(id, itemType) {
         case "song":
             renderSongDetailsPage(id);
             console.log("Wyświetlanie szczegółów utworu o id:", id);
+            break;
+        default:
+            console.error(`Nieobsługiwany typ: ${itemType}`);
+    }
+}
+export function renderEditItemSubpage(id, itemType) {
+    switch (itemType) {
+        case "artist":
+            console.log("Edycja szczegółów artysty o id:", id);
+            break;
+        case "album":
+            console.log("Edycja szczegółów albumu o id:", id);
+            break;
+        case "song":
+            console.log("Edycja szczegółów utworu o id:", id);
+            break;
+        default:
+            console.error(`Nieobsługiwany typ: ${itemType}`);
+    }
+}
+export function renderCreateItemSubpage(itemType) {
+    switch (itemType) {
+        case "artist":
+            console.log("Tworzenie nowego artysty");
+            break;
+        case "album":
+            console.log("Tworzenie nowego albumu");
+            break;
+        case "song":
+            console.log("Tworzenie nowego utworu");
+            break;
+        default:
+            console.error(`Nieobsługiwany typ: ${itemType}`);
+    }
+}
+export function renderDeleteItemSubpage(id, itemType) {
+    switch (itemType) {
+        case "artist":
+            console.log("Usuwanie artysty o id:", id);
+            break;
+        case "album":
+            console.log("Usuwanie albumu o id:", id);
+            break;
+        case "song":
+            console.log("Usuwanie utworu o id:", id);
             break;
         default:
             console.error(`Nieobsługiwany typ: ${itemType}`);

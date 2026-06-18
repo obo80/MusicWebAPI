@@ -1,121 +1,115 @@
-﻿export type abc = {
-
-}
-export class itemsForm {
-    private formFields: formField[] = [];
-    private formClassName: string | null;
-    private id: string | null;
-
-    constructor(formFields: formField[], formClassName: string | null, id: string | null) {
+import { createDivByClassName } from "../../Utils/helpers.js";
+export class itemSharedForm {
+    constructor(formFields, formClassName, id) {
+        this.formFields = [];
         this.formFields = formFields;
         this.formClassName = formClassName;
         this.id = id;
     }
-
-    renderForm(onSave: () => void, onCancel: () => void): HTMLFormElement {
-        const form = this.createForm();
+    renderArtistForm(headerText, onSave, onCancel) {
+        //const headerText = "Edytuj artystę";
+        const modalContainer = this.createModalOverlayContainer(headerText);
+        document.body.appendChild(modalContainer);
+        const form = modalContainer.querySelector("form");
         this.addEventListeners(form, onSave, onCancel);
-        return form;
     }
-
-    private createForm(): HTMLFormElement {
+    renderAlbumForm(headerText, onSave, onCancel) {
+        const modalContainer = this.createModalOverlayContainer(headerText);
+        document.body.appendChild(modalContainer);
+        const form = modalContainer.querySelector("form");
+        this.addEventListeners(form, onSave, onCancel);
+    }
+    createModalOverlayContainer(headerText) {
+        const overlay = createDivByClassName("modal-overlay");
+        const modalContent = createDivByClassName("modal-content");
+        const modalHeader = document.createElement("h2");
+        modalHeader.textContent = headerText;
+        modalContent.appendChild(modalHeader);
+        const topContainer = createDivByClassName("top-container");
+        topContainer.style.display = "none";
+        modalContent.appendChild(topContainer);
+        topContainer.style.height = "80px";
+        topContainer.style.backgroundColor = "yellow";
+        topContainer.textContent = "placeholder dla wyboru artysty i albumu";
+        //form for dynamic items
+        const form = this.createForm();
+        modalContent.appendChild(form);
+        overlay.appendChild(modalContent);
+        return overlay;
+    }
+    createForm() {
         const form = document.createElement("form");
         if (this.formClassName)
             form.className = this.formClassName;
         if (this.id)
             form.id = this.id;
-
         //append items
         this.formFields.forEach(field => {
             form.appendChild(field.createformFieldDiv());
         });
-
         const buttonsContainer = this.createButtonsContainer();
         form.appendChild(buttonsContainer);
-
         return form;
     }
-    private addEventListeners(form: HTMLFormElement, onSave: () => void, onCancel: () => void) {
+    addEventListeners(form, onSave, onCancel) {
         const confirmButton = form.querySelector("#confirmBtn");
         const cancelButton = form.querySelector("#cancelBtn");
-
         if (confirmButton) {
             confirmButton.addEventListener("click", (event) => {
                 event.preventDefault();
                 this.updateFieldsValue(form);
-
                 onSave();
-                });
+            });
         }
-
-        form.qu
-
+        //form.qu
         if (cancelButton) {
             cancelButton.addEventListener("click", (event) => {
                 event.preventDefault();
-
                 onCancel();
-                });
+            });
         }
     }
-
-    private updateFieldsValue(form: HTMLFormElement) {
+    updateFieldsValue(form) {
         console.log("Getting updated data...");
         this.formFields.forEach(field => {
-            const div = form.querySelector(`#${field.fieldId}`) as HTMLDivElement;
+            const div = form.querySelector(`#${field.fieldId}`);
             if (div) {
-                const input = div.querySelector("input") as HTMLInputElement;
+                const input = div.querySelector("input");
                 if (input) {
                     field.fieldValue = input.value;
                 }
             }
         });
     }
-
-
-    private createButtonsContainer(): HTMLDivElement {
+    createButtonsContainer() {
         const buttonsContainer = document.createElement("div");
         buttonsContainer.className = "form-buttons-container";
-
         const confirmButton = document.createElement("button");
         confirmButton.type = "submit";
         confirmButton.classList.add("confirm-btn");
         confirmButton.id = "confirmBtn";
         confirmButton.textContent = "Zapisz";
         buttonsContainer.appendChild(confirmButton);
-
         const cancelButton = document.createElement("button");
         cancelButton.type = "button";
         cancelButton.classList.add("cancel-btn");
         cancelButton.id = "cancelBtn";
         cancelButton.textContent = "Anuluj";
         buttonsContainer.appendChild(cancelButton);
-
         return buttonsContainer;
     }
 }
-
-
 export class formField {
-    private _fieldId: string;
-    private _isBiggerField: boolean;
-    private _labelText: string;
-    private _inputType: "text" | "password" | "email" | "number" | "date" | "checkbox" | "radio" | "textarea" | "select";
-    private _inputId: string;
-    private _fieldValue: string | null;
-    private _required: boolean;
-
-    get fieldId(): string {
+    get fieldId() {
         return this._fieldId;
     }
-    get fieldValue(): string | null {
+    get fieldValue() {
         return this._fieldValue;
     }
-    set fieldValue(value: string | null) {
+    set fieldValue(value) {
         this._fieldValue = value;
     }
-
-    constructor(fieldId: string, isBiggerField: boolean, labelText: string, inputType: "text" | "password" | "email" | "number" | "date" | "checkbox" | "radio" | "textarea" | "select", inputId: string, fieldValue: string | null, required: boolean) {
+    constructor(fieldId, isBiggerField, labelText, inputType, inputId, fieldValue, required) {
         this._fieldId = fieldId;
         this._isBiggerField = isBiggerField;
         this._labelText = labelText;
@@ -124,8 +118,7 @@ export class formField {
         this._fieldValue = fieldValue;
         this._required = required;
     }
-
-    createformFieldDiv(): HTMLDivElement {
+    createformFieldDiv() {
         const div = document.createElement("div");
         div.className = this._isBiggerField ? "big-form-field" : "form-field";
         div.id = this._fieldId;
@@ -135,19 +128,16 @@ export class formField {
         const input = document.createElement("input");
         input.type = this._inputType;
         input.id = this._inputId;
-
         if (this._fieldValue)
             input.value = this._fieldValue;
         if (this._required)
-            input.required = true;        
-        
+            input.required = true;
         div.appendChild(label);
         div.appendChild(input);
         return div;
     }
-
-    returnUpdatedFormField(): formField {
+    returnUpdatedFormField() {
         return new formField(this._fieldId, this._isBiggerField, this._labelText, this._inputType, this._inputId, this._fieldValue, this._required);
     }
 }
-
+//# sourceMappingURL=ItemSharedForm.js.map

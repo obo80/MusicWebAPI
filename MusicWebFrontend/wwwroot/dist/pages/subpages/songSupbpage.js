@@ -8,8 +8,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { mainURL } from "../../app.js";
-import { getPagedItemsFromApi } from "../../functions/apiCommunication.js";
-import { createDivByClassName } from "../../functions/helpers.js";
+import { getPagedItemsFromApi } from "../../Utils/apiCommunication.js";
+import { createDivByClassName } from "../../Utils/helpers.js";
 import { createTileCard, createDetailsButtonsDiv, createMainContentContainerElement } from "./sharedSuppage.js";
 export function createSongCard(songDto) {
     const cardTile = createTileCard(songDto);
@@ -58,7 +58,7 @@ export const displaySongsPage = () => __awaiter(void 0, void 0, void 0, function
     const subheader = `<p>Ta strona zawiera listę utworów, które są dostępne w naszej bibliotece.</p>
     <p>Wybierz utwór, aby dowiedzieć się wiecej.</p>`;
     let mainContent = document.querySelector(".main-content");
-    const newMainContent = createMainContentContainerElement(header, subheader);
+    const newMainContent = createMainContentContainerElement(header, subheader, "song");
     const TilesGrid = newMainContent.querySelector(".tiles-grid");
     const padedResult = yield getPagedItemsFromApi(mainURL + "song");
     if (!padedResult) {
