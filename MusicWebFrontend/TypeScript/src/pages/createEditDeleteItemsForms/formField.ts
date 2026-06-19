@@ -78,5 +78,12 @@ export class formField {
         payload[field.fieldId] = value;
     })
     return payload;
-};
+    };
+
+    public static getFormFieldsFromDto<T>(dto: T, formFields: formField[]) {
+        formFields.forEach(field => {
+            const value = dto[field.fieldId] as formfieldValue;
+            field.fieldValue = value? value.toString(): null;
+        });
+    }
 }

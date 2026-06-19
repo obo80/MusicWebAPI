@@ -65,5 +65,11 @@ export class formField {
         return payload;
     }
     ;
+    static getFormFieldsFromDto(dto, formFields) {
+        formFields.forEach(field => {
+            const value = dto[field.fieldId];
+            field.fieldValue = value ? value.toString() : null;
+        });
+    }
 }
 //# sourceMappingURL=formField.js.map

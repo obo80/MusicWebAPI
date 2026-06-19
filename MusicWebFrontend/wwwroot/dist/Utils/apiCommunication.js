@@ -17,7 +17,6 @@ export function getPagedItemsFromApi(url) {
             }
             const data = yield response.json();
             console.log(`Data fetched from ${url}:`);
-            // console.log("A dane to:", data);
             return data;
         }
         catch (error) {
@@ -36,7 +35,6 @@ export function getItemFromApi(url) {
             }
             const data = yield response.json();
             console.log(`Data fetched from ${url}:`);
-            // console.log("A dane to:", data);
             return data;
         }
         catch (error) {
@@ -60,31 +58,26 @@ export function ApiGetMethodObjectDtoWithAuthorization(url, token) {
         }
         catch (error) {
             console.error("Error fetching items:", error);
-            //return 500;
         }
     });
 }
-export function loginUserToApi(url, loginDto) {
+export function ApiPutMethodObjectDtoWithAuthorization(url, objectDto, token) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const response = yield fetch(url, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(loginDto)
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(objectDto)
             });
             const responseResult = yield handleResponse(response);
-            const resultStatusCode = responseResult.status;
-            if (resultStatusCode === 200) {
-                localStorage.setItem("token", responseResult.data);
-                return 200;
-            }
-            else {
-                return resultStatusCode;
-            }
+            return responseResult;
         }
         catch (error) {
             console.error("Error fetching items:", error);
-            return 500;
+            //return 500;
         }
     });
 }
@@ -100,13 +93,10 @@ export function ApiPostMethodObjectDtoWithAuthorization(url, objectDto, token) {
                 body: JSON.stringify(objectDto)
             });
             const responseResult = yield handleResponse(response);
-            //console.log("responseResult:", responseResult);
-            //const resultStatusCode = responseResult.status;
             return responseResult;
         }
         catch (error) {
             console.error("Error fetching items:", error);
-            //return 500;
         }
     });
 }
@@ -119,8 +109,6 @@ export function ApiPostMethodObjectDto(url, objectDto) {
                 body: JSON.stringify(objectDto)
             });
             const responseResult = yield handleResponse(response);
-            //console.log("responseResult:", responseResult);
-            //const resultStatusCode = responseResult.status;
             return responseResult;
         }
         catch (error) {
@@ -147,6 +135,30 @@ function handleResponse(rawResponse) {
             headers: rawResponse.headers,
             data: data
         };
+    });
+}
+export function loginUserToApi(url, loginDto) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const response = yield fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(loginDto)
+            });
+            const responseResult = yield handleResponse(response);
+            const resultStatusCode = responseResult.status;
+            if (resultStatusCode === 200) {
+                localStorage.setItem("token", responseResult.data);
+                return 200;
+            }
+            else {
+                return resultStatusCode;
+            }
+        }
+        catch (error) {
+            console.error("Error fetching items:", error);
+            return 500;
+        }
     });
 }
 //# sourceMappingURL=apiCommunication.js.map

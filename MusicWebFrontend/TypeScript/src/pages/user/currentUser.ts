@@ -167,7 +167,7 @@ export class CurrentUser {
     }
 
     public static isCurrentUserCreator(): boolean {
-        return this._currentUser?.roleId === 2 || this._currentUser?.roleId === 3;
+        return this._currentUser?.roleId === 2;
     }
 
     public static getCurrentUser(): CurrentUser | null {

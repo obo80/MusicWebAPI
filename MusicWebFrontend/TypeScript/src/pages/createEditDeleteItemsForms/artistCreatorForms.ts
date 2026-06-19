@@ -1,5 +1,7 @@
 ﻿import { mainURL } from "../../app.js";
-import { ApiPostMethodObjectDtoWithAuthorization } from "../../Utils/apiCommunication.js";
+import { ArtistDto } from "../../DTO/ItemsDto.js";
+import { Artist } from "../../Entities/Artist.js";
+import { ApiGetMethodObjectDtoWithAuthorization, ApiPostMethodObjectDtoWithAuthorization, ApiPutMethodObjectDtoWithAuthorization } from "../../Utils/apiCommunication.js";
 import { toast } from "../../Utils/toast.js";
 import { displayArtistsPage } from "../displayItemsSubpages/artistSubpage.js";
 import { CurrentUser } from "../user/currentUser.js";
@@ -13,12 +15,14 @@ interface CreateArtistDto {
 }
 
 const createArtistFormHeaderText = "Dodaj artystę";
-const esitArtistFormHeaderText = "Dodaj artystę";
+const editArtistFormHeaderText = "Edycja artysty";
 
 export async function createArtist() {
     const artistFormFields: formField[] = createArtistformFields();
     const createArtistForm = new itemSharedForm(artistFormFields, null, null);
-    createArtistForm.renderArtistForm(createArtistFormHeaderText,
+
+    createArtistForm.renderArtistForm(
+        createArtistFormHeaderText,
         async () => {
             //onSave
             console.log("On save");
@@ -41,6 +45,47 @@ export async function createArtist() {
     
 };
 
+export async function editArtist(artistId: string) {
+    const artistFormFields: formField[] = createArtistformFields();
+    await updateFormFieldsValueFromCurrentArtistId(artistId, artistFormFields);
+    const editArtistForm = new itemSharedForm(artistFormFields, null, artistId);
+
+    editArtistForm.renderArtistForm(
+        editArtistFormHeaderText,
+        async () => {
+            //onSave
+            console.log("On save");
+            const response = await editArtistsInApi(artistId, artistFormFields); 
+            const statusCode = response.status;
+            if (statusCode === 200) {
+                toast.success("Artysta został zaaktualizowany");
+                await displayArtistsPage();
+            }
+            else {
+                toast.error("Wystąpił błąd podczas dodawania artysty");
+                console.log(statusCode, response.body);
+            }
+        },
+        () => {
+            //onCancel
+            console.log("Cancel");
+            toast.info("Anulowano dodawanie artysty")
+        });
+}
+
+async function updateFormFieldsValueFromCurrentArtistId(artistId: string, artistFormFields): Promise<void> {
+    const url = mainURL + "artist/"+artistId;
+    const token = CurrentUser.token;
+    const response = await ApiGetMethodObjectDtoWithAuthorization<ArtistDto>(url, token);
+    if (response.status === 200) {
+        const artistDto = response.data as unknown as ArtistDto;
+        console.log(artistDto);
+        //artistFormFields.forEach(field => field.fieldValue = artistDto[field.fieldId]);
+        formField.getFormFieldsFromDto<ArtistDto>(artistDto, artistFormFields);
+    }
+
+}
+
 async function createArtistInApi(artistFormFields: formField[]) {
     const artistDto = formField.getDtoFromFormFields(artistFormFields) as unknown as CreateArtistDto;
 
@@ -54,3 +99,14 @@ async function createArtistInApi(artistFormFields: formField[]) {
 
 
 
+async function editArtistsInApi(artistId: string, artistFormFields: formField[]) {
+    const artistDto = formField.getDtoFromFormFields(artistFormFields) as unknown as CreateArtistDto;
+
+    const url = mainURL + "artist/"+artistId;
+    const token = CurrentUser.token;
+    const response = await ApiPutMethodObjectDtoWithAuthorization(url, artistDto, token);
+
+    console.log(artistDto);
+    return response;
+
+}

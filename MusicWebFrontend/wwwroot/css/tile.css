@@ -115,6 +115,7 @@
     height: 150px; /* Stała wysokość dla opisu, aby nie wpływał na układ */
     overflow-y: auto; /* Dodaje pasek przewijania, jeśli opis jest zbyt długi */
     overflow-x: hidden; /* Ukrywa poziomy pasek przewijania, jeśli jest */
+    white-space: pre-wrap;
     word-break: break-word; /* Zapobiega rozrywaniu słów, jeśli są zbyt długie */
 }
 .details-buttons {

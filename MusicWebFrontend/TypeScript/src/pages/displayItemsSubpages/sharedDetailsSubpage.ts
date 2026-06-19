@@ -1,5 +1,5 @@
 ﻿import { createDivByClassName } from "../../Utils/helpers.js";
-import { createArtist } from "../createEditDeleteItemsForms/artistCreatorForms.js";
+import { createArtist, editArtist } from "../createEditDeleteItemsForms/artistCreatorForms.js";
 import { renderAlbumDetailsPage } from "./albumIdDetailsSubpage.js";
 import { renderArtistDetailsPage } from "./artistIdDetailsSubpage.js";
 import { renderSongDetailsPage } from "./songIdDetailsSubpage.js";
@@ -33,10 +33,10 @@ export function renderDetailsSubpage(id: number, itemType: ItemType) {
 }
 
 
-export function renderEditItemSubpage(id: number, itemType: ItemType) {
+export async function renderEditItemSubpage(id: number, itemType: ItemType) {
     switch (itemType) {
         case "artist":
-            
+            await editArtist(id);
             console.log("Edycja szczegółów artysty o id:", id);
             break;
 
@@ -55,10 +55,10 @@ export function renderEditItemSubpage(id: number, itemType: ItemType) {
     }
 }
 
-export function renderCreateItemSubpage(itemType: ItemType) {
+export async function renderCreateItemSubpage(itemType: ItemType) {
     switch (itemType) {
         case "artist":
-            createArtist();
+            await createArtist();
             console.log("Tworzenie nowego artysty");
             break;
 
@@ -133,4 +133,6 @@ function createItemDetaisTemplateInMainContent(): void {
     mainContent.appendChild(mainDetailsContainer);
 
 }
+
+
     

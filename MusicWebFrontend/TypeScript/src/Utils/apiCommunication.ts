@@ -13,7 +13,6 @@ export async function getPagedItemsFromApi(url: string): Promise<PagedResultDto<
         }
         const data = await response.json() as PagedResultDto<ItemDTO>;
         console.log(`Data fetched from ${url}:`);
-        // console.log("A dane to:", data);
         return data;
     } catch (error) {
         console.error("Error fetching items:", error);
@@ -30,7 +29,6 @@ export async function getItemFromApi(url: string): Promise<ItemDTO> | null {
         }
         const data = await response.json() as ItemDTO;
         console.log(`Data fetched from ${url}:`);
-        // console.log("A dane to:", data);
         return data;
     } catch (error) {
         console.error("Error fetching items:", error);
@@ -53,38 +51,29 @@ export async function ApiGetMethodObjectDtoWithAuthorization<responseDataType>(u
     }
     catch (error) {
         console.error("Error fetching items:", error);
-        //return 500;
     }
 }
 
-
-
-export async function loginUserToApi(url: string, loginDto: LoginDto): Promise<number> {
+export async function ApiPutMethodObjectDtoWithAuthorization<DtoType, responseDataType>(url: string, objectDto: DtoType, token: string): Promise<IApiResponse<responseDataType>> {
     try {
         const response = await fetch(url, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(loginDto)
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(objectDto)
         });
 
-        const responseResult = await handleResponse<string>(response);
+        const responseResult = await handleResponse<responseDataType>(response);
 
-        const resultStatusCode = responseResult.status;
-        if (resultStatusCode === 200) {
-            localStorage.setItem("token", responseResult.data);
-            return 200;
-        }
-        else {
-            return resultStatusCode;
-        }
+        return responseResult;
     }
     catch (error) {
         console.error("Error fetching items:", error);
-        return 500;
+        //return 500;
     }
-
 }
-
 
 export async function ApiPostMethodObjectDtoWithAuthorization<DtoType, responseDataType>(url: string, objectDto: DtoType, token: string): Promise<IApiResponse<responseDataType>> {
     try {
@@ -98,15 +87,12 @@ export async function ApiPostMethodObjectDtoWithAuthorization<DtoType, responseD
         });
 
         const responseResult = await handleResponse<responseDataType>(response);
-        //console.log("responseResult:", responseResult);
 
-        //const resultStatusCode = responseResult.status;
         return responseResult;
-
     }
     catch (error) {
         console.error("Error fetching items:", error);
-        //return 500;
+
     }
 }
 
@@ -119,11 +105,8 @@ export async function ApiPostMethodObjectDto<DtoType, responseDataType>(url: str
         });
 
         const responseResult = await handleResponse<responseDataType>(response);
-        //console.log("responseResult:", responseResult);
 
-        //const resultStatusCode = responseResult.status;
         return responseResult;
-
     }
     catch (error) {
         console.error("Error fetching items:", error);
@@ -159,4 +142,31 @@ async function handleResponse<responseDataType>(rawResponse: Response): Promise<
         headers: rawResponse.headers,
         data: data as responseDataType
     };
+}
+
+
+export async function loginUserToApi(url: string, loginDto: LoginDto): Promise<number> {
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(loginDto)
+        });
+
+        const responseResult = await handleResponse<string>(response);
+
+        const resultStatusCode = responseResult.status;
+        if (resultStatusCode === 200) {
+            localStorage.setItem("token", responseResult.data);
+            return 200;
+        }
+        else {
+            return resultStatusCode;
+        }
+    }
+    catch (error) {
+        console.error("Error fetching items:", error);
+        return 500;
+    }
+
 }

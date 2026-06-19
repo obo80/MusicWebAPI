@@ -47,6 +47,8 @@
     min-height: 500px;
     border: solid 0.3px #e0e0e0;
     border-radius: 15px;
+    white-space: pre-wrap;
+    word-break: break-word;
 }
 .artist-details-ratings{
 
@@ -119,13 +121,14 @@
 }
 .artist-album-details-description {
     margin-top: 15px;
-/*    padding: 5px;
+    /*    padding: 5px;
     border: solid thin #e0e0e0;
     border-radius: 10px;*/
     width: 100%;
     height: 250px; /* Stała wysokość dla opisu, aby nie wpływał na układ */
     overflow-y: auto; /* Dodaje pasek przewijania, jeśli opis jest zbyt długi */
     overflow-x: hidden; /* Ukrywa poziomy pasek przewijania, jeśli jest */
+    white-space: pre-wrap;
     word-break: break-word; /* Zapobiega rozrywaniu słów, jeśli są zbyt długie */
 }
 /*bottom panel for song list*/
@@ -212,7 +215,7 @@
 
 .song-details-description {
     margin-top: 15px;
-/*    padding: 5px;
+    /*    padding: 5px;
     border: solid thin #e0e0e0;
     border-radius: 10px;*/
     width: 100%;
@@ -220,5 +223,6 @@
     min-height: 250px; /* Stała wysokość dla opisu, aby nie wpływał na układ */
     overflow-y: auto; /* Dodaje pasek przewijania, jeśli opis jest zbyt długi */
     overflow-x: hidden; /* Ukrywa poziomy pasek przewijania, jeśli jest */
+    white-space: pre-wrap;
     word-break: break-word; /* Zapobiega rozrywaniu słów, jeśli są zbyt długie */
 }

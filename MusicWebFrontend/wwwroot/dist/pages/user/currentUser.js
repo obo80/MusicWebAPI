@@ -151,8 +151,8 @@ export class CurrentUser {
         return ((_a = this._currentUser) === null || _a === void 0 ? void 0 : _a.roleId) === 3;
     }
     static isCurrentUserCreator() {
-        var _a, _b;
-        return ((_a = this._currentUser) === null || _a === void 0 ? void 0 : _a.roleId) === 2 || ((_b = this._currentUser) === null || _b === void 0 ? void 0 : _b.roleId) === 3;
+        var _a;
+        return ((_a = this._currentUser) === null || _a === void 0 ? void 0 : _a.roleId) === 2;
     }
     static getCurrentUser() {
         const currentUser = this._currentUser;
