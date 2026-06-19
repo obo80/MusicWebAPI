@@ -1,4 +1,5 @@
 ﻿import { createDivByClassName } from "../../Utils/helpers.js";
+import { formField } from "./formField.js";
 
 export class itemSharedForm {
     private formFields: formField[] = [];
@@ -13,21 +14,20 @@ export class itemSharedForm {
 
     renderArtistForm(headerText: string, onSave: () => void, onCancel: () => void): void {
         //const headerText = "Edytuj artystę";
-        const modalContainer = this.createModalOverlayContainer(headerText);
+        const modalOverlayContainer = this.createModalOverlayContainer(headerText);
 
-        document.body.appendChild(modalContainer);
+        document.body.appendChild(modalOverlayContainer);
 
-        const form = modalContainer.querySelector("form") as HTMLFormElement;
-        this.addEventListeners(form, onSave, onCancel);
+        
+        this.addEventListeners(modalOverlayContainer, onSave, onCancel);
     }
 
     renderAlbumForm(headerText: string, onSave: () => void, onCancel: () => void) {
-        const modalContainer = this.createModalOverlayContainer(headerText);
+        const modalOverlayContainer = this.createModalOverlayContainer(headerText);
 
-        document.body.appendChild(modalContainer);
-
-        const form = modalContainer.querySelector("form") as HTMLFormElement;
-        this.addEventListeners(form, onSave, onCancel);
+        document.body.appendChild(modalOverlayContainer);
+       
+        this.addEventListeners(modalOverlayContainer, onSave, onCancel);
     }
 
     
@@ -75,7 +75,8 @@ export class itemSharedForm {
     }
 
 
-    private addEventListeners(form: HTMLFormElement, onSave: () => void, onCancel: () => void) {
+    private addEventListeners(modalOverlayContainer: HTMLDivElement, onSave: () => void, onCancel: () => void) {
+        const form = modalOverlayContainer.querySelector("form") as HTMLFormElement;
         const confirmButton = form.querySelector("#confirmBtn");
         const cancelButton = form.querySelector("#cancelBtn");
 
@@ -83,8 +84,8 @@ export class itemSharedForm {
             confirmButton.addEventListener("click", (event) => {
                 event.preventDefault();
                 this.updateFieldsValue(form);
-
                 onSave();
+                modalOverlayContainer.remove();
                 });
         }
 
@@ -93,8 +94,8 @@ export class itemSharedForm {
         if (cancelButton) {
             cancelButton.addEventListener("click", (event) => {
                 event.preventDefault();
-
                 onCancel();
+                modalOverlayContainer.remove();
                 });
         }
     }
@@ -104,7 +105,7 @@ export class itemSharedForm {
         this.formFields.forEach(field => {
             const div = form.querySelector(`#${field.fieldId}`) as HTMLDivElement;
             if (div) {
-                const input = div.querySelector("input") as HTMLInputElement;
+                const input = div.querySelector("input, textarea") as HTMLInputElement;
                 if (input) {
                     field.fieldValue = input.value;
                 }
@@ -136,58 +137,5 @@ export class itemSharedForm {
 }
 
 
-export class formField {
-    private _fieldId: string;
-    private _isBiggerField: boolean;
-    private _labelText: string;
-    private _inputType: "text" | "password" | "email" | "number" | "date" | "checkbox" | "radio" | "textarea" | "select";
-    private _inputId: string;
-    private _fieldValue: string | null;
-    private _required: boolean;
 
-    get fieldId(): string {
-        return this._fieldId;
-    }
-    get fieldValue(): string | null {
-        return this._fieldValue;
-    }
-    set fieldValue(value: string | null) {
-        this._fieldValue = value;
-    }
-
-    constructor(fieldId: string, isBiggerField: boolean, labelText: string, inputType: "text" | "password" | "email" | "number" | "date" | "checkbox" | "radio" | "textarea" | "select", inputId: string, fieldValue: string | null, required: boolean) {
-        this._fieldId = fieldId;
-        this._isBiggerField = isBiggerField;
-        this._labelText = labelText;
-        this._inputType = inputType;
-        this._inputId = inputId;
-        this._fieldValue = fieldValue;
-        this._required = required;
-    }
-
-    createformFieldDiv(): HTMLDivElement {
-        const div = document.createElement("div");
-        div.className = this._isBiggerField ? "big-form-field" : "form-field";
-        div.id = this._fieldId;
-        const label = document.createElement("label");
-        label.textContent = this._labelText;
-        label.htmlFor = this._inputId;
-        const input = document.createElement("input");
-        input.type = this._inputType;
-        input.id = this._inputId;
-
-        if (this._fieldValue)
-            input.value = this._fieldValue;
-        if (this._required)
-            input.required = true;        
-        
-        div.appendChild(label);
-        div.appendChild(input);
-        return div;
-    }
-
-    returnUpdatedFormField(): formField {
-        return new formField(this._fieldId, this._isBiggerField, this._labelText, this._inputType, this._inputId, this._fieldValue, this._required);
-    }
-}
-
+export { formField };
