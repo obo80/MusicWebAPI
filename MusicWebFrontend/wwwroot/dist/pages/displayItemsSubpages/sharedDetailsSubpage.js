@@ -8,7 +8,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { createDivByClassName } from "../../Utils/helpers.js";
-import { createArtist, editArtist } from "../createEditDeleteItemsForms/artistCreatorForms.js";
+import { createAlbum, deleteAlbum, editAlbum } from "../createEditDeleteItemsForms/albumCreatorForms.js";
+import { createArtist, deleteArtist, editArtist } from "../createEditDeleteItemsForms/artistCreatorForms.js";
+import { createSong, deleteSong, editSong } from "../createEditDeleteItemsForms/songCreatorForms.js";
 import { renderAlbumDetailsPage } from "./albumIdDetailsSubpage.js";
 import { renderArtistDetailsPage } from "./artistIdDetailsSubpage.js";
 import { renderSongDetailsPage } from "./songIdDetailsSubpage.js";
@@ -18,15 +20,15 @@ export function renderDetailsSubpage(id, itemType) {
     switch (itemType) {
         case "artist":
             renderArtistDetailsPage(id);
-            console.log("Wyświetlanie szczegółów artysty o id:", id);
+            //console.log("Wyświetlanie szczegółów artysty o id:", id);
             break;
         case "album":
             renderAlbumDetailsPage(id);
-            console.log("Wyświetlanie szczegółów albumu o id:", id);
+            //console.log("Wyświetlanie szczegółów albumu o id:", id);
             break;
         case "song":
             renderSongDetailsPage(id);
-            console.log("Wyświetlanie szczegółów utworu o id:", id);
+            //console.log("Wyświetlanie szczegółów utworu o id:", id);
             break;
         default:
             console.error(`Nieobsługiwany typ: ${itemType}`);
@@ -37,13 +39,15 @@ export function renderEditItemSubpage(id, itemType) {
         switch (itemType) {
             case "artist":
                 yield editArtist(id);
-                console.log("Edycja szczegółów artysty o id:", id);
+                //console.log("Edycja szczegółów artysty o id:", id);
                 break;
             case "album":
-                console.log("Edycja szczegółów albumu o id:", id);
+                yield editAlbum(id);
+                //console.log("Edycja szczegółów albumu o id:", id);
                 break;
             case "song":
-                console.log("Edycja szczegółów utworu o id:", id);
+                yield editSong(id);
+                //console.log("Edycja szczegółów utworu o id:", id);
                 break;
             default:
                 console.error(`Nieobsługiwany typ: ${itemType}`);
@@ -55,13 +59,15 @@ export function renderCreateItemSubpage(itemType) {
         switch (itemType) {
             case "artist":
                 yield createArtist();
-                console.log("Tworzenie nowego artysty");
+                //console.log("Tworzenie nowego artysty");
                 break;
             case "album":
-                console.log("Tworzenie nowego albumu");
+                yield createAlbum();
+                //console.log("Tworzenie nowego albumu");
                 break;
             case "song":
-                console.log("Tworzenie nowego utworu");
+                yield createSong();
+                //console.log("Tworzenie nowego utworu");
                 break;
             default:
                 console.error(`Nieobsługiwany typ: ${itemType}`);
@@ -69,19 +75,24 @@ export function renderCreateItemSubpage(itemType) {
     });
 }
 export function renderDeleteItemSubpage(id, itemType) {
-    switch (itemType) {
-        case "artist":
-            console.log("Usuwanie artysty o id:", id);
-            break;
-        case "album":
-            console.log("Usuwanie albumu o id:", id);
-            break;
-        case "song":
-            console.log("Usuwanie utworu o id:", id);
-            break;
-        default:
-            console.error(`Nieobsługiwany typ: ${itemType}`);
-    }
+    return __awaiter(this, void 0, void 0, function* () {
+        switch (itemType) {
+            case "artist":
+                yield deleteArtist(id);
+                //console.log("Usuwanie artysty o id:", id);
+                break;
+            case "album":
+                yield deleteAlbum(id);
+                //console.log("Usuwanie albumu o id:", id);
+                break;
+            case "song":
+                yield deleteSong(id);
+                //console.log("Usuwanie utworu o id:", id);
+                break;
+            default:
+                console.error(`Nieobsługiwany typ: ${itemType}`);
+        }
+    });
 }
 export function renderRatingSubpage(id, itemType) {
     switch (itemType) {

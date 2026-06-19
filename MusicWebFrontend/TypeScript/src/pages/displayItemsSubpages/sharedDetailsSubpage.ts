@@ -1,5 +1,7 @@
 ﻿import { createDivByClassName } from "../../Utils/helpers.js";
-import { createArtist, editArtist } from "../createEditDeleteItemsForms/artistCreatorForms.js";
+import { createAlbum, deleteAlbum, editAlbum } from "../createEditDeleteItemsForms/albumCreatorForms.js";
+import { createArtist, deleteArtist, editArtist } from "../createEditDeleteItemsForms/artistCreatorForms.js";
+import { createSong, deleteSong, editSong } from "../createEditDeleteItemsForms/songCreatorForms.js";
 import { renderAlbumDetailsPage } from "./albumIdDetailsSubpage.js";
 import { renderArtistDetailsPage } from "./artistIdDetailsSubpage.js";
 import { renderSongDetailsPage } from "./songIdDetailsSubpage.js";
@@ -14,17 +16,17 @@ export function renderDetailsSubpage(id: number, itemType: ItemType) {
     switch (itemType) {
         case "artist":
             renderArtistDetailsPage(id)
-            console.log("Wyświetlanie szczegółów artysty o id:", id);
+            //console.log("Wyświetlanie szczegółów artysty o id:", id);
             break;
 
         case "album":
             renderAlbumDetailsPage(id);
-            console.log("Wyświetlanie szczegółów albumu o id:", id);
+            //console.log("Wyświetlanie szczegółów albumu o id:", id);
             break;
 
         case "song":
             renderSongDetailsPage(id);
-            console.log("Wyświetlanie szczegółów utworu o id:", id);
+            //console.log("Wyświetlanie szczegółów utworu o id:", id);
             break;
 
         default:
@@ -37,17 +39,17 @@ export async function renderEditItemSubpage(id: number, itemType: ItemType) {
     switch (itemType) {
         case "artist":
             await editArtist(id);
-            console.log("Edycja szczegółów artysty o id:", id);
+            //console.log("Edycja szczegółów artysty o id:", id);
             break;
 
         case "album":
-            
-            console.log("Edycja szczegółów albumu o id:", id);
+            await editAlbum(id);
+            //console.log("Edycja szczegółów albumu o id:", id);
             break;
 
         case "song":
-            
-            console.log("Edycja szczegółów utworu o id:", id);
+            await editSong(id);
+            //console.log("Edycja szczegółów utworu o id:", id);
             break;
 
         default:
@@ -59,35 +61,38 @@ export async function renderCreateItemSubpage(itemType: ItemType) {
     switch (itemType) {
         case "artist":
             await createArtist();
-            console.log("Tworzenie nowego artysty");
+            //console.log("Tworzenie nowego artysty");
             break;
 
         case "album":
-
-            console.log("Tworzenie nowego albumu");
+            await createAlbum();
+            //console.log("Tworzenie nowego albumu");
             break;
 
         case "song":
-
-            console.log("Tworzenie nowego utworu");
+            await createSong();
+            //console.log("Tworzenie nowego utworu");
             break;
 
         default:
             console.error(`Nieobsługiwany typ: ${itemType}`);
     }
 }
-export function renderDeleteItemSubpage(id: number, itemType: ItemType) {
+export async function renderDeleteItemSubpage(id: number, itemType: ItemType) {
     switch (itemType) {
         case "artist":
-            console.log("Usuwanie artysty o id:", id);
+            await deleteArtist(id);
+            //console.log("Usuwanie artysty o id:", id);
             break;
 
         case "album":
-            console.log("Usuwanie albumu o id:", id);
+            await deleteAlbum(id);
+            //console.log("Usuwanie albumu o id:", id);
             break;
 
         case "song":
-            console.log("Usuwanie utworu o id:", id);
+            await deleteSong(id);
+            //console.log("Usuwanie utworu o id:", id);
             break;
 
         default:

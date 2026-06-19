@@ -45,7 +45,7 @@ export function editArtist(artistId) {
     return __awaiter(this, void 0, void 0, function* () {
         const artistFormFields = createArtistformFields();
         yield updateFormFieldsValueFromCurrentArtistId(artistId, artistFormFields);
-        const editArtistForm = new itemSharedForm(artistFormFields, null, artistId);
+        const editArtistForm = new itemSharedForm(artistFormFields, null, artistId.toString());
         editArtistForm.renderArtistForm(editArtistFormHeaderText, () => __awaiter(this, void 0, void 0, function* () {
             //onSave
             console.log("On save");
@@ -64,6 +64,17 @@ export function editArtist(artistId) {
             console.log("Cancel");
             toast.info("Anulowano dodawanie artysty");
         });
+    });
+}
+export function deleteArtist(artistId) {
+    return __awaiter(this, void 0, void 0, function* () {
+        if (confirm("Czy na pewno chcesz usunąć artystę?")) {
+            console.log("Delete artist in progress");
+        }
+        // const url = mainURL + "artist/"+artistId;
+        // const token = CurrentUser.token;
+        // const response = await ApiDeleteMethodWithAuthorization(url, token);
+        // console.log(response);}
     });
 }
 function updateFormFieldsValueFromCurrentArtistId(artistId, artistFormFields) {
@@ -92,7 +103,7 @@ function createArtistInApi(artistFormFields) {
 function editArtistsInApi(artistId, artistFormFields) {
     return __awaiter(this, void 0, void 0, function* () {
         const artistDto = formField.getDtoFromFormFields(artistFormFields);
-        const url = mainURL + "artist/" + artistId;
+        const url = mainURL + "artist/" + artistId.toString();
         const token = CurrentUser.token;
         const response = yield ApiPutMethodObjectDtoWithAuthorization(url, artistDto, token);
         console.log(artistDto);

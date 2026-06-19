@@ -1,11 +1,9 @@
 ﻿import { mainURL } from "../../app.js";
 import { ArtistDto } from "../../DTO/ItemsDto.js";
-import { Artist } from "../../Entities/Artist.js";
 import { ApiGetMethodObjectDtoWithAuthorization, ApiPostMethodObjectDtoWithAuthorization, ApiPutMethodObjectDtoWithAuthorization } from "../../Utils/apiCommunication.js";
 import { toast } from "../../Utils/toast.js";
 import { displayArtistsPage } from "../displayItemsSubpages/artistSubpage.js";
 import { CurrentUser } from "../user/currentUser.js";
-import { formfieldValue } from "./formField.js";
 import { createArtistformFields } from "./formFieldsCreator.js";
 import { formField, itemSharedForm } from "./ItemSharedForm.js";
 
@@ -44,11 +42,10 @@ export async function createArtist() {
         });
     
 };
-
-export async function editArtist(artistId: string) {
+export async function editArtist(artistId: number) {
     const artistFormFields: formField[] = createArtistformFields();
     await updateFormFieldsValueFromCurrentArtistId(artistId, artistFormFields);
-    const editArtistForm = new itemSharedForm(artistFormFields, null, artistId);
+    const editArtistForm = new itemSharedForm(artistFormFields, null, artistId.toString());
 
     editArtistForm.renderArtistForm(
         editArtistFormHeaderText,
@@ -73,7 +70,17 @@ export async function editArtist(artistId: string) {
         });
 }
 
-async function updateFormFieldsValueFromCurrentArtistId(artistId: string, artistFormFields): Promise<void> {
+export async function deleteArtist(artistId: number) {
+    if (confirm("Czy na pewno chcesz usunąć artystę?")) {
+        console.log("Delete artist in progress");
+    }
+    // const url = mainURL + "artist/"+artistId;
+    // const token = CurrentUser.token;
+    // const response = await ApiDeleteMethodWithAuthorization(url, token);
+    // console.log(response);}
+}
+
+async function updateFormFieldsValueFromCurrentArtistId(artistId: number, artistFormFields): Promise<void> {
     const url = mainURL + "artist/"+artistId;
     const token = CurrentUser.token;
     const response = await ApiGetMethodObjectDtoWithAuthorization<ArtistDto>(url, token);
@@ -99,10 +106,10 @@ async function createArtistInApi(artistFormFields: formField[]) {
 
 
 
-async function editArtistsInApi(artistId: string, artistFormFields: formField[]) {
+async function editArtistsInApi(artistId: number, artistFormFields: formField[]) {
     const artistDto = formField.getDtoFromFormFields(artistFormFields) as unknown as CreateArtistDto;
 
-    const url = mainURL + "artist/"+artistId;
+    const url = mainURL + "artist/" + artistId.toString();
     const token = CurrentUser.token;
     const response = await ApiPutMethodObjectDtoWithAuthorization(url, artistDto, token);
 
