@@ -2,7 +2,7 @@ export type formfieldValue = string | number | boolean | null;
 
 export class formField {
     private _fieldId: string;
-    private _isBiggerField: boolean;
+    private _isBiggerField: boolean = false;
     private _labelText: string;
     private _inputType: "text" | "password" | "email" | "number" | "date" | "checkbox" | "radio" | "textarea" | "select";
     private _inputId: string;
@@ -29,6 +29,29 @@ export class formField {
         this._required = required;
     }
 
+    createInputElement__Factory(): HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement {
+        if (this._inputType === "select") {
+            const element = document.createElement("select");
+            //<option value="red">Czerwony</option>
+            element.innerHTML = `<option value="">\<--Wybierz--\></option>`;
+            //element.id = this._inputId;
+            return element;
+        }
+        else if (this._inputType === "textarea") {
+            const element = document.createElement("textarea");
+            element.rows = 15;
+            //element.id = this._inputId;
+            return element;
+        }
+        else {
+            const element = document.createElement("input");
+            element.type = this._inputType;
+            //element.id = this._inputId;
+            return element;
+        }
+    }
+
+
     createformFieldDiv(): HTMLDivElement {
         const div = document.createElement("div");
         div.className = this._isBiggerField ? "big-form-field" : "form-field";
@@ -36,15 +59,19 @@ export class formField {
         const label = document.createElement("label");
         label.textContent = this._labelText;
         label.htmlFor = this._inputId;
-        let input = null;
-        if (this._inputType === "textarea") {
-            input = document.createElement("textarea");
-            input.rows = 15;
-        }
-        else {
-            input = document.createElement("input");
-            input.type = this._inputType;
-        }
+        const input = this.createInputElement__Factory();
+        // if (this._inputType === "select") {
+        //     input = document.createElement("select");
+        //     console.log("tworze select dla " + this._fieldId);
+        // }
+        // if (this._inputType === "textarea") {
+        //     input = document.createElement("textarea") as HTMLTextAreaElement;
+        //     input.rows = 15;
+        // }
+        // else {
+        //     input = document.createElement("input");
+        //     input.type = this._inputType;
+        // }
 
         input.id = this._inputId;
 
@@ -58,26 +85,26 @@ export class formField {
         return div;
     }
 
-    returnUpdatedFormField(): formField {
+    public returnUpdatedFormField(): formField {
         return new formField(this._fieldId, this._isBiggerField, this._labelText, this._inputType, this._inputId, this._fieldValue.toString(), this._required);
     }
 
     public static getDtoFromFormFields(formFields: formField[]) {
-    const payload: Record<string, formfieldValue> = {};
+        const payload: Record<string, formfieldValue> = {};
 
-    formFields.forEach(field => {
-        let value = field.fieldValue;
-        if (typeof value === 'string' && value.trim() !== '' && !isNaN(Number(value))) {
-            value = Number(value);
-        }
-        else if (value === 'null') value = null;
-        else if (value === 'true') value = true;
-        else if (value === 'false') value = false;
-        else value = value;
+        formFields.forEach(field => {
+            let value = field.fieldValue;
+            if (typeof value === 'string' && value.trim() !== '' && !isNaN(Number(value))) {
+                value = Number(value);
+            }
+            else if (value === 'null') value = null;
+            else if (value === 'true') value = true;
+            else if (value === 'false') value = false;
+            else value = value;
 
-        payload[field.fieldId] = value;
-    })
-    return payload;
+            payload[field.fieldId] = value;
+        })
+        return payload;
     };
 
     public static getFormFieldsFromDto<T>(dto: T, formFields: formField[]) {
@@ -86,4 +113,6 @@ export class formField {
             field.fieldValue = value? value.toString(): null;
         });
     }
+
+    public  
 }

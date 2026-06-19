@@ -19,11 +19,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="TypeScript\src\DTO\CreateItemsDto.ts" />
     <None Remove="TypeScript\src\DTO\UserDtos.ts" />
     <None Remove="TypeScript\src\Entities\Album.ts" />
     <None Remove="TypeScript\src\Entities\song.ts" />
     <None Remove="TypeScript\src\pages\createEditDeleteItemsForms\albumCreatorForms.ts" />
     <None Remove="TypeScript\src\pages\createEditDeleteItemsForms\formFieldsCreator.ts" />
+    <None Remove="TypeScript\src\pages\createEditDeleteItemsForms\Shared\SelectInput.ts" />
     <None Remove="TypeScript\src\pages\createEditDeleteItemsForms\songCreatorForms.ts" />
     <None Remove="TypeScript\src\Utils\sharedSVgIcons.ts" />
     <None Remove="TypeScript\src\Utils\toast.ts" />
@@ -45,14 +47,16 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="TypeScript\src\app.ts" />
+    <TypeScriptCompile Include="TypeScript\src\DTO\CreateItemsDto.ts" />
     <TypeScriptCompile Include="TypeScript\src\DTO\UserDtos.ts" />
     <TypeScriptCompile Include="TypeScript\src\Entities\Album.ts" />
     <TypeScriptCompile Include="TypeScript\src\Entities\Artist.ts" />
     <TypeScriptCompile Include="TypeScript\src\Entities\Song.ts" />
     <TypeScriptCompile Include="TypeScript\src\pages\createEditDeleteItemsForms\albumCreatorForms.ts" />
     <TypeScriptCompile Include="TypeScript\src\pages\createEditDeleteItemsForms\artistCreatorForms.ts" />
-    <TypeScriptCompile Include="TypeScript\src\pages\createEditDeleteItemsForms\formFieldsCreator.ts" />
-    <TypeScriptCompile Include="TypeScript\src\pages\createEditDeleteItemsForms\ItemSharedForm.ts" />
+    <TypeScriptCompile Include="TypeScript\src\pages\createEditDeleteItemsForms\Shared\formFieldsCreator.ts" />
+    <TypeScriptCompile Include="TypeScript\src\pages\createEditDeleteItemsForms\Shared\ItemSharedForm.ts" />
+    <TypeScriptCompile Include="TypeScript\src\pages\createEditDeleteItemsForms\Shared\SelectInput.ts" />
     <TypeScriptCompile Include="TypeScript\src\pages\createEditDeleteItemsForms\songCreatorForms.ts" />
     <TypeScriptCompile Include="TypeScript\src\Utils\sharedSVgIcons.ts" />
     <TypeScriptCompile Include="TypeScript\src\Utils\toast.ts" />

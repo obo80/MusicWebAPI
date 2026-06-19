@@ -12,8 +12,8 @@ import { ApiGetMethodObjectDtoWithAuthorization, ApiPostMethodObjectDtoWithAutho
 import { toast } from "../../Utils/toast.js";
 import { displayArtistsPage } from "../displayItemsSubpages/artistSubpage.js";
 import { CurrentUser } from "../user/currentUser.js";
-import { createArtistformFields } from "./formFieldsCreator.js";
-import { formField, itemSharedForm } from "./ItemSharedForm.js";
+import { createArtistformFields } from "./Shared/formFieldsCreator.js";
+import { formField, itemSharedForm } from "./Shared/ItemSharedForm.js";
 const createArtistFormHeaderText = "Dodaj artystę";
 const editArtistFormHeaderText = "Edycja artysty";
 export function createArtist() {

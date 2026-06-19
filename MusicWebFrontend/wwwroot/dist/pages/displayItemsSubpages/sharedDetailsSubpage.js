@@ -11,12 +11,13 @@ import { createDivByClassName } from "../../Utils/helpers.js";
 import { createAlbum, deleteAlbum, editAlbum } from "../createEditDeleteItemsForms/albumCreatorForms.js";
 import { createArtist, deleteArtist, editArtist } from "../createEditDeleteItemsForms/artistCreatorForms.js";
 import { createSong, deleteSong, editSong } from "../createEditDeleteItemsForms/songCreatorForms.js";
+import { CurrentUser } from "../user/currentUser.js";
 import { renderAlbumDetailsPage } from "./albumIdDetailsSubpage.js";
 import { renderArtistDetailsPage } from "./artistIdDetailsSubpage.js";
 import { renderSongDetailsPage } from "./songIdDetailsSubpage.js";
 export function renderDetailsSubpage(id, itemType) {
     console.log("renderDetailsSubpage");
-    createItemDetaisTemplateInMainContent();
+    createItemDetaisTemplateInMainContent(id, itemType);
     switch (itemType) {
         case "artist":
             renderArtistDetailsPage(id);
@@ -109,7 +110,7 @@ export function renderRatingSubpage(id, itemType) {
             console.error(`Nieobsługiwany typ: ${itemType}`);
     }
 }
-function createItemDetaisTemplateInMainContent() {
+function createItemDetaisTemplateInMainContent(id, itemType) {
     const mainContent = document.querySelector("main");
     if (!mainContent) {
         console.log("main element was't found");
@@ -117,7 +118,53 @@ function createItemDetaisTemplateInMainContent() {
     }
     mainContent.innerHTML = "";
     console.log("Tworzenie nowego main content");
+    const divForTopButtons = createTopButtonsContainer(id, itemType);
+    mainContent.appendChild(divForTopButtons);
     const mainDetailsContainer = createDivByClassName("main-details-container");
     mainContent.appendChild(mainDetailsContainer);
+}
+function createTopButtonsContainer(id, itemType) {
+    const topButtonsContainer = createDivByClassName("details-top-buttons-container");
+    const editItemButton = document.createElement("button");
+    const deleteItemButton = document.createElement("button");
+    topButtonsContainer.appendChild(editItemButton);
+    topButtonsContainer.appendChild(deleteItemButton);
+    editItemButton.classList.add("btn-edit-item-details", "btn-detail");
+    deleteItemButton.classList.add("btn-delete-item-details", "btn-detail");
+    let editButtonText = "";
+    let deleteButtonText = "";
+    switch (itemType) {
+        case "artist":
+            editButtonText = "✏️ Edytuj artystę";
+            deleteButtonText = "❌ Usuń artystę";
+            break;
+        case "album":
+            editButtonText = "✏️ Edytuj album";
+            deleteButtonText = "❌ Usuń album";
+            break;
+        case "song":
+            editButtonText = "✏️ Edytuj utwor";
+            deleteButtonText = "❌ Usuń utwor";
+            break;
+        case null:
+            console.log("Nic nie robić dla null");
+            editButtonText = "🎵 Nowy...";
+            break;
+        default:
+            console.error(`Nieobsługiwany typ: ${itemType}`);
+    }
+    editItemButton.textContent = editButtonText;
+    editItemButton.addEventListener("click", () => renderEditItemSubpage(id, itemType));
+    deleteItemButton.textContent = deleteButtonText;
+    deleteItemButton.addEventListener("click", () => renderDeleteItemSubpage(id, itemType));
+    if (CurrentUser.isCurrentUserCreator()) {
+        editItemButton.style.display = "block";
+        deleteItemButton.style.display = "block";
+    }
+    else {
+        editItemButton.style.display = "none";
+        deleteItemButton.style.display = "none";
+    }
+    return topButtonsContainer;
 }
 //# sourceMappingURL=sharedDetailsSubpage.js.map

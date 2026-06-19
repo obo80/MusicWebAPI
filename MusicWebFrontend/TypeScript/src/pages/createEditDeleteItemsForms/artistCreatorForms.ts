@@ -1,16 +1,12 @@
 ﻿import { mainURL } from "../../app.js";
+import { CreateArtistDto } from "../../DTO/CreateItemsDto.js";
 import { ArtistDto } from "../../DTO/ItemsDto.js";
 import { ApiGetMethodObjectDtoWithAuthorization, ApiPostMethodObjectDtoWithAuthorization, ApiPutMethodObjectDtoWithAuthorization } from "../../Utils/apiCommunication.js";
 import { toast } from "../../Utils/toast.js";
 import { displayArtistsPage } from "../displayItemsSubpages/artistSubpage.js";
 import { CurrentUser } from "../user/currentUser.js";
-import { createArtistformFields } from "./formFieldsCreator.js";
-import { formField, itemSharedForm } from "./ItemSharedForm.js";
-
-interface CreateArtistDto {
-    name: string;
-    description: string;
-}
+import { createArtistformFields } from "./Shared/formFieldsCreator.js";
+import { formField, itemSharedForm } from "./Shared/ItemSharedForm.js";
 
 const createArtistFormHeaderText = "Dodaj artystę";
 const editArtistFormHeaderText = "Edycja artysty";

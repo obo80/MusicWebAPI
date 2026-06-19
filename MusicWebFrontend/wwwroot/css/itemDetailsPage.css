@@ -5,6 +5,21 @@
     flex-wrap: wrap;
     gap: 16px;
 }
+.details-top-buttons-container {
+    display: flex;
+    flex-direction: row;  
+    gap: 12px;  
+    margin-top: auto; 
+    width: 100%;
+    margin-bottom: 20px;
+}
+.btn-edit-item-details, .btn-delete-item-details {
+    padding: 10px 16px;
+    margin-top: 20px;
+    min-width: 120px;
+    max-width: 160px;
+    font-weight: bold;
+}
 
 /*ArtistPage*/
 /*Container for artist name and details*/

@@ -154,9 +154,10 @@
     /*display: flex;
     flex-direction: row;*/ /* Układ w poziomie */
     /*gap: 8px;*/ /* Odstęp między przyciskami */
-    /*margin-top: auto;*/ /* Wypycha cały kontener na sam dół kafelka */
-    /*width: 100%;*/
+    /*margin-top: auto;  Wypycha cały kontener na sam dół kafelka 
+    width: 100%;*/
 }
+
 
 .btn-new-item {
     padding: 10px 16px;
