@@ -3,11 +3,11 @@
     public record UserDto
     {
         public int Id { get; set; }
-        public string Name { get; set; } //nick of user
+        public required string Name { get; set; } //nick of user
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
-        public string Email { get; set; }
+        public required string Email { get; set; }
         public int RoleId { get; set; } 
-        public string RoleName { get; set; }
+        public string? RoleName { get; set; }
     }
 }

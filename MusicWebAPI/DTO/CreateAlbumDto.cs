@@ -7,7 +7,7 @@ namespace MusicWebAPI.DTO
     public record CreateAlbumDto
     {
         [Required]
-        public string Title { get; set; }
+        public required string Title { get; set; }
         public string? Description { get; set; }
         public int? ReleasedYear { get; set; }
 

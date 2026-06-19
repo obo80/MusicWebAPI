@@ -6,17 +6,17 @@ namespace MusicWebAPI.DTO
     public record AlbumDto
     {
         public int Id { get; set; }
-        public string Title { get; set; }
+        public required string Title { get; set; }
         public string? Description { get; set; }
         public int? ReleasedYear { get; set; }
 
 
         public int ArtistId { get; set; }
         //public virtual Artist Artist { get; set; }
-        public string ArtistName { get; set; }
+        public required string ArtistName { get; set; }
 
         public int GenreId { get; set; }
-        public string GenreName { get; set; }
+        public required string GenreName { get; set; }
         //public Genre? Genres { get; set; }
 
         public double? AverageRating { get; set; }

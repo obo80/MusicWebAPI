@@ -5,7 +5,7 @@ namespace MusicWebAPI.DTO
 {
     public record UpdateArtistDto
     {
-        public string Name { get; set; }
+        public required string Name { get; set; }
         public string? Description { get; set; }
 
     }

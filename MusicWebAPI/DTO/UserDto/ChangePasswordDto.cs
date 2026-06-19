@@ -2,9 +2,9 @@
 {
     public record ChangePasswordDto
     {
-        public string Password { get; set; }
+        public required string Password { get; set; }
 
-        public string NewPassword { get; set; }
-        public string ConfirmPassword { get; set; }
+        public required string NewPassword { get; set; }
+        public required string ConfirmPassword { get; set; }
     }
 }
