@@ -7,9 +7,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { getPagedItems } from "../functions/apiCommunication.js";
+import { getPagedItemsFromApi } from "../../Utils/apiCommunication.js";
 import { createDetailsButtonsDiv, createMainContentContainerElement, createTileCard } from "./sharedSuppage.js";
-import { mainURL } from "../app.js";
+import { mainURL } from "../../app.js";
 export function createArtistCard(artistDto) {
     const cardTile = createTileCard(artistDto);
     const tileSummary = cardTile.querySelector(".tile-summary");
@@ -31,8 +31,8 @@ export function createArtistCard(artistDto) {
     }
     const tileDetails = cardTile.querySelector(".details-inner");
     if (tileDetails) {
-        // const description = artist.description ? artist.description : "Brak opisu";
-        const description = `lorem ipsum dolor sit amet, consectetur adipiscing elit.</br> Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.lorem ipsum dolor sit amet, consectetur adipiscing elit.</br> Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.lorem ipsum dolor sit amet, consectetur adipiscing elit.</br> Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.lorem ipsum dolor sit amet, consectetur adipiscing elit.</br> Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`;
+        const description = artistDto.description ? artistDto.description : "Brak opisu";
+        //const description = `lorem ipsum dolor sit amet, consectetur adipiscing elit.</br> Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.lorem ipsum dolor sit amet, consectetur adipiscing elit.</br> Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.lorem ipsum dolor sit amet, consectetur adipiscing elit.</br> Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.lorem ipsum dolor sit amet, consectetur adipiscing elit.</br> Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`;
         const descriptionElement = document.createElement("div");
         descriptionElement.classList.add("tile-description");
         descriptionElement.innerHTML = `<p><strong>Opis:</strong></p><p>${description}</p>`;
@@ -47,9 +47,9 @@ export const displayArtistsPage = () => __awaiter(void 0, void 0, void 0, functi
     const subheader = `<p>Ta strona zawiera listę artystów, którzy są dostępni w naszej bibliotece.</p>
     <p>Wybierz artystę, aby dowiedzieć się wiecej.</p>`;
     let mainContent = document.querySelector(".main-content");
-    const newMainContent = createMainContentContainerElement(header, subheader);
+    const newMainContent = createMainContentContainerElement(header, subheader, "artist");
     const TilesGrid = newMainContent.querySelector(".tiles-grid");
-    const padedResult = yield getPagedItems(mainURL + "artist");
+    const padedResult = yield getPagedItemsFromApi(mainURL + "artist");
     if (!padedResult) {
         console.error("Nie można pobrać danych o artystach.");
         TilesGrid.textContent = "Bład: Nie można pobrać danych o artystach.";

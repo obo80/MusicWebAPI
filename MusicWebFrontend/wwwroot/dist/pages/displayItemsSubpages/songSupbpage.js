@@ -7,8 +7,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { mainURL } from "../app.js";
-import { getPagedItems } from "../functions/apiCommunication.js";
+import { mainURL } from "../../app.js";
+import { getPagedItemsFromApi } from "../../Utils/apiCommunication.js";
+import { createDivByClassName } from "../../Utils/helpers.js";
 import { createTileCard, createDetailsButtonsDiv, createMainContentContainerElement } from "./sharedSuppage.js";
 export function createSongCard(songDto) {
     const cardTile = createTileCard(songDto);
@@ -17,9 +18,10 @@ export function createSongCard(songDto) {
         const titleElement = document.createElement("h3");
         titleElement.classList.add("tile-first-name");
         titleElement.textContent = songDto.title;
+        const artistName = songDto.artistName ? songDto.artistName : "Nieznany artysta";
         const artistElement = document.createElement("h4");
         artistElement.classList.add("tile-second-name");
-        artistElement.textContent = songDto.artistName;
+        artistElement.textContent = artistName;
         const ratingElement = document.createElement("p");
         ratingElement.classList.add("tile-rating");
         const ratingValue = (songDto.averageRating !== null && songDto.averageRating > 0) ? songDto.averageRating.toString() : "Brak oceny";
@@ -36,14 +38,12 @@ export function createSongCard(songDto) {
     const tileDetails = cardTile.querySelector(".details-inner");
     if (tileDetails) {
         const releasedYear = songDto.releasedYear ? songDto.releasedYear.toString() : "Nieznany";
-        const length = songDto.length ? songDto.length.toString() + " sekund" : "Nieznana długosć";
-        const divdetailsInfo = document.createElement("div");
-        divdetailsInfo.classList.add("tile-details-info");
+        const lenght = songDto.lenght ? songDto.lenght.toString() + " sekund" : "Nieznana długosć";
+        const divdetailsInfo = createDivByClassName("tile-details-info");
         divdetailsInfo.innerHTML = `<p><strong>Rok wydania:</strong> ${releasedYear}</p>
-                                    <p><strong>Długość:</strong> ${length}</p>`;
+                                    <p><strong>Długość:</strong> ${lenght}</p>`;
         const description = songDto.description ? songDto.description : "Brak opisu";
-        const descriptionElement = document.createElement("div");
-        descriptionElement.classList.add("tile-description");
+        const descriptionElement = createDivByClassName("tile-description");
         descriptionElement.innerHTML = `<p><strong>Opis:</strong></p><p>${description}</p>`;
         const detailsButtons = createDetailsButtonsDiv(songDto, "song");
         tileDetails.appendChild(divdetailsInfo);
@@ -58,9 +58,9 @@ export const displaySongsPage = () => __awaiter(void 0, void 0, void 0, function
     const subheader = `<p>Ta strona zawiera listę utworów, które są dostępne w naszej bibliotece.</p>
     <p>Wybierz utwór, aby dowiedzieć się wiecej.</p>`;
     let mainContent = document.querySelector(".main-content");
-    const newMainContent = createMainContentContainerElement(header, subheader);
+    const newMainContent = createMainContentContainerElement(header, subheader, "song");
     const TilesGrid = newMainContent.querySelector(".tiles-grid");
-    const padedResult = yield getPagedItems(mainURL + "song");
+    const padedResult = yield getPagedItemsFromApi(mainURL + "song");
     if (!padedResult) {
         console.error("Nie można pobrać danych o utworach.");
         TilesGrid.textContent = "Bład: Nie można pobrać danych o utworach.";

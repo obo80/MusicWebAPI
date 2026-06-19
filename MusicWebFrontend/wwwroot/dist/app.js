@@ -1,5 +1,6 @@
 import { renderMainPage } from "./pages/homePage.js";
-import { formField, itemSharedForm } from "./pages/creatorForms/ItemSharedForm.js";
+import { itemSharedForm } from "./pages/createEditDeleteItemsForms/ItemSharedForm.js";
+import { formField } from "./pages/createEditDeleteItemsForms/formField.js";
 export const mainURL = 'https://localhost:7192/api/';
 //console.log(mainURL);
 window.onload = () => {

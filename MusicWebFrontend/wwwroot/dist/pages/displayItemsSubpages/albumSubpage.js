@@ -7,8 +7,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { mainURL } from "../app.js";
-import { getPagedItems } from "../functions/apiCommunication.js";
+import { mainURL } from "../../app.js";
+import { getPagedItemsFromApi } from "../../Utils/apiCommunication.js";
+import { createDivByClassName } from "../../Utils/helpers.js";
 import { createTileCard, createDetailsButtonsDiv, createMainContentContainerElement } from "./sharedSuppage.js";
 export function createAlbumCard(albumDto) {
     const cardTile = createTileCard(albumDto);
@@ -17,9 +18,10 @@ export function createAlbumCard(albumDto) {
         const titleElement = document.createElement("h3");
         titleElement.classList.add("tile-first-name");
         titleElement.textContent = albumDto.title;
+        const artistName = albumDto.artistName ? albumDto.artistName : "Nieznany artysta";
         const artistElement = document.createElement("h4");
         artistElement.classList.add("tile-second-name");
-        artistElement.textContent = albumDto.artistName;
+        artistElement.textContent = artistName;
         const ratingElement = document.createElement("p");
         ratingElement.classList.add("tile-rating");
         const ratingValue = (albumDto.averageRating !== null && albumDto.averageRating > 0) ? albumDto.averageRating.toString() : "Brak oceny";
@@ -37,12 +39,10 @@ export function createAlbumCard(albumDto) {
     if (tileDetails) {
         const releasedYear = albumDto.releasedYear ? albumDto.releasedYear.toString() : "Nieznany";
         const genreName = albumDto.genreName ? albumDto.genreName : "Nieznany";
-        const divdetailsInfo = document.createElement("div");
-        divdetailsInfo.classList.add("tile-details-info");
+        const divdetailsInfo = createDivByClassName("tile-details-info");
         divdetailsInfo.innerHTML = `<p><strong>Rok wydania:</strong> ${releasedYear}</p><p><strong>Gatunek:</strong> ${genreName}</p>`;
         const description = albumDto.description ? albumDto.description : "Brak opisu";
-        const descriptionElement = document.createElement("div");
-        descriptionElement.classList.add("tile-description");
+        const descriptionElement = createDivByClassName("tile-description");
         descriptionElement.innerHTML = `<p><strong>Opis:</strong></p><p>${description}</p>`;
         const detailsButtons = createDetailsButtonsDiv(albumDto, "album");
         tileDetails.appendChild(divdetailsInfo);
@@ -56,9 +56,9 @@ export const displayAlbumsPage = () => __awaiter(void 0, void 0, void 0, functio
     const subheader = `<p>Ta strona zawiera listę albumów, które są dostępne w naszej bibliotece.</p>
     <p>Wybierz album, aby dowiedzieć się wiecej.</p>`;
     let mainContent = document.querySelector(".main-content");
-    const newMainContent = createMainContentContainerElement(header, subheader);
+    const newMainContent = createMainContentContainerElement(header, subheader, "album");
     const TilesGrid = newMainContent.querySelector(".tiles-grid");
-    const padedResult = yield getPagedItems(mainURL + "album");
+    const padedResult = yield getPagedItemsFromApi(mainURL + "album");
     if (!padedResult) {
         console.error("Nie można pobrać danych o albumach.");
         TilesGrid.textContent = "Bład: Nie można pobrać danych o albumach.";
