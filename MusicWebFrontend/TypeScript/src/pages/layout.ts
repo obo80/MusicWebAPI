@@ -2,9 +2,9 @@ import { createDivByClassName } from "../Utils/helpers.js";
 import { musicIconString } from "../Utils/sharedSVgIcons.js";
 import { createSvgFromString } from "./createSvgFromString.js";
 import { renderMainPage } from "./homePage.js";
-import { displayAlbumsPage } from "./subpages/albumSubpage.js";
-import { displayArtistsPage } from "./subpages/artistSubpage.js";
-import { displaySongsPage } from "./subpages/songSupbpage.js";
+import { displayAlbumsPage } from "./displayItemsSubpages/albumSubpage.js";
+import { displayArtistsPage } from "./displayItemsSubpages/artistSubpage.js";
+import { displaySongsPage } from "./displayItemsSubpages/songSupbpage.js";
 import { getUserButtonContainer } from "./user/userButton.js";
 
 const welcomeTextString: string = "Witaj w MusicWeb!";

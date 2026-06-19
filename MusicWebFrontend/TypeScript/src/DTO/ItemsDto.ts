@@ -2,16 +2,15 @@ export interface ItemDTO {
     id: number;
     description?: string;
     averageRating?: number;
-    showDetails(id: number): void
-    editDetails(id: number): void;
-    rateItem(id: number): void;
+    // showDetails(id: number): void
+    // editDetails(id: number): void;
+    // rateItem(id: number): void;
 }
 export interface ArtistDto extends ItemDTO {
     name: string;
     albums: AlbumDto[];
     songs: SongDto[];
     ratings: ArtistRatingDto[];
-    
 }
 
 export interface AlbumDto extends ItemDTO {

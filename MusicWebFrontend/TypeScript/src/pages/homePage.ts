@@ -1,5 +1,5 @@
 ﻿import { createLayout } from "./layout.js";
-import { createMainContentContainerElement } from "./subpages/sharedSuppage.js";
+import { createMainContentContainerElement } from "./displayItemsSubpages/sharedSuppage.js";
 
 export const renderMainPage = () => {
     const header: string = "Witaj w naszej aplikacji muzycznej!";

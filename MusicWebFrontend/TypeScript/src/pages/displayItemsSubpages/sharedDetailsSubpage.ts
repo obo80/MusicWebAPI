@@ -1,7 +1,10 @@
 ﻿import { createDivByClassName } from "../../Utils/helpers.js";
+import { createArtist } from "../createEditDeleteItemsForms/artistCreatorForms.js";
 import { renderAlbumDetailsPage } from "./albumIdDetailsSubpage.js";
 import { renderArtistDetailsPage } from "./artistIdDetailsSubpage.js";
 import { renderSongDetailsPage } from "./songIdDetailsSubpage.js";
+
+ 
 
 export type ItemType = "artist" | "album" | "song" | null;
 export function renderDetailsSubpage(id: number, itemType: ItemType) {
@@ -55,7 +58,7 @@ export function renderEditItemSubpage(id: number, itemType: ItemType) {
 export function renderCreateItemSubpage(itemType: ItemType) {
     switch (itemType) {
         case "artist":
-
+            createArtist();
             console.log("Tworzenie nowego artysty");
             break;
 
