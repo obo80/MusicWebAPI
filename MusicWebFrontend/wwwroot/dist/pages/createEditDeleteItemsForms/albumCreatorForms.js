@@ -8,13 +8,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { mainURL } from "../../app.js";
-import { ApiPostMethodObjectDtoWithAuthorization } from "../../Utils/apiCommunication.js";
+import { ApiGetMethodObjectDtoWithAuthorization, ApiPostMethodObjectDtoWithAuthorization } from "../../Utils/apiCommunication.js";
 import { toast } from "../../Utils/toast.js";
 import { displayAlbumsPage } from "../displayItemsSubpages/albumSubpage.js";
 import { CurrentUser } from "../user/currentUser.js";
 import { formField } from "./Shared/formField.js";
 import { createAlbumformFields } from "./Shared/formFieldsCreator.js";
 import { itemSharedForm } from "./Shared/ItemSharedForm.js";
+import { appendSelectOptionsFromSelectDto } from "./Shared/SelectInput.js";
 const createAlbumFormHeaderText = "Dodaj album";
 const editAlbumFormHeaderText = "Edycja albumu";
 export function createAlbum() {
@@ -41,6 +42,8 @@ export function createAlbum() {
             console.log("Cancel");
             toast.info("Anulowano dodawanie albumu");
         });
+        const artistSelectId = "artistId";
+        yield updateArtistsSelectOptions(artistSelectId);
     });
 }
 export function editAlbum(albumId) {
@@ -55,10 +58,33 @@ export function deleteAlbum(albumId) {
         }
     });
 }
-function getArtistsFronApi() {
+function updateArtistsSelectOptions(selectQuerySelector) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const form = document.querySelector("form");
+        const artistSelectElement = form.querySelector("select#artistId");
+        //const selectElement = document.querySelector(selectQuerySelector) ;
+        //get artists from Api and set options in form
+        const artists = yield getAllArtistsFronApi();
+        const SelectOptions = [];
+        artists === null || artists === void 0 ? void 0 : artists.forEach(artist => {
+            const SelectOption = { value: artist.id, text: artist.name };
+            SelectOptions.push(SelectOption);
+        });
+        if (SelectOptions.length === 0)
+            return;
+        if (artistSelectElement === null)
+            return;
+        appendSelectOptionsFromSelectDto(SelectOptions, artistSelectElement);
+    });
+}
+function getAllArtistsFronApi() {
     return __awaiter(this, void 0, void 0, function* () {
         const url = mainURL + "artist";
-        //to do
+        const response = yield ApiGetMethodObjectDtoWithAuthorization(url, CurrentUser.token);
+        if (response.status !== 200)
+            return null;
+        const artists = response.data.items;
+        return artists;
     });
 }
 function createAlbumInApi(artistId, artistFormFields) {
