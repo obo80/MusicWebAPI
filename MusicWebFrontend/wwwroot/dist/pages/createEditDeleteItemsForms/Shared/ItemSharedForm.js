@@ -8,15 +8,21 @@ export class itemSharedForm {
         this.id = id;
     }
     renderArtistForm(headerText, onSave, onCancel) {
-        //const headerText = "Edytuj artystę";
         const modalOverlayContainer = this.createModalOverlayContainer(headerText);
         document.body.appendChild(modalOverlayContainer);
-        this.addEventListeners(modalOverlayContainer, onSave, onCancel);
+        this.addFormButtonsEventListeners(modalOverlayContainer, onSave, onCancel);
     }
     renderAlbumForm(headerText, onSave, onCancel) {
         const modalOverlayContainer = this.createModalOverlayContainer(headerText);
         document.body.appendChild(modalOverlayContainer);
-        this.addEventListeners(modalOverlayContainer, onSave, onCancel);
+        this.addFormButtonsEventListeners(modalOverlayContainer, onSave, onCancel);
+        this.addSelectChangeEventListeners(modalOverlayContainer);
+    }
+    renderSongForm(headerText, onSave, onCancel) {
+        const modalOverlayContainer = this.createModalOverlayContainer(headerText);
+        document.body.appendChild(modalOverlayContainer);
+        this.addFormButtonsEventListeners(modalOverlayContainer, onSave, onCancel);
+        this.addSelectChangeEventListeners(modalOverlayContainer);
     }
     createModalOverlayContainer(headerText) {
         const overlay = createDivByClassName("modal-overlay");
@@ -50,7 +56,21 @@ export class itemSharedForm {
         form.appendChild(buttonsContainer);
         return form;
     }
-    addEventListeners(modalOverlayContainer, onSave, onCancel) {
+    addSelectChangeEventListeners(modalOverlayContainer) {
+        const form = modalOverlayContainer.querySelector("form");
+        this.formFields.forEach(field => {
+            if (field.inputType === "select") {
+                const div = form.querySelector(`#${field.fieldId}`);
+                const select = div.querySelector("select");
+                if (select) {
+                    select.addEventListener("change", () => {
+                        field.fieldValue = select.value;
+                    });
+                }
+            }
+        });
+    }
+    addFormButtonsEventListeners(modalOverlayContainer, onSave, onCancel) {
         const form = modalOverlayContainer.querySelector("form");
         const confirmButton = form.querySelector("#confirmBtn");
         const cancelButton = form.querySelector("#cancelBtn");

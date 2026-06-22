@@ -5,18 +5,18 @@ import { ApiGetMethodObjectDtoWithAuthorization, ApiPostMethodObjectDtoWithAutho
 import { toast } from "../../Utils/toast.js";
 import { displayArtistsPage } from "../displayItemsSubpages/artistSubpage.js";
 import { CurrentUser } from "../user/currentUser.js";
-import { createArtistformFields } from "./Shared/formFieldsCreator.js";
+import { createArtistFormFields } from "./Shared/formFieldsCreator.js";
 import { formField, itemSharedForm } from "./Shared/ItemSharedForm.js";
 
-const createArtistFormHeaderText = "Dodaj artystę";
-const editArtistFormHeaderText = "Edycja artysty";
+const artistCreateFormHeaderText = "Dodaj artystę";
+const artistEditFormHeaderText = "Edycja artysty";
 
 export async function createArtist() {
-    const artistFormFields: formField[] = createArtistformFields();
-    const createArtistForm = new itemSharedForm(artistFormFields, null, null);
+    const artistFormFields: formField[] = createArtistFormFields();
+    const artistCreateForm = new itemSharedForm(artistFormFields, null, null);
 
-    createArtistForm.renderArtistForm(
-        createArtistFormHeaderText,
+    artistCreateForm.renderArtistForm(
+        artistCreateFormHeaderText,
         async () => {
             //onSave
             console.log("On save");
@@ -39,12 +39,12 @@ export async function createArtist() {
     
 };
 export async function editArtist(artistId: number) {
-    const artistFormFields: formField[] = createArtistformFields();
+    const artistFormFields: formField[] = createArtistFormFields();
     await updateFormFieldsValueFromCurrentArtistId(artistId, artistFormFields);
-    const editArtistForm = new itemSharedForm(artistFormFields, null, artistId.toString());
+    const artistEditForm = new itemSharedForm(artistFormFields, null, artistId.toString());
 
-    editArtistForm.renderArtistForm(
-        editArtistFormHeaderText,
+    artistEditForm.renderArtistForm(
+        artistEditFormHeaderText,
         async () => {
             //onSave
             console.log("On save");

@@ -8,6 +8,9 @@ export class formField {
     set fieldValue(value) {
         this._fieldValue = value;
     }
+    get inputType() {
+        return this._inputType;
+    }
     constructor(fieldId, isBiggerField, labelText, inputType, inputId, fieldValue, required) {
         this._isBiggerField = false;
         this._fieldId = fieldId;
@@ -96,6 +99,10 @@ export class formField {
             const value = dto[field.fieldId];
             field.fieldValue = value ? value.toString() : null;
         });
+    }
+    static getFieldValueByFieldId(fieldId, formFields) {
+        const field = formFields.find(field => field.fieldId === fieldId);
+        return field ? field.fieldValue : null;
     }
 }
 //# sourceMappingURL=formField.js.map

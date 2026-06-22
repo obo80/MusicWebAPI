@@ -12,15 +12,15 @@ import { ApiGetMethodObjectDtoWithAuthorization, ApiPostMethodObjectDtoWithAutho
 import { toast } from "../../Utils/toast.js";
 import { displayArtistsPage } from "../displayItemsSubpages/artistSubpage.js";
 import { CurrentUser } from "../user/currentUser.js";
-import { createArtistformFields } from "./Shared/formFieldsCreator.js";
+import { createArtistFormFields } from "./Shared/formFieldsCreator.js";
 import { formField, itemSharedForm } from "./Shared/ItemSharedForm.js";
-const createArtistFormHeaderText = "Dodaj artystę";
-const editArtistFormHeaderText = "Edycja artysty";
+const artistCreateFormHeaderText = "Dodaj artystę";
+const artistEditFormHeaderText = "Edycja artysty";
 export function createArtist() {
     return __awaiter(this, void 0, void 0, function* () {
-        const artistFormFields = createArtistformFields();
-        const createArtistForm = new itemSharedForm(artistFormFields, null, null);
-        createArtistForm.renderArtistForm(createArtistFormHeaderText, () => __awaiter(this, void 0, void 0, function* () {
+        const artistFormFields = createArtistFormFields();
+        const artistCreateForm = new itemSharedForm(artistFormFields, null, null);
+        artistCreateForm.renderArtistForm(artistCreateFormHeaderText, () => __awaiter(this, void 0, void 0, function* () {
             //onSave
             console.log("On save");
             const response = yield createArtistInApi(artistFormFields);
@@ -43,10 +43,10 @@ export function createArtist() {
 ;
 export function editArtist(artistId) {
     return __awaiter(this, void 0, void 0, function* () {
-        const artistFormFields = createArtistformFields();
+        const artistFormFields = createArtistFormFields();
         yield updateFormFieldsValueFromCurrentArtistId(artistId, artistFormFields);
-        const editArtistForm = new itemSharedForm(artistFormFields, null, artistId.toString());
-        editArtistForm.renderArtistForm(editArtistFormHeaderText, () => __awaiter(this, void 0, void 0, function* () {
+        const artistEditForm = new itemSharedForm(artistFormFields, null, artistId.toString());
+        artistEditForm.renderArtistForm(artistEditFormHeaderText, () => __awaiter(this, void 0, void 0, function* () {
             //onSave
             console.log("On save");
             const response = yield editArtistsInApi(artistId, artistFormFields);

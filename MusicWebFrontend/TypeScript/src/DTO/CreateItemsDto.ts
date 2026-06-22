@@ -13,6 +13,9 @@ interface CreateAlbumDto {
 
 interface CreateSongDto {
     title: string;
+    releasedYear: number;
+    lenght: number;
+    albumId: number;
     description: string;
 }
 

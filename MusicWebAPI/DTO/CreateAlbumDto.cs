@@ -16,7 +16,7 @@ namespace MusicWebAPI.DTO
         //public virtual Artist Artist { get; set; }
 
         //public Genre? Genres { get; set; }
-        public int? GenreId { get; set; }
+        public int? GenreId { get; set; } = 1; //default genre
 
         public virtual ICollection<Song>? Songs { get; set; }
 

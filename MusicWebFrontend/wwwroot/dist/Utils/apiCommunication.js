@@ -83,6 +83,9 @@ export function ApiPutMethodObjectDtoWithAuthorization(url, objectDto, token) {
 }
 export function ApiPostMethodObjectDtoWithAuthorization(url, objectDto, token) {
     return __awaiter(this, void 0, void 0, function* () {
+        console.log("starito", objectDto);
+        const body = JSON.stringify(objectDto);
+        console.log("body", body);
         try {
             const response = yield fetch(url, {
                 method: 'POST',

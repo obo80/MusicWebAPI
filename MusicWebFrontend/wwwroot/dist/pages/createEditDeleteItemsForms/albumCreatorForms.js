@@ -8,25 +8,32 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { mainURL } from "../../app.js";
-import { ApiGetMethodObjectDtoWithAuthorization, ApiPostMethodObjectDtoWithAuthorization } from "../../Utils/apiCommunication.js";
+import { ApiPostMethodObjectDtoWithAuthorization } from "../../Utils/apiCommunication.js";
 import { toast } from "../../Utils/toast.js";
 import { displayAlbumsPage } from "../displayItemsSubpages/albumSubpage.js";
 import { CurrentUser } from "../user/currentUser.js";
 import { formField } from "./Shared/formField.js";
-import { createAlbumformFields } from "./Shared/formFieldsCreator.js";
+import { createAlbumFormFields } from "./Shared/formFieldsCreator.js";
 import { itemSharedForm } from "./Shared/ItemSharedForm.js";
-import { appendSelectOptionsFromSelectDto } from "./Shared/SelectInput.js";
+import { getNumberIdByFieldId, updateArtistsSelectOptions } from "./Shared/SharedFormsUtils.js";
 const createAlbumFormHeaderText = "Dodaj album";
 const editAlbumFormHeaderText = "Edycja albumu";
 export function createAlbum() {
     return __awaiter(this, void 0, void 0, function* () {
         console.log("Create album in progress");
-        const albumFormFields = createAlbumformFields();
-        const createAlbumForm = new itemSharedForm(albumFormFields, null, null);
-        const artistId = 2;
-        createAlbumForm.renderAlbumForm(createAlbumFormHeaderText, () => __awaiter(this, void 0, void 0, function* () {
+        const albumFormFields = createAlbumFormFields();
+        const albumCreateForm = new itemSharedForm(albumFormFields, null, null);
+        const artistIdFormFieldId = "artistId";
+        // let artistId = 2;
+        albumCreateForm.renderAlbumForm(createAlbumFormHeaderText, () => __awaiter(this, void 0, void 0, function* () {
             //onSave
             console.log("On save");
+            const artistId = getNumberIdByFieldId(artistIdFormFieldId, albumFormFields);
+            console.log(artistId);
+            if (!artistId || artistId === 0) {
+                toast.error("Wybierz artystę");
+                return;
+            }
             const response = yield createAlbumInApi(artistId, albumFormFields);
             const statusCode = response.status;
             if (statusCode === 201) {
@@ -35,15 +42,14 @@ export function createAlbum() {
             }
             else {
                 toast.error("Wystąpił błąd podczas dodawania albumu");
-                console.log(statusCode, response.body);
+                console.log(statusCode, response);
             }
         }), () => {
             //onCancel
             console.log("Cancel");
             toast.info("Anulowano dodawanie albumu");
         });
-        const artistSelectId = "artistId";
-        yield updateArtistsSelectOptions(artistSelectId);
+        yield updateArtistsSelectOptions(artistIdFormFieldId);
     });
 }
 export function editAlbum(albumId) {
@@ -58,39 +64,10 @@ export function deleteAlbum(albumId) {
         }
     });
 }
-function updateArtistsSelectOptions(selectQuerySelector) {
+function createAlbumInApi(artistId, albumFormFields) {
     return __awaiter(this, void 0, void 0, function* () {
-        const form = document.querySelector("form");
-        const artistSelectElement = form.querySelector("select#artistId");
-        //const selectElement = document.querySelector(selectQuerySelector) ;
-        //get artists from Api and set options in form
-        const artists = yield getAllArtistsFronApi();
-        const SelectOptions = [];
-        artists === null || artists === void 0 ? void 0 : artists.forEach(artist => {
-            const SelectOption = { value: artist.id, text: artist.name };
-            SelectOptions.push(SelectOption);
-        });
-        if (SelectOptions.length === 0)
-            return;
-        if (artistSelectElement === null)
-            return;
-        appendSelectOptionsFromSelectDto(SelectOptions, artistSelectElement);
-    });
-}
-function getAllArtistsFronApi() {
-    return __awaiter(this, void 0, void 0, function* () {
-        const url = mainURL + "artist";
-        const response = yield ApiGetMethodObjectDtoWithAuthorization(url, CurrentUser.token);
-        if (response.status !== 200)
-            return null;
-        const artists = response.data.items;
-        return artists;
-    });
-}
-function createAlbumInApi(artistId, artistFormFields) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const artistDto = formField.getDtoFromFormFields(artistFormFields);
-        const url = mainURL + "artist" + artistId.toString() + "/album";
+        const artistDto = formField.getDtoFromFormFields(albumFormFields);
+        const url = mainURL + "artist/" + artistId.toString() + "/album";
         const token = CurrentUser.token;
         const response = yield ApiPostMethodObjectDtoWithAuthorization(url, artistDto, token);
         console.log(artistDto);

@@ -9,19 +9,29 @@ export class formField {
     private _fieldValue: formfieldValue;
     private _required: boolean;
     */
-export function createArtistformFields() {
-    const name = new formField("name", false, "Nazwa artysty", "text", "name", null, true);
-    const description = new formField("description", false, "Opis", "textarea", "description", null, false);
+export function createArtistFormFields() {
+    const name = new formField("name", false, "Nazwa artysty", "text", "name-input", null, true);
+    const description = new formField("description", false, "Opis", "textarea", "description-input", null, false);
     const formFields = [name, description];
     return formFields;
 }
-export function createAlbumformFields() {
-    const artistId = new formField("artistId", false, "Artysta", "select", "artistId", null, true);
-    const title = new formField("title", false, "Tytuł albumu", "text", "title", null, true);
-    const releasedYear = new formField("releasedYear", false, "Rok wydania", "number", "releasedYear", null, false);
-    const genreId = new formField("genreId", false, "Gatunek", "select", "genreId", null, false);
-    const description = new formField("description", false, "Opis", "textarea", "description", null, false);
-    const formFields = [artistId, title, releasedYear, genreId, description];
+export function createAlbumFormFields() {
+    const artistId = new formField("artistId", false, "Artysta", "select", "artistId-select", null, true);
+    const title = new formField("title", false, "Tytuł albumu", "text", "title-input", null, true);
+    const releasedYear = new formField("releasedYear", false, "Rok wydania", "number", "releasedYear-input", null, false);
+    //const genreId = new formField("genreId", false, "Gatunek", "select", "genreId-select", null, false);
+    const description = new formField("description", false, "Opis", "textarea", "description-input", null, false);
+    const formFields = [artistId, title, releasedYear, /*genreId,*/ description];
+    return formFields;
+}
+export function createSongFormFields() {
+    const artistId = new formField("artistId", false, "Artysta", "select", "artistId-select", null, true);
+    const albumId = new formField("albumId", false, "Artysta", "select", "albumId-select", null, false);
+    const title = new formField("title", false, "Tytuł albumu", "text", "title-input", null, true);
+    const length = new formField("title", false, "Tytuł albumu", "number", "title-input", null, false);
+    const releasedYear = new formField("releasedYear", false, "Rok wydania", "number", "releasedYear-input", null, false);
+    const description = new formField("description", false, "Opis", "textarea", "description-input", null, false);
+    const formFields = [artistId, albumId, title, length, releasedYear, description];
     return formFields;
 }
 //# sourceMappingURL=formFieldsCreator.js.map

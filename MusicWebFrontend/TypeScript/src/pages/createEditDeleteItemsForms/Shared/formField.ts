@@ -1,10 +1,11 @@
 export type formfieldValue = string | number | boolean | null;
+export type formfieldType = "text" | "password" | "email" | "number" | "date" | "checkbox" | "radio" | "textarea" | "select";
 
 export class formField {
     private _fieldId: string;
     private _isBiggerField: boolean = false;
     private _labelText: string;
-    private _inputType: "text" | "password" | "email" | "number" | "date" | "checkbox" | "radio" | "textarea" | "select";
+    private _inputType: formfieldType;
     private _inputId: string;
     private _fieldValue: formfieldValue;
     private _required: boolean;
@@ -17,6 +18,10 @@ export class formField {
     }
     set fieldValue(value: string | null) {
         this._fieldValue = value;
+    }
+
+    get inputType(): formfieldType {
+        return this._inputType;
     }
 
     constructor(fieldId: string, isBiggerField: boolean, labelText: string, inputType: "text" | "password" | "email" | "number" | "date" | "checkbox" | "radio" | "textarea" | "select", inputId: string, fieldValue: string | null, required: boolean) {
@@ -114,5 +119,8 @@ export class formField {
         });
     }
 
-    public  
+     public static getFieldValueByFieldId(fieldId: string, formFields: formField[]) {
+         const field = formFields.find(field => field.fieldId === fieldId);
+        return field ? field.fieldValue : null;
+    }
 }
