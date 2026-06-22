@@ -20,7 +20,7 @@ export function createArtist() {
     return __awaiter(this, void 0, void 0, function* () {
         const artistFormFields = createArtistFormFields();
         const artistCreateForm = new itemSharedForm(artistFormFields, null, null);
-        artistCreateForm.renderArtistForm(artistCreateFormHeaderText, () => __awaiter(this, void 0, void 0, function* () {
+        yield artistCreateForm.renderArtistForm(artistCreateFormHeaderText, () => __awaiter(this, void 0, void 0, function* () {
             //onSave
             console.log("On save");
             const response = yield createArtistInApi(artistFormFields);
@@ -62,7 +62,7 @@ export function editArtist(artistId) {
         }), () => {
             //onCancel
             console.log("Cancel");
-            toast.info("Anulowano dodawanie artysty");
+            toast.info("Anulowano edycje artysty");
         });
     });
 }
@@ -70,11 +70,11 @@ export function deleteArtist(artistId) {
     return __awaiter(this, void 0, void 0, function* () {
         if (confirm("Czy na pewno chcesz usunąć artystę?")) {
             console.log("Delete artist in progress");
+            // const url = mainURL + "artist/"+artistId;
+            // const token = CurrentUser.token;
+            // const response = await ApiDeleteMethodWithAuthorization(url, token);
+            // console.log(response);}
         }
-        // const url = mainURL + "artist/"+artistId;
-        // const token = CurrentUser.token;
-        // const response = await ApiDeleteMethodWithAuthorization(url, token);
-        // console.log(response);}
     });
 }
 function updateFormFieldsValueFromCurrentArtistId(artistId, artistFormFields) {

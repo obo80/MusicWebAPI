@@ -26,6 +26,7 @@
     <None Remove="TypeScript\src\pages\createEditDeleteItemsForms\albumCreatorForms.ts" />
     <None Remove="TypeScript\src\pages\createEditDeleteItemsForms\formFieldsCreator.ts" />
     <None Remove="TypeScript\src\pages\createEditDeleteItemsForms\Shared\SelectInput.ts" />
+    <None Remove="TypeScript\src\pages\createEditDeleteItemsForms\Shared\SharedFormsUtils.ts" />
     <None Remove="TypeScript\src\pages\createEditDeleteItemsForms\songCreatorForms.ts" />
     <None Remove="TypeScript\src\Utils\sharedSVgIcons.ts" />
     <None Remove="TypeScript\src\Utils\toast.ts" />
@@ -57,6 +58,7 @@
     <TypeScriptCompile Include="TypeScript\src\pages\createEditDeleteItemsForms\Shared\formFieldsCreator.ts" />
     <TypeScriptCompile Include="TypeScript\src\pages\createEditDeleteItemsForms\Shared\ItemSharedForm.ts" />
     <TypeScriptCompile Include="TypeScript\src\pages\createEditDeleteItemsForms\Shared\SelectInput.ts" />
+    <TypeScriptCompile Include="TypeScript\src\pages\createEditDeleteItemsForms\Shared\SharedFormsUtils.ts" />
     <TypeScriptCompile Include="TypeScript\src\pages\createEditDeleteItemsForms\songCreatorForms.ts" />
     <TypeScriptCompile Include="TypeScript\src\Utils\sharedSVgIcons.ts" />
     <TypeScriptCompile Include="TypeScript\src\Utils\toast.ts" />

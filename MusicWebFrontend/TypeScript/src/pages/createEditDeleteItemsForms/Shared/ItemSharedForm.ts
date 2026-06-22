@@ -1,4 +1,5 @@
 ﻿import { createDivByClassName } from "../../../Utils/helpers.js";
+import { updateAlbumsSelectOptionsBySelectedArtist } from "../songCreatorForms.js";
 import { formField } from "./formField.js";
 
 export class itemSharedForm {
@@ -21,22 +22,22 @@ export class itemSharedForm {
         this.addFormButtonsEventListeners(modalOverlayContainer, onSave, onCancel);
     }
 
-    renderAlbumForm(headerText: string, onSave: () => void, onCancel: () => void) {
+    async renderAlbumForm(headerText: string, onSave: () => void, onCancel: () => void) {
         const modalOverlayContainer = this.createModalOverlayContainer(headerText);
 
         document.body.appendChild(modalOverlayContainer);
        
         this.addFormButtonsEventListeners(modalOverlayContainer, onSave, onCancel);
-        this.addSelectChangeEventListeners(modalOverlayContainer);
+        await this.addSelectChangeEventListeners(modalOverlayContainer);
     }
 
-    renderSongForm(headerText: string, onSave: () => void, onCancel: () => void) {
+    async renderSongForm(headerText: string, onSave: () => void, onCancel: () => void) {
         const modalOverlayContainer = this.createModalOverlayContainer(headerText);
 
         document.body.appendChild(modalOverlayContainer);
 
         this.addFormButtonsEventListeners(modalOverlayContainer, onSave, onCancel);
-        this.addSelectChangeEventListeners(modalOverlayContainer);
+        await this.addSelectChangeEventListeners(modalOverlayContainer);
     }
 
     
@@ -90,8 +91,9 @@ export class itemSharedForm {
                 const div = form.querySelector(`#${field.fieldId}`) as HTMLDivElement;
                 const select = div.querySelector("select") as HTMLSelectElement;
                 if (select) {
-                    select.addEventListener("change", () => {
+                    select.addEventListener("change", async () => {
                         field.fieldValue = select.value;
+                        await updateAlbumsSelectOptionsBySelectedArtist(field.fieldId, field.fieldValue);
                     });
                 }
             }

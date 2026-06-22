@@ -1,6 +1,6 @@
 ﻿import { mainURL } from "../../../app.js";
 import { SelectOptionsDto } from "../../../DTO/CreateItemsDto.js";
-import { ArtistDto } from "../../../DTO/ItemsDto.js";
+import { AlbumDto, ArtistDto } from "../../../DTO/ItemsDto.js";
 import { PagedResultDto } from "../../../DTO/PagedResultDto.js";
 import { ApiGetMethodObjectDtoWithAuthorization } from "../../../Utils/apiCommunication.js";
 import { CurrentUser } from "../../user/currentUser.js";
@@ -40,7 +40,23 @@ export async function updateArtistsSelectOptions(artistIdFormFieldId: string) {
     appendSelectOptionsFromSelectDto(SelectOptions, artistSelectElement);
 } 
 
+export async function updateAlbumsSelectOptions(albumsIdFormFieldId: string, artistId: number) {
+    const form = document.querySelector("form") as HTMLFormElement;
+    const div = form.querySelector(`#${albumsIdFormFieldId}`) as HTMLDivElement;
+    if (div !== null) {
+        const albumsSelectElement = div.querySelector("select") as HTMLSelectElement;
+        const albums = await getAlbumsByArtistId(artistId);
 
+        const SelectOptions: SelectOptionsDto[] = [];
+        albums?.forEach(album => {
+            const SelectOption: SelectOptionsDto = { value: album.id, text: album.title };
+            SelectOptions.push(SelectOption);
+        });
+        if (SelectOptions.length === 0) return;
+        if (albumsSelectElement === null) return;
+        appendSelectOptionsFromSelectDto(SelectOptions, albumsSelectElement);
+    }
+} 
 
 
 async function getAllArtistsFronApi(): Promise<ArtistDto[] | null> {
@@ -51,3 +67,13 @@ async function getAllArtistsFronApi(): Promise<ArtistDto[] | null> {
     const artists = response.data.items as ArtistDto[];
     return artists;
 }
+
+async function getAlbumsByArtistId(artistId: number): Promise<AlbumDto[] | null> {
+    const url = mainURL + "artist/" + artistId.toString() + "/album";
+    const response = await ApiGetMethodObjectDtoWithAuthorization<PagedResultDto<AlbumDto>>(url, CurrentUser.token);
+    if (response.status !== 200) return null;
+
+    const albums = response.data.items as AlbumDto[];
+    return albums;
+}
+

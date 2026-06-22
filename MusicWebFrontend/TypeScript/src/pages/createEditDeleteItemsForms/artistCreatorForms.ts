@@ -1,7 +1,7 @@
 ﻿import { mainURL } from "../../app.js";
 import { CreateArtistDto } from "../../DTO/CreateItemsDto.js";
 import { ArtistDto } from "../../DTO/ItemsDto.js";
-import { ApiGetMethodObjectDtoWithAuthorization, ApiPostMethodObjectDtoWithAuthorization, ApiPutMethodObjectDtoWithAuthorization } from "../../Utils/apiCommunication.js";
+import { ApiGetMethodObjectDtoWithAuthorization, ApiPostMethodObjectDtoWithAuthorization, ApiPutMethodObjectDtoWithAuthorization, IApiResponse } from "../../Utils/apiCommunication.js";
 import { toast } from "../../Utils/toast.js";
 import { displayArtistsPage } from "../displayItemsSubpages/artistSubpage.js";
 import { CurrentUser } from "../user/currentUser.js";
@@ -15,7 +15,7 @@ export async function createArtist() {
     const artistFormFields: formField[] = createArtistFormFields();
     const artistCreateForm = new itemSharedForm(artistFormFields, null, null);
 
-    artistCreateForm.renderArtistForm(
+    await artistCreateForm.renderArtistForm(
         artistCreateFormHeaderText,
         async () => {
             //onSave
@@ -62,18 +62,20 @@ export async function editArtist(artistId: number) {
         () => {
             //onCancel
             console.log("Cancel");
-            toast.info("Anulowano dodawanie artysty")
+            toast.info("Anulowano edycje artysty")
         });
 }
 
 export async function deleteArtist(artistId: number) {
     if (confirm("Czy na pewno chcesz usunąć artystę?")) {
         console.log("Delete artist in progress");
+
+        // const url = mainURL + "artist/"+artistId;
+        // const token = CurrentUser.token;
+        // const response = await ApiDeleteMethodWithAuthorization(url, token);
+        // console.log(response);}
     }
-    // const url = mainURL + "artist/"+artistId;
-    // const token = CurrentUser.token;
-    // const response = await ApiDeleteMethodWithAuthorization(url, token);
-    // console.log(response);}
+
 }
 
 async function updateFormFieldsValueFromCurrentArtistId(artistId: number, artistFormFields): Promise<void> {
@@ -89,12 +91,12 @@ async function updateFormFieldsValueFromCurrentArtistId(artistId: number, artist
 
 }
 
-async function createArtistInApi(artistFormFields: formField[]) {
+async function createArtistInApi(artistFormFields: formField[]):Promise<IApiResponse<ArtistDto>> {
     const artistDto = formField.getDtoFromFormFields(artistFormFields) as unknown as CreateArtistDto;
 
     const url = mainURL + "artist";
     const token = CurrentUser.token;
-    const response = await ApiPostMethodObjectDtoWithAuthorization(url, artistDto, token);
+    const response = await ApiPostMethodObjectDtoWithAuthorization<CreateArtistDto,ArtistDto>(url, artistDto, token);
 
     console.log(artistDto);
     return response;

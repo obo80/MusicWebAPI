@@ -21,11 +21,17 @@ function appendSelectOptions(options: string[], selectElement: HTMLSelectElement
     });
 }
 
-// function addEventListeners(selectElement: HTMLSelectElement, onChange: (event: Event) => void) {
-//     selectElement.addEventListener("change", onChange);
-// }
-
 function resetSelect(select: HTMLSelectElement, defaultText: string) {
     select.innerHTML = `<option value="">${defaultText}</option>`;
 }
 
+export function markOptionSelected(select: HTMLSelectElement, value: string) {
+    const options = select.querySelectorAll("option");
+    options.forEach(option => {
+        if (option.value === value) {
+            option.selected = true;
+            return;
+        }
+    });
+
+}

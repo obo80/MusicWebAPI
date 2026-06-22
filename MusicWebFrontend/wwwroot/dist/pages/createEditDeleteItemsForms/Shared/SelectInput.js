@@ -16,10 +16,16 @@ function appendSelectOptions(options, selectElement) {
         selectElement.appendChild(optionElement);
     });
 }
-// function addEventListeners(selectElement: HTMLSelectElement, onChange: (event: Event) => void) {
-//     selectElement.addEventListener("change", onChange);
-// }
 function resetSelect(select, defaultText) {
     select.innerHTML = `<option value="">${defaultText}</option>`;
+}
+export function markOptionSelected(select, value) {
+    const options = select.querySelectorAll("option");
+    options.forEach(option => {
+        if (option.value === value) {
+            option.selected = true;
+            return;
+        }
+    });
 }
 //# sourceMappingURL=SelectInput.js.map

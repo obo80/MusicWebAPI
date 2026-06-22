@@ -76,9 +76,6 @@ export async function ApiPutMethodObjectDtoWithAuthorization<DtoType, responseDa
 }
 
 export async function ApiPostMethodObjectDtoWithAuthorization<DtoType, responseDataType>(url: string, objectDto: DtoType, token: string): Promise<IApiResponse<responseDataType>> {
-    console.log("starito", objectDto);
-    const body = JSON.stringify(objectDto);
-    console.log("body", body);
     try {
         
         const response = await fetch(url, {

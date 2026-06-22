@@ -1,4 +1,14 @@
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 import { createDivByClassName } from "../../../Utils/helpers.js";
+import { updateAlbumsSelectOptionsBySelectedArtist } from "../songCreatorForms.js";
 import { formField } from "./formField.js";
 export class itemSharedForm {
     constructor(formFields, formClassName, id) {
@@ -13,16 +23,20 @@ export class itemSharedForm {
         this.addFormButtonsEventListeners(modalOverlayContainer, onSave, onCancel);
     }
     renderAlbumForm(headerText, onSave, onCancel) {
-        const modalOverlayContainer = this.createModalOverlayContainer(headerText);
-        document.body.appendChild(modalOverlayContainer);
-        this.addFormButtonsEventListeners(modalOverlayContainer, onSave, onCancel);
-        this.addSelectChangeEventListeners(modalOverlayContainer);
+        return __awaiter(this, void 0, void 0, function* () {
+            const modalOverlayContainer = this.createModalOverlayContainer(headerText);
+            document.body.appendChild(modalOverlayContainer);
+            this.addFormButtonsEventListeners(modalOverlayContainer, onSave, onCancel);
+            yield this.addSelectChangeEventListeners(modalOverlayContainer);
+        });
     }
     renderSongForm(headerText, onSave, onCancel) {
-        const modalOverlayContainer = this.createModalOverlayContainer(headerText);
-        document.body.appendChild(modalOverlayContainer);
-        this.addFormButtonsEventListeners(modalOverlayContainer, onSave, onCancel);
-        this.addSelectChangeEventListeners(modalOverlayContainer);
+        return __awaiter(this, void 0, void 0, function* () {
+            const modalOverlayContainer = this.createModalOverlayContainer(headerText);
+            document.body.appendChild(modalOverlayContainer);
+            this.addFormButtonsEventListeners(modalOverlayContainer, onSave, onCancel);
+            yield this.addSelectChangeEventListeners(modalOverlayContainer);
+        });
     }
     createModalOverlayContainer(headerText) {
         const overlay = createDivByClassName("modal-overlay");
@@ -63,9 +77,10 @@ export class itemSharedForm {
                 const div = form.querySelector(`#${field.fieldId}`);
                 const select = div.querySelector("select");
                 if (select) {
-                    select.addEventListener("change", () => {
+                    select.addEventListener("change", () => __awaiter(this, void 0, void 0, function* () {
                         field.fieldValue = select.value;
-                    });
+                        yield updateAlbumsSelectOptionsBySelectedArtist(field.fieldId, field.fieldValue);
+                    }));
                 }
             }
         });

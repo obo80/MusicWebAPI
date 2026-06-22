@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { mainURL } from "../../app.js";
-import { ApiPostMethodObjectDtoWithAuthorization } from "../../Utils/apiCommunication.js";
+import { ApiGetMethodObjectDtoWithAuthorization, ApiPostMethodObjectDtoWithAuthorization } from "../../Utils/apiCommunication.js";
 import { toast } from "../../Utils/toast.js";
 import { displayAlbumsPage } from "../displayItemsSubpages/albumSubpage.js";
 import { CurrentUser } from "../user/currentUser.js";
@@ -18,18 +18,18 @@ import { itemSharedForm } from "./Shared/ItemSharedForm.js";
 import { getNumberIdByFieldId, updateArtistsSelectOptions } from "./Shared/SharedFormsUtils.js";
 const createAlbumFormHeaderText = "Dodaj album";
 const editAlbumFormHeaderText = "Edycja albumu";
+const artistIdFormFieldId = "artistId";
 export function createAlbum() {
     return __awaiter(this, void 0, void 0, function* () {
         console.log("Create album in progress");
         const albumFormFields = createAlbumFormFields();
         const albumCreateForm = new itemSharedForm(albumFormFields, null, null);
-        const artistIdFormFieldId = "artistId";
         // let artistId = 2;
-        albumCreateForm.renderAlbumForm(createAlbumFormHeaderText, () => __awaiter(this, void 0, void 0, function* () {
+        yield albumCreateForm.renderAlbumForm(createAlbumFormHeaderText, () => __awaiter(this, void 0, void 0, function* () {
             //onSave
             console.log("On save");
             const artistId = getNumberIdByFieldId(artistIdFormFieldId, albumFormFields);
-            console.log(artistId);
+            //console.log(artistId);
             if (!artistId || artistId === 0) {
                 toast.error("Wybierz artystę");
                 return;
@@ -55,12 +55,51 @@ export function createAlbum() {
 export function editAlbum(albumId) {
     return __awaiter(this, void 0, void 0, function* () {
         console.log("Edit album in progress");
+        const albumFormFields = createAlbumFormFields();
+        yield updateFormFieldsValueFromCurrentAlbumId(albumId, albumFormFields);
+        const albumEditForm = new itemSharedForm(albumFormFields, null, null);
+        albumEditForm.renderAlbumForm(editAlbumFormHeaderText, () => __awaiter(this, void 0, void 0, function* () {
+            //onSave
+            console.log("On save");
+            // const artistId = getNumberIdByFieldId("artistId", albumFormFields);
+            // if (!artistId || artistId === 0) {
+            //     toast.error("Wybierz artystę");
+            //     return;
+            // }
+            const response = yield editAlbumInApi(albumId, albumFormFields);
+            const statusCode = response.status;
+            if (statusCode === 201) {
+                toast.success("Album został dodany");
+                yield displayAlbumsPage();
+            }
+            else {
+                toast.error("Wystąpił błąd podczas dodawania albumu");
+                console.log(statusCode, response);
+            }
+        }), () => {
+            console.log("Cancel");
+            toast.info("Anulowano edycje albumu");
+        });
+        yield updateArtistsSelectOptions(artistIdFormFieldId);
     });
 }
 export function deleteAlbum(albumId) {
     return __awaiter(this, void 0, void 0, function* () {
         if (confirm("Czy na pewno chcesz usunąć album?")) {
             console.log("Delete album in progress");
+        }
+    });
+}
+function updateFormFieldsValueFromCurrentAlbumId(albumId, albumFormFields) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const url = mainURL + "album/" + albumId;
+        const token = CurrentUser.token;
+        const response = yield ApiGetMethodObjectDtoWithAuthorization(url, token);
+        if (response.status === 200) {
+            const artistDto = response.data;
+            console.log(artistDto);
+            //artistFormFields.forEach(field => field.fieldValue = artistDto[field.fieldId]);
+            formField.getFormFieldsFromDto(artistDto, albumFormFields);
         }
     });
 }
@@ -73,5 +112,8 @@ function createAlbumInApi(artistId, albumFormFields) {
         console.log(artistDto);
         return response;
     });
+}
+function editAlbumInApi(albumId, albumFormFields) {
+    throw new Error("Function not implemented.");
 }
 //# sourceMappingURL=albumCreatorForms.js.map

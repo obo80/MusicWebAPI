@@ -43,6 +43,26 @@ export function updateArtistsSelectOptions(artistIdFormFieldId) {
         appendSelectOptionsFromSelectDto(SelectOptions, artistSelectElement);
     });
 }
+export function updateAlbumsSelectOptions(albumsIdFormFieldId, artistId) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const form = document.querySelector("form");
+        const div = form.querySelector(`#${albumsIdFormFieldId}`);
+        if (div !== null) {
+            const albumsSelectElement = div.querySelector("select");
+            const albums = yield getAlbumsByArtistId(artistId);
+            const SelectOptions = [];
+            albums === null || albums === void 0 ? void 0 : albums.forEach(album => {
+                const SelectOption = { value: album.id, text: album.title };
+                SelectOptions.push(SelectOption);
+            });
+            if (SelectOptions.length === 0)
+                return;
+            if (albumsSelectElement === null)
+                return;
+            appendSelectOptionsFromSelectDto(SelectOptions, albumsSelectElement);
+        }
+    });
+}
 function getAllArtistsFronApi() {
     return __awaiter(this, void 0, void 0, function* () {
         const url = mainURL + "artist";
@@ -51,6 +71,16 @@ function getAllArtistsFronApi() {
             return null;
         const artists = response.data.items;
         return artists;
+    });
+}
+function getAlbumsByArtistId(artistId) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const url = mainURL + "artist/" + artistId.toString() + "/album";
+        const response = yield ApiGetMethodObjectDtoWithAuthorization(url, CurrentUser.token);
+        if (response.status !== 200)
+            return null;
+        const albums = response.data.items;
+        return albums;
     });
 }
 //# sourceMappingURL=SharedFormsUtils.js.map
