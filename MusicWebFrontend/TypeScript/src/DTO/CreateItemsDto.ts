@@ -4,7 +4,7 @@ interface CreateArtistDto {
     description: string;
 }
 interface CreateAlbumDto {
-    //artistId: number;
+    artistId: number;
     title: string;
     releasedYear: number;
     genreId: number;

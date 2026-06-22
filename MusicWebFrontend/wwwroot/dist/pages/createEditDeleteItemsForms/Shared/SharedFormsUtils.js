@@ -29,18 +29,20 @@ export function updateArtistsSelectOptions(artistIdFormFieldId) {
     return __awaiter(this, void 0, void 0, function* () {
         const form = document.querySelector("form");
         const div = form.querySelector(`#${artistIdFormFieldId}`);
-        const artistSelectElement = div.querySelector("select");
-        const artists = yield getAllArtistsFronApi();
-        const SelectOptions = [];
-        artists === null || artists === void 0 ? void 0 : artists.forEach(artist => {
-            const SelectOption = { value: artist.id, text: artist.name };
-            SelectOptions.push(SelectOption);
-        });
-        if (SelectOptions.length === 0)
-            return;
-        if (artistSelectElement === null)
-            return;
-        appendSelectOptionsFromSelectDto(SelectOptions, artistSelectElement);
+        if (div !== null) {
+            const artistSelectElement = div.querySelector("select");
+            const artists = yield getAllArtistsFronApi();
+            const SelectOptions = [];
+            artists === null || artists === void 0 ? void 0 : artists.forEach(artist => {
+                const SelectOption = { value: artist.id, text: artist.name };
+                SelectOptions.push(SelectOption);
+            });
+            if (SelectOptions.length === 0)
+                return;
+            if (artistSelectElement === null)
+                return;
+            appendSelectOptionsFromSelectDto(SelectOptions, artistSelectElement);
+        }
     });
 }
 export function updateAlbumsSelectOptions(albumsIdFormFieldId, artistId) {

@@ -27,17 +27,19 @@ return field ? Number(field.fieldValue) : null;
 export async function updateArtistsSelectOptions(artistIdFormFieldId: string) {
     const form = document.querySelector("form") as HTMLFormElement;
     const div = form.querySelector(`#${artistIdFormFieldId}`) as HTMLDivElement;
+    if (div !== null) {
     const artistSelectElement = div.querySelector("select") as HTMLSelectElement;
-    const artists = await getAllArtistsFronApi();
+        const artists = await getAllArtistsFronApi();
 
-    const SelectOptions: SelectOptionsDto[] = [];
-    artists?.forEach(artist => {
-        const SelectOption: SelectOptionsDto = { value: artist.id, text: artist.name };
-        SelectOptions.push(SelectOption);
-    });
-    if (SelectOptions.length === 0) return;
-    if (artistSelectElement === null) return;
-    appendSelectOptionsFromSelectDto(SelectOptions, artistSelectElement);
+        const SelectOptions: SelectOptionsDto[] = [];
+        artists?.forEach(artist => {
+            const SelectOption: SelectOptionsDto = { value: artist.id, text: artist.name };
+            SelectOptions.push(SelectOption);
+        });
+        if (SelectOptions.length === 0) return;
+        if (artistSelectElement === null) return;
+        appendSelectOptionsFromSelectDto(SelectOptions, artistSelectElement);
+    }
 } 
 
 export async function updateAlbumsSelectOptions(albumsIdFormFieldId: string, artistId: number) {

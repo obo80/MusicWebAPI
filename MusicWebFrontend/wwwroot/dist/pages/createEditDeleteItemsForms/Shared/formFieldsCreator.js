@@ -2,7 +2,7 @@ import { formField } from "./formField.js";
 /*
 export class formField {
     private _fieldId: string;
-    private _isBiggerField: boolean;
+    private _isHidden: boolean;
     private _labelText: string;
     private _inputType: "text" | "password" | "email" | "number" | "date" | "checkbox" | "radio" | "textarea" | "select";
     private _inputId: string;
@@ -17,6 +17,15 @@ export function createArtistFormFields() {
 }
 export function createAlbumFormFields() {
     const artistId = new formField("artistId", false, "Artysta", "select", "artistId-select", null, true);
+    const title = new formField("title", false, "Tytuł albumu", "text", "title-input", null, true);
+    const releasedYear = new formField("releasedYear", false, "Rok wydania", "number", "releasedYear-input", null, false);
+    //const genreId = new formField("genreId", false, "Gatunek", "select", "genreId-select", null, false);
+    const description = new formField("description", false, "Opis", "textarea", "description-input", null, false);
+    const formFields = [artistId, title, releasedYear, /*genreId,*/ description];
+    return formFields;
+}
+export function editAlbumFormFields() {
+    const artistId = new formField("artistId", true, "Artysta", "text", "artistId-input", null, true);
     const title = new formField("title", false, "Tytuł albumu", "text", "title-input", null, true);
     const releasedYear = new formField("releasedYear", false, "Rok wydania", "number", "releasedYear-input", null, false);
     //const genreId = new formField("genreId", false, "Gatunek", "select", "genreId-select", null, false);

@@ -3,7 +3,7 @@ export type formfieldType = "text" | "password" | "email" | "number" | "date" | 
 
 export class formField {
     private _fieldId: string;
-    private _isBiggerField: boolean = false;
+    private _isHidden: boolean = false;
     private _labelText: string;
     private _inputType: formfieldType;
     private _inputId: string;
@@ -24,9 +24,9 @@ export class formField {
         return this._inputType;
     }
 
-    constructor(fieldId: string, isBiggerField: boolean, labelText: string, inputType: "text" | "password" | "email" | "number" | "date" | "checkbox" | "radio" | "textarea" | "select", inputId: string, fieldValue: string | null, required: boolean) {
+    constructor(fieldId: string, isHidden: boolean, labelText: string, inputType: "text" | "password" | "email" | "number" | "date" | "checkbox" | "radio" | "textarea" | "select", inputId: string, fieldValue: string | null, required: boolean) {
         this._fieldId = fieldId;
-        this._isBiggerField = isBiggerField;
+        this._isHidden = isHidden;
         this._labelText = labelText;
         this._inputType = inputType;
         this._inputId = inputId;
@@ -59,7 +59,9 @@ export class formField {
 
     createformFieldDiv(): HTMLDivElement {
         const div = document.createElement("div");
-        div.className = this._isBiggerField ? "big-form-field" : "form-field";
+        if (this._isHidden) {
+            div.style.display = "none";
+        }
         div.id = this._fieldId;
         const label = document.createElement("label");
         label.textContent = this._labelText;
@@ -91,7 +93,7 @@ export class formField {
     }
 
     public returnUpdatedFormField(): formField {
-        return new formField(this._fieldId, this._isBiggerField, this._labelText, this._inputType, this._inputId, this._fieldValue.toString(), this._required);
+        return new formField(this._fieldId, this._isHidden, this._labelText, this._inputType, this._inputId, this._fieldValue.toString(), this._required);
     }
 
     public static getDtoFromFormFields(formFields: formField[]) {

@@ -33,5 +33,4 @@ export function markOptionSelected(select: HTMLSelectElement, value: string) {
             return;
         }
     });
-
 }

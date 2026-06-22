@@ -1,13 +1,14 @@
 ﻿import { mainURL } from "../../app.js"
 import { CreateAlbumDto } from "../../DTO/CreateItemsDto.js";
 import { AlbumDto } from "../../DTO/ItemsDto.js";
-import { ApiGetMethodObjectDtoWithAuthorization, ApiPostMethodObjectDtoWithAuthorization } from "../../Utils/apiCommunication.js";
+import { ApiGetMethodObjectDtoWithAuthorization, ApiPostMethodObjectDtoWithAuthorization, ApiPutMethodObjectDtoWithAuthorization } from "../../Utils/apiCommunication.js";
 import { toast } from "../../Utils/toast.js";
 import { displayAlbumsPage } from "../displayItemsSubpages/albumSubpage.js";
 import { CurrentUser } from "../user/currentUser.js";
 import { formField } from "./Shared/formField.js";
-import { createAlbumFormFields } from "./Shared/formFieldsCreator.js";
+import { createAlbumFormFields, editAlbumFormFields} from "./Shared/formFieldsCreator.js";
 import { itemSharedForm } from "./Shared/ItemSharedForm.js";
+import { markOptionSelected } from "./Shared/SelectInput.js";
 import { getNumberIdByFieldId, updateArtistsSelectOptions } from "./Shared/SharedFormsUtils.js";
 
 
@@ -59,7 +60,8 @@ export async function createAlbum() {
 
 export async function editAlbum(albumId: number) {
     console.log("Edit album in progress");
-    const albumFormFields: formField[] = createAlbumFormFields();
+    const albumFormFields: formField[] = editAlbumFormFields();
+    //const artistId = getNumberIdByFieldId(artistIdFormFieldId, albumFormFields);
     await updateFormFieldsValueFromCurrentAlbumId(albumId, albumFormFields);
     const albumEditForm = new itemSharedForm(albumFormFields, null, null);
 
@@ -68,15 +70,15 @@ export async function editAlbum(albumId: number) {
         async () => {
             //onSave
             console.log("On save");
-            // const artistId = getNumberIdByFieldId("artistId", albumFormFields);
-            // if (!artistId || artistId === 0) {
-            //     toast.error("Wybierz artystę");
-            //     return;
-            // }
-            const response = await editAlbumInApi(albumId, albumFormFields);
+            const artistId = getNumberIdByFieldId("artistId", albumFormFields);
+            if (!artistId || artistId === 0) {
+                toast.error("Wybierz artystę");
+                return;
+            }
+            const response = await editAlbumInApi(albumId, artistId, albumFormFields);
             const statusCode = response.status;
-            if (statusCode === 201) {
-                toast.success("Album został dodany");
+            if (statusCode === 200) {
+                toast.success("Album został zaktualizowany");
                 await displayAlbumsPage();
             }
             else {
@@ -90,6 +92,20 @@ export async function editAlbum(albumId: number) {
         }
     );
     await updateArtistsSelectOptions(artistIdFormFieldId);
+    //markCurretnArtistInSelect(artistIdFormFieldId, albumFormFields);
+    //disableArtistSelect(artistIdFormFieldId);
+}
+
+function disableArtistSelect(artistIdFormFieldId: string) {
+    const artistSelect = document.getElementById(artistIdFormFieldId) as HTMLSelectElement;
+    artistSelect.disabled = true;
+}
+function markCurretnArtistInSelect(artistIdFormFieldId: string, albumFormFields: formField[]) {
+    const artistId = getNumberIdByFieldId(artistIdFormFieldId, albumFormFields);
+    const artistSelect = document.getElementById(artistIdFormFieldId) as HTMLSelectElement;
+    artistSelect.disabled = true;
+    markOptionSelected(artistSelect, artistId.toString());
+    
 }
 
 export async function deleteAlbum(albumId: number) {
@@ -111,18 +127,29 @@ async function updateFormFieldsValueFromCurrentAlbumId(albumId: number, albumFor
 
 
 async function createAlbumInApi(artistId: number, albumFormFields: formField[]) {
-    const artistDto = formField.getDtoFromFormFields(albumFormFields) as unknown as CreateAlbumDto;
+    const albumDto = formField.getDtoFromFormFields(albumFormFields) as unknown as CreateAlbumDto;
 
     const url = mainURL + "artist/" + artistId.toString() + "/album";
     const token = CurrentUser.token;
-    const response = await ApiPostMethodObjectDtoWithAuthorization<CreateAlbumDto, AlbumDto>(url, artistDto, token);
+    const response = await ApiPostMethodObjectDtoWithAuthorization<CreateAlbumDto, AlbumDto>(url, albumDto, token);
 
-    console.log(artistDto);
+    console.log(albumDto);
     return response;
 }
 
 
 
-function editAlbumInApi(albumId: number, albumFormFields: formField[]) {
-    throw new Error("Function not implemented.");
+async function editAlbumInApi(albumId: number, artistId: number, albumFormFields: formField[]) {
+    const albumDto = formField.getDtoFromFormFields(albumFormFields) as unknown as CreateAlbumDto;
+
+    const url = mainURL + "artist/" + artistId.toString() + "/album/" + albumId.toString();
+    const token = CurrentUser.token;
+    const response = await ApiPutMethodObjectDtoWithAuthorization<CreateAlbumDto, AlbumDto>(url, albumDto, token);
+
+    console.log(albumDto);
+    return response;
 }
+
+
+
+

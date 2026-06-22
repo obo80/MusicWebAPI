@@ -11,10 +11,10 @@ export class formField {
     get inputType() {
         return this._inputType;
     }
-    constructor(fieldId, isBiggerField, labelText, inputType, inputId, fieldValue, required) {
-        this._isBiggerField = false;
+    constructor(fieldId, isHidden, labelText, inputType, inputId, fieldValue, required) {
+        this._isHidden = false;
         this._fieldId = fieldId;
-        this._isBiggerField = isBiggerField;
+        this._isHidden = isHidden;
         this._labelText = labelText;
         this._inputType = inputType;
         this._inputId = inputId;
@@ -44,7 +44,9 @@ export class formField {
     }
     createformFieldDiv() {
         const div = document.createElement("div");
-        div.className = this._isBiggerField ? "big-form-field" : "form-field";
+        if (this._isHidden) {
+            div.style.display = "none";
+        }
         div.id = this._fieldId;
         const label = document.createElement("label");
         label.textContent = this._labelText;
@@ -72,7 +74,7 @@ export class formField {
         return div;
     }
     returnUpdatedFormField() {
-        return new formField(this._fieldId, this._isBiggerField, this._labelText, this._inputType, this._inputId, this._fieldValue.toString(), this._required);
+        return new formField(this._fieldId, this._isHidden, this._labelText, this._inputType, this._inputId, this._fieldValue.toString(), this._required);
     }
     static getDtoFromFormFields(formFields) {
         const payload = {};

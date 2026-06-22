@@ -109,7 +109,7 @@ async function editArtistsInApi(artistId: number, artistFormFields: formField[])
 
     const url = mainURL + "artist/" + artistId.toString();
     const token = CurrentUser.token;
-    const response = await ApiPutMethodObjectDtoWithAuthorization(url, artistDto, token);
+    const response = await ApiPutMethodObjectDtoWithAuthorization<CreateArtistDto, ArtistDto>(url, artistDto, token);
 
     console.log(artistDto);
     return response;
