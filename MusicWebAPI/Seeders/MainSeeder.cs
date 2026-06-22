@@ -50,11 +50,20 @@ namespace MusicWebAPI.Seeders
         {
             var genres = new List<Genre>()
             {
+                new Genre() {Name = "Unknown"},
                 new Genre() {Name = "Rock"},
                 new Genre() {Name = "Metal"},
                 new Genre() {Name = "Pop"},
                 new Genre() {Name = "Disco"},
                 new Genre() {Name = "Classic"},
+                new Genre() {Name = "Jazz"},
+                new Genre() {Name = "Country"},
+                new Genre() {Name = "Rap"},
+                new Genre() {Name = "RnB"},
+                new Genre() {Name = "Reggae"},
+                new Genre() {Name = "Folk"},
+                new Genre() {Name = "Blues"},
+                new Genre() {Name = "Punk"},
                 new Genre() {Name = "Other"}
             };
 
