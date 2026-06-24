@@ -97,6 +97,8 @@ function createAlbumContainer(albums) {
     //albumContainer.classList.add("discography-container");
     if (albums.length === 0) {
         albumContainer.textContent = "Brak albumów do wyświetlenia.";
+        albumContainer.style.color = "grey";
+        albumContainer.style.fontStyle = "italic";
         return albumContainer;
     }
     albums.forEach(album => {

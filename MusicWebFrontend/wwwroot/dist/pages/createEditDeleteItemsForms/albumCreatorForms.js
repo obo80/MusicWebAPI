@@ -13,13 +13,13 @@ import { toast } from "../../Utils/toast.js";
 import { displayAlbumsPage } from "../displayItemsSubpages/albumSubpage.js";
 import { CurrentUser } from "../user/currentUser.js";
 import { formField } from "./Shared/formField.js";
-import { createAlbumFormFields, editAlbumFormFields } from "./Shared/formFieldsCreator.js";
+import { artistIdFormFieldId, createAlbumFormFields, editAlbumFormFields } from "./Shared/formFieldsCreator.js";
 import { itemSharedForm } from "./Shared/ItemSharedForm.js";
 import { markOptionSelected } from "./Shared/SelectInput.js";
 import { getNumberIdByFieldId, updateArtistsSelectOptions } from "./Shared/SharedFormsUtils.js";
 const createAlbumFormHeaderText = "Dodaj album";
 const editAlbumFormHeaderText = "Edycja albumu";
-const artistIdFormFieldId = "artistId";
+//const artistIdFormFieldId = "artistId";
 export function createAlbum() {
     return __awaiter(this, void 0, void 0, function* () {
         console.log("Create album in progress");
@@ -55,7 +55,7 @@ export function createAlbum() {
 }
 export function editAlbum(albumId) {
     return __awaiter(this, void 0, void 0, function* () {
-        console.log("Edit album in progress");
+        //console.log("Edit album in progress");
         const albumFormFields = editAlbumFormFields();
         //const artistId = getNumberIdByFieldId(artistIdFormFieldId, albumFormFields);
         yield updateFormFieldsValueFromCurrentAlbumId(albumId, albumFormFields);
@@ -110,10 +110,9 @@ function updateFormFieldsValueFromCurrentAlbumId(albumId, albumFormFields) {
         const token = CurrentUser.token;
         const response = yield ApiGetMethodObjectDtoWithAuthorization(url, token);
         if (response.status === 200) {
-            const artistDto = response.data;
-            console.log(artistDto);
-            //artistFormFields.forEach(field => field.fieldValue = artistDto[field.fieldId]);
-            formField.getFormFieldsFromDto(artistDto, albumFormFields);
+            const albumDto = response.data;
+            //console.log(albumDto);
+            formField.getFormFieldsFromDto(albumDto, albumFormFields);
         }
     });
 }

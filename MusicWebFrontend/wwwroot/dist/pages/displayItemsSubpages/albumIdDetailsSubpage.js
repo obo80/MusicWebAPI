@@ -120,6 +120,8 @@ function renderAlbumSongsContainer(albumId) {
         else {
             const songDiv = createDivByClassName("artist-album-song");
             const songLi = createLiByClassName("artist-album-song");
+            songDiv.style.color = "gray";
+            songDiv.style.fontStyle = "italic";
             songDiv.innerHTML = "Brak utworów na albumie.";
             songsContainer.appendChild(songDiv);
         }

@@ -8,30 +8,28 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { mainURL } from "../../app.js";
-import { ApiPostMethodObjectDtoWithAuthorization } from "../../Utils/apiCommunication.js";
+import { ApiGetMethodObjectDtoWithAuthorization, ApiPostMethodObjectDtoWithAuthorization, ApiPutMethodObjectDtoWithAuthorization } from "../../Utils/apiCommunication.js";
 import { toast } from "../../Utils/toast.js";
 import { displaySongsPage } from "../displayItemsSubpages/songSupbpage.js";
 import { CurrentUser } from "../user/currentUser.js";
 import { formField } from "./Shared/formField.js";
-import { createSongFormFields } from "./Shared/formFieldsCreator.js";
+import { albumIdFormFieldId, artistIdFormFieldId, createSongFormFields, editSongFormFields } from "./Shared/formFieldsCreator.js";
 import { itemSharedForm } from "./Shared/ItemSharedForm.js";
+import { markCurretnItemInSelect, markOptionSelected } from "./Shared/SelectInput.js";
 import { getNumberIdByFieldId, updateAlbumsSelectOptions, updateArtistsSelectOptions } from "./Shared/SharedFormsUtils.js";
 const createSongFormHeaderText = "Dodaj utwór";
 const editSongFormHeaderText = "Edycja utworu";
-const artistIdFormFieldId = "artistId";
-const albumIdFormFieldId = "albumId";
+// const artistIdFormFieldId: string = "artistId";
+// const albumIdFormFieldId: string = "albumId";
 export function createSong() {
     return __awaiter(this, void 0, void 0, function* () {
         console.log("Create song in progress");
         const songFormFields = createSongFormFields();
         const songCreateForm = new itemSharedForm(songFormFields, null, null);
         yield songCreateForm.renderSongForm(createSongFormHeaderText, () => __awaiter(this, void 0, void 0, function* () {
-            //blokowanie i aktualizacja selecta albumu po wyborze artysty
-            //dodać wywołanie jakiejś funkcji która sprawdza czy jest wybrany artysta i aktualizuje selecta albumu
-            //i musi też w tym moim generyku zgadywać który select jest nasłuchiwany
-            //dodać jeszcze jakąś blokadę tego selecta, żeby nie mogło być wybrany jesli nie jest wybrany artysta
             //on Save
             console.log("On save");
+            console.log(songFormFields);
             const artistId = getNumberIdByFieldId(artistIdFormFieldId, songFormFields);
             //const albumId = getNumberIdByFieldId(albumIdFormFieldId, songFormFields);
             const response = yield createSongInApi(artistId, songFormFields);
@@ -55,6 +53,34 @@ export function createSong() {
 export function editSong(songId) {
     return __awaiter(this, void 0, void 0, function* () {
         console.log("Edit song in progress");
+        const songFormFields = editSongFormFields();
+        yield updateFormFieldsValueFromCurrentSongId(songId, songFormFields);
+        const songEditForm = new itemSharedForm(songFormFields, null, null);
+        yield songEditForm.renderSongForm(editSongFormHeaderText, () => __awaiter(this, void 0, void 0, function* () {
+            //on Save
+            console.log("On save");
+            const artistId = getNumberIdByFieldId(artistIdFormFieldId, songFormFields);
+            //const albumId = getNumberIdByFieldId(albumIdFormFieldId, songFormFields);
+            const response = yield editSongInApi(songId, artistId, songFormFields);
+            const statusCode = response.status;
+            if (statusCode === 200) {
+                toast.success("Utwór został zaktualizowany");
+                yield displaySongsPage();
+            }
+            else {
+                toast.error("Wystąpił błąd podczas edycji utworu");
+                console.log(statusCode, response);
+            }
+        }), () => __awaiter(this, void 0, void 0, function* () {
+            //on Cancel
+            console.log("Cancel");
+            toast.info("Anulowano dodawanie albumu");
+        }));
+        yield updateArtistsSelectOptions(artistIdFormFieldId);
+        // markCurretnItemInSelect(artistIdFormFieldId, songFormFields, true);
+        const artistId = getNumberIdByFieldId(artistIdFormFieldId, songFormFields);
+        yield updateAlbumsSelectOptions(albumIdFormFieldId, artistId, false);
+        markCurretnItemInSelect(albumIdFormFieldId, songFormFields, false);
     });
 }
 export function deleteSong(songId) {
@@ -64,22 +90,52 @@ export function deleteSong(songId) {
         }
     });
 }
+function markCurretnArtistInSelect(artistIdFormFieldId, formFields) {
+    const artistId = getNumberIdByFieldId(artistIdFormFieldId, formFields);
+    const artistSelect = document.getElementById(artistIdFormFieldId);
+    artistSelect.disabled = true;
+    markOptionSelected(artistSelect, artistId.toString());
+}
+function updateFormFieldsValueFromCurrentSongId(songId, songFormFields) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const url = mainURL + "song/" + songId;
+        const token = CurrentUser.token;
+        const response = yield ApiGetMethodObjectDtoWithAuthorization(url, token);
+        if (response.status === 200) {
+            const songDto = response.data;
+            //console.log(songDto);
+            formField.getFormFieldsFromDto(songDto, songFormFields);
+        }
+    });
+}
 function createSongInApi(artistId, songFormFields) {
     return __awaiter(this, void 0, void 0, function* () {
         const songDto = formField.getDtoFromFormFields(songFormFields);
+        console.log(songDto);
+        console.log("JSON: ", JSON.stringify(songDto));
         const url = mainURL + "artist/" + artistId.toString() + "/song";
         const token = CurrentUser.token;
         const response = yield ApiPostMethodObjectDtoWithAuthorization(url, songDto, token);
+        return response;
+    });
+}
+function editSongInApi(singId, artistId, songFormFields) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const songDto = formField.getDtoFromFormFields(songFormFields);
+        songDto.albumId = songDto.albumId === 0 ? songDto.albumId : null;
+        const url = mainURL + "artist/" + artistId.toString() + "/song/" + singId.toString();
+        const token = CurrentUser.token;
+        const response = yield ApiPutMethodObjectDtoWithAuthorization(url, songDto, token);
         console.log(songDto);
         return response;
     });
 }
-export function updateAlbumsSelectOptionsBySelectedArtist(currentFieldId, currentFieldValue) {
+export function updateAlbumsSelectOptionsBySelectedArtist(currentFieldId, currentFieldValue, isRequired) {
     return __awaiter(this, void 0, void 0, function* () {
         if (currentFieldId != artistIdFormFieldId)
             return;
         else {
-            yield updateAlbumsSelectOptions(albumIdFormFieldId, Number(currentFieldValue));
+            yield updateAlbumsSelectOptions(albumIdFormFieldId, Number(currentFieldValue), isRequired);
         }
     });
 }

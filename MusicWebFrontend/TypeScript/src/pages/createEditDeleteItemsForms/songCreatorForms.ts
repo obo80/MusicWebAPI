@@ -1,20 +1,21 @@
 ﻿import { mainURL } from "../../app.js";
 import { CreateSongDto } from "../../DTO/CreateItemsDto.js";
 import { SongDto } from "../../DTO/ItemsDto.js";
-import { ApiPostMethodObjectDtoWithAuthorization } from "../../Utils/apiCommunication.js";
+import { ApiGetMethodObjectDtoWithAuthorization, ApiPostMethodObjectDtoWithAuthorization, ApiPutMethodObjectDtoWithAuthorization } from "../../Utils/apiCommunication.js";
 import { toast } from "../../Utils/toast.js";
 import { displaySongsPage } from "../displayItemsSubpages/songSupbpage.js";
 import { CurrentUser } from "../user/currentUser.js";
 import { formField } from "./Shared/formField.js";
-import { createSongFormFields } from "./Shared/formFieldsCreator.js";
+import { albumIdFormFieldId, artistIdFormFieldId, createSongFormFields, editSongFormFields } from "./Shared/formFieldsCreator.js";
 import { itemSharedForm } from "./Shared/ItemSharedForm.js";
+import { markCurretnItemInSelect, markOptionSelected } from "./Shared/SelectInput.js";
 import { getNumberIdByFieldId, updateAlbumsSelectOptions, updateArtistsSelectOptions } from "./Shared/SharedFormsUtils.js";
 
 const createSongFormHeaderText = "Dodaj utwór";
 const editSongFormHeaderText = "Edycja utworu";
 
-const artistIdFormFieldId: string = "artistId";
-const albumIdFormFieldId: string = "albumId";
+// const artistIdFormFieldId: string = "artistId";
+// const albumIdFormFieldId: string = "albumId";
 
 export async function createSong() {
     console.log("Create song in progress");
@@ -25,13 +26,9 @@ export async function createSong() {
     await songCreateForm.renderSongForm(
         createSongFormHeaderText,
         async () => {
-            //blokowanie i aktualizacja selecta albumu po wyborze artysty
-            //dodać wywołanie jakiejś funkcji która sprawdza czy jest wybrany artysta i aktualizuje selecta albumu
-            //i musi też w tym moim generyku zgadywać który select jest nasłuchiwany
-            //dodać jeszcze jakąś blokadę tego selecta, żeby nie mogło być wybrany jesli nie jest wybrany artysta
-
             //on Save
             console.log("On save");
+            console.log(songFormFields);
             const artistId = getNumberIdByFieldId(artistIdFormFieldId, songFormFields);
             //const albumId = getNumberIdByFieldId(albumIdFormFieldId, songFormFields);
             const response = await createSongInApi(artistId, songFormFields);
@@ -50,13 +47,49 @@ export async function createSong() {
             console.log("Cancel");
             toast.info("Anulowano dodawanie albumu");
         }
-
     );
     await updateArtistsSelectOptions(artistIdFormFieldId);
+
+
+
 }
 
 export async function editSong(songId: number) {
     console.log("Edit song in progress");
+    const songFormFields: formField[] = editSongFormFields();
+    await updateFormFieldsValueFromCurrentSongId(songId, songFormFields);
+    const songEditForm = new itemSharedForm(songFormFields, null, null);
+
+    await songEditForm.renderSongForm(
+        editSongFormHeaderText,
+        async () => {
+            //on Save
+            console.log("On save");
+            const artistId = getNumberIdByFieldId(artistIdFormFieldId, songFormFields);
+            //const albumId = getNumberIdByFieldId(albumIdFormFieldId, songFormFields);
+            const response = await editSongInApi(songId, artistId, songFormFields);
+            const statusCode = response.status;
+            if (statusCode === 200) {
+                toast.success("Utwór został zaktualizowany");
+                await displaySongsPage();
+            }
+            else {
+                toast.error("Wystąpił błąd podczas edycji utworu");
+                console.log(statusCode, response);
+            }
+        },
+        async () => {
+            //on Cancel
+            console.log("Cancel");
+            toast.info("Anulowano dodawanie albumu");
+        }
+    );
+    await updateArtistsSelectOptions(artistIdFormFieldId);
+
+    // markCurretnItemInSelect(artistIdFormFieldId, songFormFields, true);
+    const artistId = getNumberIdByFieldId(artistIdFormFieldId, songFormFields);
+    await updateAlbumsSelectOptions(albumIdFormFieldId, artistId, false);
+    markCurretnItemInSelect(albumIdFormFieldId, songFormFields, false);
 }
 
 export async function deleteSong(songId: number) {
@@ -65,25 +98,54 @@ export async function deleteSong(songId: number) {
     }
 
 }
+function markCurretnArtistInSelect(artistIdFormFieldId: string, formFields: formField[]) {
+    const artistId = getNumberIdByFieldId(artistIdFormFieldId, formFields);
+    const artistSelect = document.getElementById(artistIdFormFieldId) as HTMLSelectElement;
+    artistSelect.disabled = true;
+    markOptionSelected(artistSelect, artistId.toString());
+}
 
+async function updateFormFieldsValueFromCurrentSongId(songId: number, songFormFields: formField[]): Promise<void> {
+    const url = mainURL + "song/" + songId;
+    const token = CurrentUser.token;
+    const response = await ApiGetMethodObjectDtoWithAuthorization<SongDto>(url, token);
+    if (response.status === 200) {
+        const songDto = response.data as unknown as SongDto;
+        //console.log(songDto);
 
+        formField.getFormFieldsFromDto<SongDto>(songDto, songFormFields);
+    }
+}
 
 async function createSongInApi(artistId: number, songFormFields: formField[]) {
     const songDto = formField.getDtoFromFormFields(songFormFields) as unknown as CreateSongDto;
-
+    console.log(songDto);
+    console.log("JSON: ", JSON.stringify(songDto));
     const url = mainURL + "artist/" + artistId.toString() + "/song";
     const token = CurrentUser.token;
+
     const response = await ApiPostMethodObjectDtoWithAuthorization<CreateSongDto, SongDto>(url, songDto, token);
+
+    
+    return response;
+}
+
+async function editSongInApi(singId: number, artistId: number, songFormFields: formField[]) {
+    const songDto = formField.getDtoFromFormFields(songFormFields) as unknown as CreateSongDto;
+    songDto.albumId = songDto.albumId === 0 ? songDto.albumId : null;
+    const url = mainURL + "artist/" + artistId.toString() + "/song/" + singId.toString();
+    const token = CurrentUser.token;
+    const response = await ApiPutMethodObjectDtoWithAuthorization<CreateSongDto, SongDto>(url, songDto, token);
 
     console.log(songDto);
     return response;
 }
 
-export async function updateAlbumsSelectOptionsBySelectedArtist(currentFieldId : string, currentFieldValue: string) {
+export async function updateAlbumsSelectOptionsBySelectedArtist(currentFieldId : string, currentFieldValue: string, isRequired: boolean) {
     if (currentFieldId != artistIdFormFieldId)
         return;
     else {
-        await updateAlbumsSelectOptions(albumIdFormFieldId, Number(currentFieldValue))
+        await updateAlbumsSelectOptions(albumIdFormFieldId, Number(currentFieldValue), isRequired)
     }
 
 }

@@ -93,7 +93,7 @@ export class itemSharedForm {
                 if (select) {
                     select.addEventListener("change", async () => {
                         field.fieldValue = select.value;
-                        await updateAlbumsSelectOptionsBySelectedArtist(field.fieldId, field.fieldValue);
+                        await updateAlbumsSelectOptionsBySelectedArtist(field.fieldId, field.fieldValue, false);
                     });
                 }
             }
@@ -127,12 +127,14 @@ export class itemSharedForm {
     }
 
     private updateFieldsValue(form: HTMLFormElement) {
-        console.log("Getting updated data...");
+        //console.log("Getting updated data...");
         this.formFields.forEach(field => {
             const div = form.querySelector(`#${field.fieldId}`) as HTMLDivElement;
             if (div) {
                 const input = div.querySelector("input, textarea") as HTMLInputElement;
                 if (input) {
+                    const inputValue = input.value;
+                    console.log(`Updating ${field.fieldId} with value: ${inputValue}`);
                     field.fieldValue = input.value;
                 }
             }

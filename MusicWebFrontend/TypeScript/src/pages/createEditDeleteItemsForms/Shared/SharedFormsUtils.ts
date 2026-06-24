@@ -7,6 +7,7 @@ import { CurrentUser } from "../../user/currentUser.js";
 import { formField, formfieldValue } from "./formField.js";
 import { appendSelectOptionsFromSelectDto } from "./SelectInput.js";
 
+
 export function getFormFieldsFromDto<T>(dto: T, formFields: formField[]) {
 formFields.forEach(field => {
     const value = dto[field.fieldId] as formfieldValue;
@@ -42,7 +43,7 @@ export async function updateArtistsSelectOptions(artistIdFormFieldId: string) {
     }
 } 
 
-export async function updateAlbumsSelectOptions(albumsIdFormFieldId: string, artistId: number) {
+export async function updateAlbumsSelectOptions(albumsIdFormFieldId: string, artistId: number, isRequired: boolean) {
     const form = document.querySelector("form") as HTMLFormElement;
     const div = form.querySelector(`#${albumsIdFormFieldId}`) as HTMLDivElement;
     if (div !== null) {
@@ -50,6 +51,9 @@ export async function updateAlbumsSelectOptions(albumsIdFormFieldId: string, art
         const albums = await getAlbumsByArtistId(artistId);
 
         const SelectOptions: SelectOptionsDto[] = [];
+        if (isRequired === false)
+            SelectOptions.push({ value: 0, text: "Brak albumu" });
+
         albums?.forEach(album => {
             const SelectOption: SelectOptionsDto = { value: album.id, text: album.title };
             SelectOptions.push(SelectOption);

@@ -6,7 +6,7 @@ import { toast } from "../../Utils/toast.js";
 import { displayAlbumsPage } from "../displayItemsSubpages/albumSubpage.js";
 import { CurrentUser } from "../user/currentUser.js";
 import { formField } from "./Shared/formField.js";
-import { createAlbumFormFields, editAlbumFormFields} from "./Shared/formFieldsCreator.js";
+import { artistIdFormFieldId, createAlbumFormFields, editAlbumFormFields} from "./Shared/formFieldsCreator.js";
 import { itemSharedForm } from "./Shared/ItemSharedForm.js";
 import { markOptionSelected } from "./Shared/SelectInput.js";
 import { getNumberIdByFieldId, updateArtistsSelectOptions } from "./Shared/SharedFormsUtils.js";
@@ -14,7 +14,7 @@ import { getNumberIdByFieldId, updateArtistsSelectOptions } from "./Shared/Share
 
 const createAlbumFormHeaderText = "Dodaj album";
 const editAlbumFormHeaderText = "Edycja albumu";
-const artistIdFormFieldId = "artistId";
+//const artistIdFormFieldId = "artistId";
 
 export async function createAlbum() {
     console.log("Create album in progress");
@@ -59,7 +59,7 @@ export async function createAlbum() {
 
 
 export async function editAlbum(albumId: number) {
-    console.log("Edit album in progress");
+    //console.log("Edit album in progress");
     const albumFormFields: formField[] = editAlbumFormFields();
     //const artistId = getNumberIdByFieldId(artistIdFormFieldId, albumFormFields);
     await updateFormFieldsValueFromCurrentAlbumId(albumId, albumFormFields);
@@ -105,7 +105,6 @@ function markCurretnArtistInSelect(artistIdFormFieldId: string, albumFormFields:
     const artistSelect = document.getElementById(artistIdFormFieldId) as HTMLSelectElement;
     artistSelect.disabled = true;
     markOptionSelected(artistSelect, artistId.toString());
-    
 }
 
 export async function deleteAlbum(albumId: number) {
@@ -118,10 +117,10 @@ async function updateFormFieldsValueFromCurrentAlbumId(albumId: number, albumFor
     const token = CurrentUser.token;
     const response = await ApiGetMethodObjectDtoWithAuthorization<AlbumDto>(url, token);
     if (response.status === 200) {
-        const artistDto = response.data as unknown as AlbumDto;
-        console.log(artistDto);
-        //artistFormFields.forEach(field => field.fieldValue = artistDto[field.fieldId]);
-        formField.getFormFieldsFromDto<AlbumDto>(artistDto, albumFormFields);
+        const albumDto = response.data as unknown as AlbumDto;
+        //console.log(albumDto);
+
+        formField.getFormFieldsFromDto<AlbumDto>(albumDto, albumFormFields);
     }
 }
 

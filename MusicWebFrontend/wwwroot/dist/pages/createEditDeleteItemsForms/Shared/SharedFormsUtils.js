@@ -45,7 +45,7 @@ export function updateArtistsSelectOptions(artistIdFormFieldId) {
         }
     });
 }
-export function updateAlbumsSelectOptions(albumsIdFormFieldId, artistId) {
+export function updateAlbumsSelectOptions(albumsIdFormFieldId, artistId, isRequired) {
     return __awaiter(this, void 0, void 0, function* () {
         const form = document.querySelector("form");
         const div = form.querySelector(`#${albumsIdFormFieldId}`);
@@ -53,6 +53,8 @@ export function updateAlbumsSelectOptions(albumsIdFormFieldId, artistId) {
             const albumsSelectElement = div.querySelector("select");
             const albums = yield getAlbumsByArtistId(artistId);
             const SelectOptions = [];
+            if (isRequired === false)
+                SelectOptions.push({ value: 0, text: "Brak albumu" });
             albums === null || albums === void 0 ? void 0 : albums.forEach(album => {
                 const SelectOption = { value: album.id, text: album.title };
                 SelectOptions.push(SelectOption);

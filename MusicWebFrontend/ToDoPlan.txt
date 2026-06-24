@@ -9,7 +9,19 @@ Listy artystów, albumów i utowrów
 Panel wyszukiwania i funkcje do obsługi plus CSS.
 
 ------	Logowanie użytkownika:
-	- zrobić metody w CurrentUser, które zwracają czy jest w roli kreator i admin
+
+DO Naprawy:
+- zmiana albumu przy edycji utworu nie działa
+- błąd dodawania kolejnych opcji bez usunięcia poprzednich na event listenerze 
+	- to chyba poprawione - do upewnienia się czy dobrze działa
+
+- Lista Utworów - do kafelków dodać informację o albumie
+- brak informacji o długości utworu w szczególach utworu
+
+FIXED 
+- Szczegółowy element - jak jest lista albumów albo utworów pusta to dodać jakiś styl aby odróżnić od normalnego 
+- Bład podczas dodawania i braku informacji o długości utworu albo o roku wydania. Bład chyba w wyniku tego że z field jest przekazywany pusty string zamiast nulla
+BŁedy wyświetlania: - Naprawione poprzez ustawianie null na wartości która idzie do wysłania
 
 Redirect z danego miejsca w inne
 - chodzi o to aby mozna było używać paska adresu. 
@@ -57,3 +69,6 @@ ZROBIONE:
 Do strony głównej dodać coś w main kontenerze:
 - pierwszy pomysł to 3 kolumny z kilkoma (top10) artysatmi, albumami, piosenkami
 - ale to po zaimplementowaniu szukania
+
+
+- zrobić metody w CurrentUser, które zwracają czy jest w roli kreator i admin

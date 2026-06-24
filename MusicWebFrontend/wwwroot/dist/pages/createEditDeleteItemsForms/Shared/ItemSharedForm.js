@@ -79,7 +79,7 @@ export class itemSharedForm {
                 if (select) {
                     select.addEventListener("change", () => __awaiter(this, void 0, void 0, function* () {
                         field.fieldValue = select.value;
-                        yield updateAlbumsSelectOptionsBySelectedArtist(field.fieldId, field.fieldValue);
+                        yield updateAlbumsSelectOptionsBySelectedArtist(field.fieldId, field.fieldValue, false);
                     }));
                 }
             }
@@ -107,12 +107,14 @@ export class itemSharedForm {
         }
     }
     updateFieldsValue(form) {
-        console.log("Getting updated data...");
+        //console.log("Getting updated data...");
         this.formFields.forEach(field => {
             const div = form.querySelector(`#${field.fieldId}`);
             if (div) {
                 const input = div.querySelector("input, textarea");
                 if (input) {
+                    const inputValue = input.value;
+                    console.log(`Updating ${field.fieldId} with value: ${inputValue}`);
                     field.fieldValue = input.value;
                 }
             }

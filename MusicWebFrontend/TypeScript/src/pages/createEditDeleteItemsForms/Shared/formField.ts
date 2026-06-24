@@ -104,13 +104,17 @@ export class formField {
             if (typeof value === 'string' && value.trim() !== '' && !isNaN(Number(value))) {
                 value = Number(value);
             }
+            else if (value === 'undefined') value = null;
+            else if (value === '') value = null;
             else if (value === 'null') value = null;
             else if (value === 'true') value = true;
             else if (value === 'false') value = false;
             else value = value;
 
             payload[field.fieldId] = value;
+            
         })
+        console.log("payload", payload);
         return payload;
     };
 
