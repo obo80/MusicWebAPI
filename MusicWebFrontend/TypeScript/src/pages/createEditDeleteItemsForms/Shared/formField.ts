@@ -37,21 +37,17 @@ export class formField {
     createInputElement__Factory(): HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement {
         if (this._inputType === "select") {
             const element = document.createElement("select");
-            //<option value="red">Czerwony</option>
             element.innerHTML = `<option value="">\<--Wybierz--\></option>`;
-            //element.id = this._inputId;
             return element;
         }
         else if (this._inputType === "textarea") {
             const element = document.createElement("textarea");
             element.rows = 15;
-            //element.id = this._inputId;
             return element;
         }
         else {
             const element = document.createElement("input");
             element.type = this._inputType;
-            //element.id = this._inputId;
             return element;
         }
     }

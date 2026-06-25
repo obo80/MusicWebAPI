@@ -19,18 +19,15 @@ import { markOptionSelected } from "./Shared/SelectInput.js";
 import { getNumberIdByFieldId, updateArtistsSelectOptions } from "./Shared/SharedFormsUtils.js";
 const createAlbumFormHeaderText = "Dodaj album";
 const editAlbumFormHeaderText = "Edycja albumu";
-//const artistIdFormFieldId = "artistId";
 export function createAlbum() {
     return __awaiter(this, void 0, void 0, function* () {
         console.log("Create album in progress");
         const albumFormFields = createAlbumFormFields();
         const albumCreateForm = new itemSharedForm(albumFormFields, null, null);
-        // let artistId = 2;
         yield albumCreateForm.renderAlbumForm(createAlbumFormHeaderText, () => __awaiter(this, void 0, void 0, function* () {
             //onSave
             console.log("On save");
             const artistId = getNumberIdByFieldId(artistIdFormFieldId, albumFormFields);
-            //console.log(artistId);
             if (!artistId || artistId === 0) {
                 toast.error("Wybierz artystę");
                 return;
@@ -55,14 +52,12 @@ export function createAlbum() {
 }
 export function editAlbum(albumId) {
     return __awaiter(this, void 0, void 0, function* () {
-        //console.log("Edit album in progress");
         const albumFormFields = editAlbumFormFields();
-        //const artistId = getNumberIdByFieldId(artistIdFormFieldId, albumFormFields);
         yield updateFormFieldsValueFromCurrentAlbumId(albumId, albumFormFields);
         const albumEditForm = new itemSharedForm(albumFormFields, null, null);
         albumEditForm.renderAlbumForm(editAlbumFormHeaderText, () => __awaiter(this, void 0, void 0, function* () {
             //onSave
-            console.log("On save");
+            //console.log("On save");
             const artistId = getNumberIdByFieldId("artistId", albumFormFields);
             if (!artistId || artistId === 0) {
                 toast.error("Wybierz artystę");
@@ -79,12 +74,11 @@ export function editAlbum(albumId) {
                 console.log(statusCode, response);
             }
         }), () => {
-            console.log("Cancel");
+            //onCancel
+            //console.log("onCancel");
             toast.info("Anulowano edycje albumu");
         });
         yield updateArtistsSelectOptions(artistIdFormFieldId);
-        //markCurretnArtistInSelect(artistIdFormFieldId, albumFormFields);
-        //disableArtistSelect(artistIdFormFieldId);
     });
 }
 function disableArtistSelect(artistIdFormFieldId) {
@@ -111,7 +105,6 @@ function updateFormFieldsValueFromCurrentAlbumId(albumId, albumFormFields) {
         const response = yield ApiGetMethodObjectDtoWithAuthorization(url, token);
         if (response.status === 200) {
             const albumDto = response.data;
-            //console.log(albumDto);
             formField.getFormFieldsFromDto(albumDto, albumFormFields);
         }
     });

@@ -19,7 +19,7 @@ export async function createArtist() {
         artistCreateFormHeaderText,
         async () => {
             //onSave
-            console.log("On save");
+            //console.log("On save");
             const response = await createArtistInApi(artistFormFields);
             const statusCode = response.status;
             if (statusCode === 201) {
@@ -33,7 +33,7 @@ export async function createArtist() {
         },
         () => {
             //onCancel
-            console.log("Cancel");
+            //console.log("on Cancel");
             toast.info("Anulowano dodawanie artysty")
         });
     
@@ -47,7 +47,7 @@ export async function editArtist(artistId: number) {
         artistEditFormHeaderText,
         async () => {
             //onSave
-            console.log("On save");
+            //console.log("On save");
             const response = await editArtistsInApi(artistId, artistFormFields); 
             const statusCode = response.status;
             if (statusCode === 200) {
@@ -61,7 +61,7 @@ export async function editArtist(artistId: number) {
         },
         () => {
             //onCancel
-            console.log("Cancel");
+            //console.log("Cancel");
             toast.info("Anulowano edycje artysty")
         });
 }
@@ -85,7 +85,6 @@ async function updateFormFieldsValueFromCurrentArtistId(artistId: number, artist
     if (response.status === 200) {
         const artistDto = response.data as unknown as ArtistDto;
         console.log(artistDto);
-        //artistFormFields.forEach(field => field.fieldValue = artistDto[field.fieldId]);
         formField.getFormFieldsFromDto<ArtistDto>(artistDto, artistFormFields);
     }
 

@@ -22,7 +22,7 @@ export function createArtist() {
         const artistCreateForm = new itemSharedForm(artistFormFields, null, null);
         yield artistCreateForm.renderArtistForm(artistCreateFormHeaderText, () => __awaiter(this, void 0, void 0, function* () {
             //onSave
-            console.log("On save");
+            //console.log("On save");
             const response = yield createArtistInApi(artistFormFields);
             const statusCode = response.status;
             if (statusCode === 201) {
@@ -35,7 +35,7 @@ export function createArtist() {
             }
         }), () => {
             //onCancel
-            console.log("Cancel");
+            //console.log("on Cancel");
             toast.info("Anulowano dodawanie artysty");
         });
     });
@@ -48,7 +48,7 @@ export function editArtist(artistId) {
         const artistEditForm = new itemSharedForm(artistFormFields, null, artistId.toString());
         artistEditForm.renderArtistForm(artistEditFormHeaderText, () => __awaiter(this, void 0, void 0, function* () {
             //onSave
-            console.log("On save");
+            //console.log("On save");
             const response = yield editArtistsInApi(artistId, artistFormFields);
             const statusCode = response.status;
             if (statusCode === 200) {
@@ -61,7 +61,7 @@ export function editArtist(artistId) {
             }
         }), () => {
             //onCancel
-            console.log("Cancel");
+            //console.log("Cancel");
             toast.info("Anulowano edycje artysty");
         });
     });
@@ -85,7 +85,6 @@ function updateFormFieldsValueFromCurrentArtistId(artistId, artistFormFields) {
         if (response.status === 200) {
             const artistDto = response.data;
             console.log(artistDto);
-            //artistFormFields.forEach(field => field.fieldValue = artistDto[field.fieldId]);
             formField.getFormFieldsFromDto(artistDto, artistFormFields);
         }
     });

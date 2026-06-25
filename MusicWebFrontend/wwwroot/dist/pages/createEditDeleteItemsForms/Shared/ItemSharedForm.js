@@ -97,7 +97,6 @@ export class itemSharedForm {
                 modalOverlayContainer.remove();
             });
         }
-        //form.qu
         if (cancelButton) {
             cancelButton.addEventListener("click", (event) => {
                 event.preventDefault();

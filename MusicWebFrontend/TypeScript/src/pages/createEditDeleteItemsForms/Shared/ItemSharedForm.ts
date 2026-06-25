@@ -115,8 +115,6 @@ export class itemSharedForm {
                 });
         }
 
-        //form.qu
-
         if (cancelButton) {
             cancelButton.addEventListener("click", (event) => {
                 event.preventDefault();
