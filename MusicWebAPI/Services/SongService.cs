@@ -145,12 +145,15 @@ namespace MusicWebAPI.Services
         {
             if (dtoSongAlbumId.HasValue)
             {
-                var album = artist.Albums.FirstOrDefault(al => al.Id == dtoSongAlbumId.Value);
+                var album = artist.Albums!.FirstOrDefault(al => al.Id == dtoSongAlbumId.Value);
                 if (album is null)
                     throw new NotFoundException("Album not found for this artist");
 
-                song.AlbumId = dtoSongAlbumId;
+                song.AlbumId = album.Id;
             }
+            else
+                song.AlbumId = null;
+
         }
 
         public async Task DeleteAllAlbumSongs(int albumId)
