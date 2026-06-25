@@ -53,7 +53,6 @@ export function createSongCard(songDto) {
     return cardTile;
 }
 export const displaySongsPage = () => __awaiter(void 0, void 0, void 0, function* () {
-    //alert("Wyświetlanie strony utworów");
     const header = "Utwory";
     const subheader = `<p>Ta strona zawiera listę utworów, które są dostępne w naszej bibliotece.</p>
     <p>Wybierz utwór, aby dowiedzieć się wiecej.</p>`;
@@ -71,7 +70,6 @@ export const displaySongsPage = () => __awaiter(void 0, void 0, void 0, function
     else {
         const songsData = padedResult.items;
         if (songsData) {
-            //console.log("Pobrano dane utworów:", songsData);
             songsData.forEach((songDto) => {
                 const songTile = createSongCard(songDto);
                 TilesGrid.appendChild(songTile);

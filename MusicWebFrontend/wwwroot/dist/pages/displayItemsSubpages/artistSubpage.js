@@ -32,7 +32,6 @@ export function createArtistCard(artistDto) {
     const tileDetails = cardTile.querySelector(".details-inner");
     if (tileDetails) {
         const description = artistDto.description ? artistDto.description : "Brak opisu";
-        //const description = `lorem ipsum dolor sit amet, consectetur adipiscing elit.</br> Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.lorem ipsum dolor sit amet, consectetur adipiscing elit.</br> Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.lorem ipsum dolor sit amet, consectetur adipiscing elit.</br> Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.lorem ipsum dolor sit amet, consectetur adipiscing elit.</br> Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`;
         const descriptionElement = document.createElement("div");
         descriptionElement.classList.add("tile-description");
         descriptionElement.innerHTML = `<p><strong>Opis:</strong></p><p>${description}</p>`;

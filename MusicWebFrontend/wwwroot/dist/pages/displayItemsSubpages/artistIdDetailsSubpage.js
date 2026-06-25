@@ -28,7 +28,6 @@ export function renderArtistDetailsPage(artistId) {
         }
         //get data from api
         const url = mainURL + "artist/" + artistId;
-        //console.log(url);
         const artistDto = yield getArtistDtoFromApi(url);
         //eror - artist not found
         if (!artistDto) {

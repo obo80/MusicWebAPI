@@ -14,7 +14,6 @@ export async function renderSongDetailsPage(songId: number) {
 
     //get data from api
     const url: string = mainURL + "song/" + songId;
-    //console.log(url);
 
     const songDto = await getSongDtoFromApi(url);
     //eror - artist not found
@@ -69,7 +68,7 @@ function renderSongSongDetailsContainer(song: SongDto, songContainer: HTMLDivEle
 
     //rating
     const songDetailsRatingDiv = createDivByClassName("song-details-rating");
-    //const rating = album.averageRating ? album.averageRating : 0;
+
     const rating: string = (song.averageRating || song.averageRating > 0) ? song.averageRating.toString() : "Brak oceny";
     songDetailsRatingDiv.innerHTML = `<span style="font-weight: bold;">Ocena: </span>` + rating; //("Ocena: );
     songDetailsContainer.appendChild(songDetailsRatingDiv);

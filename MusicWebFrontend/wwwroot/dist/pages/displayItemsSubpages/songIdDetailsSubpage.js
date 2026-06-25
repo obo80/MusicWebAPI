@@ -19,7 +19,6 @@ export function renderSongDetailsPage(songId) {
         }
         //get data from api
         const url = mainURL + "song/" + songId;
-        //console.log(url);
         const songDto = yield getSongDtoFromApi(url);
         //eror - artist not found
         if (!songDto) {
@@ -62,7 +61,6 @@ function renderSongSongDetailsContainer(song, songContainer) {
     const songDetailsContainer = createDivByClassName("song-details-container");
     //rating
     const songDetailsRatingDiv = createDivByClassName("song-details-rating");
-    //const rating = album.averageRating ? album.averageRating : 0;
     const rating = (song.averageRating || song.averageRating > 0) ? song.averageRating.toString() : "Brak oceny";
     songDetailsRatingDiv.innerHTML = `<span style="font-weight: bold;">Ocena: </span>` + rating; //("Ocena: );
     songDetailsContainer.appendChild(songDetailsRatingDiv);

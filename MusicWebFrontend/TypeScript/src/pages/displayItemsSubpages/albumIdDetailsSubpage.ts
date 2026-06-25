@@ -15,7 +15,6 @@ export async function renderAlbumDetailsPage(albumId: number) {
 
     //get data from api
     const url: string = mainURL + "album/" + albumId;
-    //console.log(url);
 
     const albumDto = await getAlbumDtoFromApi(url);
     //eror - artist not found
@@ -56,16 +55,14 @@ function renderAlbumHeaderContainer(album: AlbumDto, albumContainer: HTMLDivElem
     artistNameDiv.innerHTML = artistName;
     albumHeaderContainer.appendChild(artistNameDiv);
 
-
-
     albumContainer.appendChild(albumHeaderContainer);
-
 }
 
 
 
 export async function renderAlbumDetailsContainer(album: AlbumDto, albumContainer: HTMLDivElement): Promise<void> {
     const albumDetailsContainer = createDivByClassName("artist-album-details-container");
+
     //top div for album details
     const albumDetailsTopContainer = createDivByClassName("artist-album-details-top-container");
 
@@ -87,21 +84,10 @@ export async function renderAlbumDetailsContainer(album: AlbumDto, albumContaine
 
     const albumDetailsDescription = createDivByClassName("artist-album-details-description");
     albumDetailsDescription.innerHTML = album.description ? album.description.toString() : "Brak opisu";
-    // albumDetailsDescription.innerHTML = `<p>lorem ipsum dolor sit amet, consectetur adipiscing elit.</br> Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-    // <p>lorem ipsum dolor sit amet, consectetur adipiscing elit.</br> Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-    // <p>lorem ipsum dolor sit amet, consectetur adipiscing elit.</br> Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-    // <p>lorem ipsum dolor sit amet, consectetur adipiscing elit.</br> Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-    // <p>lorem ipsum dolor sit amet, consectetur adipiscing elit.</br> Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-    // <p>lorem ipsum dolor sit amet, consectetur adipiscing elit.</br> Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-    // <p>lorem ipsum dolor sit amet, consectetur adipiscing elit.</br> Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-    // <p>lorem ipsum dolor sit amet, consectetur adipiscing elit.</br> Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-    // `;
 
     albumDetailsTopContainer.appendChild(albumDetailsDescription);
 
-
     const albumBottomContainerForSongs = await renderAlbumSongsContainer(album.id);
-
 
     albumDetailsContainer.appendChild(albumDetailsTopContainer);
     albumDetailsContainer.appendChild(albumBottomContainerForSongs);
@@ -114,19 +100,8 @@ export async function renderAlbumDetailsContainer(album: AlbumDto, albumContaine
 
 async function renderAlbumSongsContainer(albumId: number): Promise<HTMLDivElement> {
     const songsContainer = createDivByClassName("artist-album-song-list-container");
-    //temp
-    songsContainer.innerHTML = `<h3 class="artist-album-song">Utwory:</h3>`;
-    // <div class="artist-album-song">Jakaś pioenka</div>
-    // <div class="artist-album-song">Wesoła piosenka</div>
-    // <div class="artist-album-song">Inna pieśń</div>
-    // <div class="artist-album-song">Jakaś pierdoła</div>
-    // <div class="artist-album-song">Dziwny utwór</div>
-    // <div class="artist-album-song">Przebój nad przeboje</div>
-    // <div class="artist-album-song">Gowniany hit na eurowizje</div>
-    // <div class="artist-album-song">Tego lepiej nie słuchaj</div>
-    // <div class="artist-album-song">To nawet może być</div>
-    // <div class="artist-album-song">A to już kompletna padak, ale trzeba było coś dodać</div>`
 
+    songsContainer.innerHTML = `<h3 class="artist-album-song">Utwory:</h3>`;
 
     const url: string = mainURL + "album/" + albumId + "/songs";
     const songsDto: SongDto[] = await getSongsDtoForAlbumFromApi(url);
@@ -161,7 +136,7 @@ async function getSongsDtoForAlbumFromApi(url: string): Promise<SongDto[]> {
         }
         const data = await response.json() as PagedResultDto<SongDto>;
         console.log(`Data fetched from ${url}:`);
-        // console.log("A dane to:", data);
+
         return data.items;
 
     } catch (error) {

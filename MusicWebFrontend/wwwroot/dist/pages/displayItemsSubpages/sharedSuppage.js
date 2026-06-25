@@ -11,12 +11,11 @@ export function createMainContentContainerElement(header, subheader, itemType) {
     subheaderElement.innerHTML = subheader;
     mainHeaderElement.appendChild(headerElement);
     mainHeaderElement.appendChild(subheaderElement);
-    //Kontener na całą siatkę kafelków
+    //container for tiles grid
     const tileContainer = createDivByClassName("tiles-query-grid");
     const queryContainer = createDivByClassName("query-container");
     const topButtonsContainer = createTopButtonsContainer(itemType);
     queryContainer.textContent = "Tutaj będzie można filtrować i sortować wyniki.-- PLACEHOLDER";
-    // Dodajemy kontener zapytań do głównej zawartości - to do na potem
     const tilesGrid = createDivByClassName("tiles-grid");
     tileContainer.appendChild(queryContainer);
     tileContainer.appendChild(topButtonsContainer);

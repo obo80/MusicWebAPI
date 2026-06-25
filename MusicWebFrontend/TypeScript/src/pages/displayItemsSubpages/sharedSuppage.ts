@@ -18,13 +18,12 @@ export function createMainContentContainerElement(header: string, subheader: str
     mainHeaderElement.appendChild(headerElement);
     mainHeaderElement.appendChild(subheaderElement);
 
-    //Kontener na całą siatkę kafelków
+    //container for tiles grid
     const tileContainer = createDivByClassName("tiles-query-grid");
     const queryContainer = createDivByClassName("query-container");
     const topButtonsContainer = createTopButtonsContainer(itemType);
 
     queryContainer.textContent = "Tutaj będzie można filtrować i sortować wyniki.-- PLACEHOLDER";
-    // Dodajemy kontener zapytań do głównej zawartości - to do na potem
 
     const tilesGrid = createDivByClassName("tiles-grid");
 
@@ -100,7 +99,6 @@ export function createDetailsButtonsDiv(item: ItemDTO, itemType: ItemType): HTML
         editButton.style.display = "none";
         deleteButton.style.display = "none";
     }
-    
 
     moreDetailsButton.classList.add("btn-detail", "has-tooltip");
     editButton.classList.add("btn-detail", "has-tooltip");
@@ -112,11 +110,8 @@ export function createDetailsButtonsDiv(item: ItemDTO, itemType: ItemType): HTML
     deleteButton.setAttribute("data-tooltip", "Usuń");
     ratingButton.setAttribute("data-tooltip", "Zobacz oceny lub dodaj swoją ");
 
-
-
     moreDetailsButton.setAttribute("id", "moreDetails");
     moreDetailsButton.setAttribute("onclick", "event.stopPropagation()");
-
 
     ratingButton.setAttribute("id", "ratingDetails");
     ratingButton.setAttribute("onclick", "event.stopPropagation()");
@@ -127,14 +122,10 @@ export function createDetailsButtonsDiv(item: ItemDTO, itemType: ItemType): HTML
     deleteButton.setAttribute("id", "deleteDetails");
     deleteButton.setAttribute("onclick", "event.stopPropagation()");
 
-
     moreDetailsButton.textContent = "↗️ Szczegóły";
     ratingButton.textContent = "⭐ Ocena";
     editButton.textContent = "✏️";
     deleteButton.textContent = "❌";
-    
-
-
 
     moreDetailsButton.addEventListener("click", () => renderDetailsSubpage(item.id, itemType));
 
@@ -148,7 +139,6 @@ export function createDetailsButtonsDiv(item: ItemDTO, itemType: ItemType): HTML
     detailsButtonsDiv.appendChild(ratingButton);
     detailsButtonsDiv.appendChild(editButton);
     detailsButtonsDiv.appendChild(deleteButton);
-
 
     return detailsButtonsDiv;
 }

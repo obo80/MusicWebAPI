@@ -23,7 +23,6 @@ export async function renderArtistDetailsPage(artistId: number) {
 
     //get data from api
     const url: string = mainURL + "artist/" + artistId;
-    //console.log(url);
 
     const artistDto = await getArtistDtoFromApi(url);
     //eror - artist not found

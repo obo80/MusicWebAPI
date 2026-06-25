@@ -21,15 +21,12 @@ export function renderDetailsSubpage(id, itemType) {
     switch (itemType) {
         case "artist":
             renderArtistDetailsPage(id);
-            //console.log("Wyświetlanie szczegółów artysty o id:", id);
             break;
         case "album":
             renderAlbumDetailsPage(id);
-            //console.log("Wyświetlanie szczegółów albumu o id:", id);
             break;
         case "song":
             renderSongDetailsPage(id);
-            //console.log("Wyświetlanie szczegółów utworu o id:", id);
             break;
         default:
             console.error(`Nieobsługiwany typ: ${itemType}`);
@@ -40,15 +37,12 @@ export function renderEditItemSubpage(id, itemType) {
         switch (itemType) {
             case "artist":
                 yield editArtist(id);
-                //console.log("Edycja szczegółów artysty o id:", id);
                 break;
             case "album":
                 yield editAlbum(id);
-                //console.log("Edycja szczegółów albumu o id:", id);
                 break;
             case "song":
                 yield editSong(id);
-                //console.log("Edycja szczegółów utworu o id:", id);
                 break;
             default:
                 console.error(`Nieobsługiwany typ: ${itemType}`);
@@ -60,15 +54,12 @@ export function renderCreateItemSubpage(itemType) {
         switch (itemType) {
             case "artist":
                 yield createArtist();
-                //console.log("Tworzenie nowego artysty");
                 break;
             case "album":
                 yield createAlbum();
-                //console.log("Tworzenie nowego albumu");
                 break;
             case "song":
                 yield createSong();
-                //console.log("Tworzenie nowego utworu");
                 break;
             default:
                 console.error(`Nieobsługiwany typ: ${itemType}`);
@@ -80,15 +71,12 @@ export function renderDeleteItemSubpage(id, itemType) {
         switch (itemType) {
             case "artist":
                 yield deleteArtist(id);
-                //console.log("Usuwanie artysty o id:", id);
                 break;
             case "album":
                 yield deleteAlbum(id);
-                //console.log("Usuwanie albumu o id:", id);
                 break;
             case "song":
                 yield deleteSong(id);
-                //console.log("Usuwanie utworu o id:", id);
                 break;
             default:
                 console.error(`Nieobsługiwany typ: ${itemType}`);

@@ -62,7 +62,7 @@ export function createSongCard(songDto: SongDto): HTMLElement {
 
 
 export const displaySongsPage = async () => {
-    //alert("Wyświetlanie strony utworów");
+
     const header = "Utwory";
     const subheader = `<p>Ta strona zawiera listę utworów, które są dostępne w naszej bibliotece.</p>
     <p>Wybierz utwór, aby dowiedzieć się wiecej.</p>`;
@@ -82,7 +82,6 @@ export const displaySongsPage = async () => {
     else {
         const songsData = padedResult.items;
         if (songsData) {
-            //console.log("Pobrano dane utworów:", songsData);
             songsData.forEach((songDto: SongDto) => {
                 const songTile = createSongCard(songDto);
                 TilesGrid.appendChild(songTile);

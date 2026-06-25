@@ -78,7 +78,6 @@ export const displayAlbumsPage = async () => {
     else {
         const albumsData = padedResult.items;
         if (albumsData) {
-            //console.log("Pobrano dane albumów:", albumsData);
             albumsData.forEach((albumDto: AlbumDto) => {
                 const albumTile = createAlbumCard(albumDto);
                 TilesGrid.appendChild(albumTile);

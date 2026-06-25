@@ -16,18 +16,15 @@ export function renderDetailsSubpage(id: number, itemType: ItemType) {
 
     switch (itemType) {
         case "artist":
-            renderArtistDetailsPage(id)
-            //console.log("Wyświetlanie szczegółów artysty o id:", id);
+            renderArtistDetailsPage(id);
             break;
 
         case "album":
             renderAlbumDetailsPage(id);
-            //console.log("Wyświetlanie szczegółów albumu o id:", id);
             break;
 
         case "song":
             renderSongDetailsPage(id);
-            //console.log("Wyświetlanie szczegółów utworu o id:", id);
             break;
 
         default:
@@ -40,17 +37,14 @@ export async function renderEditItemSubpage(id: number, itemType: ItemType) {
     switch (itemType) {
         case "artist":
             await editArtist(id);
-            //console.log("Edycja szczegółów artysty o id:", id);
             break;
 
         case "album":
             await editAlbum(id);
-            //console.log("Edycja szczegółów albumu o id:", id);
             break;
 
         case "song":
             await editSong(id);
-            //console.log("Edycja szczegółów utworu o id:", id);
             break;
 
         default:
@@ -62,17 +56,14 @@ export async function renderCreateItemSubpage(itemType: ItemType) {
     switch (itemType) {
         case "artist":
             await createArtist();
-            //console.log("Tworzenie nowego artysty");
             break;
 
         case "album":
             await createAlbum();
-            //console.log("Tworzenie nowego albumu");
             break;
 
         case "song":
             await createSong();
-            //console.log("Tworzenie nowego utworu");
             break;
 
         default:
@@ -83,17 +74,14 @@ export async function renderDeleteItemSubpage(id: number, itemType: ItemType) {
     switch (itemType) {
         case "artist":
             await deleteArtist(id);
-            //console.log("Usuwanie artysty o id:", id);
             break;
 
         case "album":
             await deleteAlbum(id);
-            //console.log("Usuwanie albumu o id:", id);
             break;
 
         case "song":
             await deleteSong(id);
-            //console.log("Usuwanie utworu o id:", id);
             break;
 
         default:
