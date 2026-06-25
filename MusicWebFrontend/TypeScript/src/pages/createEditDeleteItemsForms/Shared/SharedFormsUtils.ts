@@ -52,7 +52,7 @@ export async function updateAlbumsSelectOptions(albumsIdFormFieldId: string, art
 
         const SelectOptions: SelectOptionsDto[] = [];
         if (isRequired === false)
-            SelectOptions.push({ value: 0, text: "Brak albumu" });
+            SelectOptions.push({ value: 0, text: "--Brak albumu--" });
 
         albums?.forEach(album => {
             const SelectOption: SelectOptionsDto = { value: album.id, text: album.title };

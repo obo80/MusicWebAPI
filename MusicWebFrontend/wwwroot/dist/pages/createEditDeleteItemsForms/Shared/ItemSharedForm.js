@@ -107,14 +107,12 @@ export class itemSharedForm {
         }
     }
     updateFieldsValue(form) {
-        //console.log("Getting updated data...");
         this.formFields.forEach(field => {
             const div = form.querySelector(`#${field.fieldId}`);
             if (div) {
                 const input = div.querySelector("input, textarea");
                 if (input) {
                     const inputValue = input.value;
-                    console.log(`Updating ${field.fieldId} with value: ${inputValue}`);
                     field.fieldValue = input.value;
                 }
             }

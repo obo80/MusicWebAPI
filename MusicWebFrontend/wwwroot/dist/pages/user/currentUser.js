@@ -95,7 +95,7 @@ export class CurrentUser {
     }
     setCurrentUserByToken() {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log("Ustawianie danych użytkownika w CurrentUser.");
+            //console.log("Ustawianie danych użytkownika w CurrentUser.");
             try {
                 const userData = yield this.getCurrentUserDataFromApi(CurrentUser._token);
                 if (userData !== null) {

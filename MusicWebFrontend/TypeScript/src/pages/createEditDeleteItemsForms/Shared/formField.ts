@@ -67,18 +67,6 @@ export class formField {
         label.textContent = this._labelText;
         label.htmlFor = this._inputId;
         const input = this.createInputElement__Factory();
-        // if (this._inputType === "select") {
-        //     input = document.createElement("select");
-        //     console.log("tworze select dla " + this._fieldId);
-        // }
-        // if (this._inputType === "textarea") {
-        //     input = document.createElement("textarea") as HTMLTextAreaElement;
-        //     input.rows = 15;
-        // }
-        // else {
-        //     input = document.createElement("input");
-        //     input.type = this._inputType;
-        // }
 
         input.id = this._inputId;
 

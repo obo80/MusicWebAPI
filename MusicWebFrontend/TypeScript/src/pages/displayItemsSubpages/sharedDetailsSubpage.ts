@@ -170,12 +170,11 @@ function createTopButtonsContainer(id: number, itemType: ItemType): HTMLElement 
             break;
 
         case null:
-            console.log("Nic nie robić dla null");
+            //console.log("Nic nie robić dla null");
             editButtonText = "🎵 Nowy...";
             break;
 
         default:
-
             console.error(`Nieobsługiwany typ: ${itemType}`);
     }
 

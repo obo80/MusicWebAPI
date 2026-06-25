@@ -122,7 +122,9 @@ function createSongInApi(artistId, songFormFields) {
 function editSongInApi(singId, artistId, songFormFields) {
     return __awaiter(this, void 0, void 0, function* () {
         const songDto = formField.getDtoFromFormFields(songFormFields);
-        songDto.albumId = songDto.albumId === 0 ? songDto.albumId : null;
+        songDto.albumId = songDto.albumId === 0 ? null : songDto.albumId;
+        const albumID = songDto.albumId;
+        console.log("editSongInApi", albumID);
         const url = mainURL + "artist/" + artistId.toString() + "/song/" + singId.toString();
         const token = CurrentUser.token;
         const response = yield ApiPutMethodObjectDtoWithAuthorization(url, songDto, token);

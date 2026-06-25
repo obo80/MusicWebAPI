@@ -42,7 +42,7 @@ function createTopButtonsContainer(itemType) {
             newButtonText = "🎵 Nowy utwor";
             break;
         case null:
-            console.log("Nic nie robić dla null");
+            //console.log("Nic nie robić dla null");
             newButtonText = "🎵 Nowy...";
             break;
         default:

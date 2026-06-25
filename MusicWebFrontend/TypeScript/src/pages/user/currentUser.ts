@@ -109,7 +109,7 @@ export class CurrentUser {
     }
 
     private async setCurrentUserByToken()  {
-        console.log("Ustawianie danych użytkownika w CurrentUser.");
+        //console.log("Ustawianie danych użytkownika w CurrentUser.");
         try {
             const userData = await this.getCurrentUserDataFromApi(CurrentUser._token!);
             if (userData !== null) {

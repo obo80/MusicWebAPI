@@ -147,7 +147,7 @@ function createTopButtonsContainer(id, itemType) {
             deleteButtonText = "❌ Usuń utwor";
             break;
         case null:
-            console.log("Nic nie robić dla null");
+            //console.log("Nic nie robić dla null");
             editButtonText = "🎵 Nowy...";
             break;
         default:

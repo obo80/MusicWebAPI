@@ -54,7 +54,7 @@ export function updateAlbumsSelectOptions(albumsIdFormFieldId, artistId, isRequi
             const albums = yield getAlbumsByArtistId(artistId);
             const SelectOptions = [];
             if (isRequired === false)
-                SelectOptions.push({ value: 0, text: "Brak albumu" });
+                SelectOptions.push({ value: 0, text: "--Brak albumu--" });
             albums === null || albums === void 0 ? void 0 : albums.forEach(album => {
                 const SelectOption = { value: album.id, text: album.title };
                 SelectOptions.push(SelectOption);

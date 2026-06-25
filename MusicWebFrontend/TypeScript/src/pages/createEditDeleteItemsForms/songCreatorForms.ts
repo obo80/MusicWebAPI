@@ -132,7 +132,11 @@ async function createSongInApi(artistId: number, songFormFields: formField[]) {
 
 async function editSongInApi(singId: number, artistId: number, songFormFields: formField[]) {
     const songDto = formField.getDtoFromFormFields(songFormFields) as unknown as CreateSongDto;
-    songDto.albumId = songDto.albumId === 0 ? songDto.albumId : null;
+
+    songDto.albumId = songDto.albumId === 0 ? null : songDto.albumId;
+    const albumID = songDto.albumId;
+    console.log("editSongInApi", albumID);
+
     const url = mainURL + "artist/" + artistId.toString() + "/song/" + singId.toString();
     const token = CurrentUser.token;
     const response = await ApiPutMethodObjectDtoWithAuthorization<CreateSongDto, SongDto>(url, songDto, token);
