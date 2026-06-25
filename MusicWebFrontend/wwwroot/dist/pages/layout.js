@@ -8,7 +8,6 @@ import { displaySongsPage } from "./displayItemsSubpages/songSupbpage.js";
 import { getUserButtonContainer } from "./user/userButton.js";
 const welcomeTextString = "Witaj w MusicWeb!";
 export function createLayout(header, subheader) {
-    //const bodyElement = document.querySelector("body");
     const pageWrapper = createDivByClassName("page-wrapper");
     const headerElement = createHeader();
     const maintContentElement = createMainContent();

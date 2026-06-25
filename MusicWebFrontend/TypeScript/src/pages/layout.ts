@@ -12,7 +12,6 @@ const welcomeTextString: string = "Witaj w MusicWeb!";
 
 
 export function createLayout(header: string, subheader: string): HTMLDivElement {
-    //const bodyElement = document.querySelector("body");
     const pageWrapper = createDivByClassName("page-wrapper");
     const headerElement = createHeader();
     const maintContentElement = createMainContent();
@@ -29,17 +28,13 @@ function createHeader(): HTMLElement {
     headerElement.classList.add("page-header");
 
     const headerTop = createDivByClassName("header-top");
-
     const headerTopLeft = createDivByClassName("header-top-left");
-
     const headerTopRight = createDivByClassName("header-top-right");
-
     const userButtonContainer = getUserButtonContainer();
 
     headerTopRight.appendChild(userButtonContainer);
 
     const headerTopCenter = createHeaderTopCenter();
-
     const mainMenu = createMainMenu();
 
     headerTop.appendChild(headerTopLeft);
