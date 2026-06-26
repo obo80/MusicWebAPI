@@ -1,6 +1,6 @@
 ﻿//import { mainURL } from "../../app.js";
 import { ChangePasswordDto, LoginDto, RegisterUserDto, UserDto } from "../../DTO/UserDtos.js";
-import { ApiGetMethodObjectDtoWithAuthorization, ApiPostMethodObjectDto, ApiPostMethodObjectDtoWithAuthorization, IApiResponse } from "../../Utils/apiCommunication.js";
+import { ApiGetMethodObjectDtoWithAuthorization, ApiPostMethodObjectDto, ApiPostMethodObjectDtoWithAuthorization, IApiResponse } from "../../Infrastructure/ApiCommunication/apiHTTPMethods.js";
 
 //const currentmainURL = mainURL;
 

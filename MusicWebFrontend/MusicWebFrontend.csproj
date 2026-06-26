@@ -23,6 +23,7 @@
     <None Remove="TypeScript\src\DTO\UserDtos.ts" />
     <None Remove="TypeScript\src\Entities\Album.ts" />
     <None Remove="TypeScript\src\Entities\song.ts" />
+    <None Remove="TypeScript\src\Infrastructure\ApiCommunication\ApiItems.ts" />
     <None Remove="TypeScript\src\pages\createEditDeleteItemsForms\albumCreatorForms.ts" />
     <None Remove="TypeScript\src\pages\createEditDeleteItemsForms\formFieldsCreator.ts" />
     <None Remove="TypeScript\src\pages\createEditDeleteItemsForms\Shared\SelectInput.ts" />
@@ -53,6 +54,7 @@
     <TypeScriptCompile Include="TypeScript\src\Entities\Album.ts" />
     <TypeScriptCompile Include="TypeScript\src\Entities\Artist.ts" />
     <TypeScriptCompile Include="TypeScript\src\Entities\Song.ts" />
+    <TypeScriptCompile Include="TypeScript\src\Infrastructure\ApiCommunication\apiItems.ts" />
     <TypeScriptCompile Include="TypeScript\src\pages\createEditDeleteItemsForms\albumCreatorForms.ts" />
     <TypeScriptCompile Include="TypeScript\src\pages\createEditDeleteItemsForms\artistCreatorForms.ts" />
     <TypeScriptCompile Include="TypeScript\src\pages\createEditDeleteItemsForms\Shared\formFieldsCreator.ts" />

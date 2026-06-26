@@ -1,6 +1,6 @@
 ﻿import { mainURL } from "../../app.js";
 import { AlbumDto } from "../../DTO/ItemsDto.js";
-import { getPagedItemsFromApi } from "../../Utils/apiCommunication.js";
+import { getPagedItemsFromApi } from "../../Infrastructure/ApiCommunication/ApiItems.js";
 import { createDivByClassName } from "../../Utils/helpers.js";
 import {createTileCard,
         createDetailsButtonsDiv,

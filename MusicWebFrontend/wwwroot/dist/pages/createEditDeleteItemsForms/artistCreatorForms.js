@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { mainURL } from "../../app.js";
-import { ApiGetMethodObjectDtoWithAuthorization, ApiPostMethodObjectDtoWithAuthorization, ApiPutMethodObjectDtoWithAuthorization } from "../../Utils/apiCommunication.js";
+import { ApiDeleteMethodWithAuthorization, ApiGetMethodObjectDtoWithAuthorization, ApiPostMethodObjectDtoWithAuthorization, ApiPutMethodObjectDtoWithAuthorization } from "../../Infrastructure/ApiCommunication/apiHTTPMethods.js";
 import { toast } from "../../Utils/toast.js";
 import { displayArtistsPage } from "../displayItemsSubpages/artistSubpage.js";
 import { CurrentUser } from "../user/currentUser.js";
@@ -40,7 +40,6 @@ export function createArtist() {
         });
     });
 }
-;
 export function editArtist(artistId) {
     return __awaiter(this, void 0, void 0, function* () {
         const artistFormFields = createArtistFormFields();
@@ -70,10 +69,12 @@ export function deleteArtist(artistId) {
     return __awaiter(this, void 0, void 0, function* () {
         if (confirm("Czy na pewno chcesz usunąć artystę?")) {
             console.log("Delete artist in progress");
-            // const url = mainURL + "artist/"+artistId;
-            // const token = CurrentUser.token;
-            // const response = await ApiDeleteMethodWithAuthorization(url, token);
-            // console.log(response);}
+            //const artistSongs = await getArtistSongs(artistId);
+            // dodać sprawdzanie czy ma albumy i utwory
+            const url = mainURL + "artist/" + artistId.toString();
+            const token = CurrentUser.token;
+            const response = yield ApiDeleteMethodWithAuthorization(url, token);
+            console.log(response);
         }
     });
 }

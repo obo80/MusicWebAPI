@@ -10,7 +10,7 @@ const welcomeTextString = "Witaj w MusicWeb!";
 export function createLayout(header, subheader) {
     const pageWrapper = createDivByClassName("page-wrapper");
     const headerElement = createHeader();
-    const maintContentElement = createMainContent();
+    //const maintContentElement = createMainContent();
     pageWrapper.appendChild(headerElement);
     pageWrapper.appendChild(createMainContentElement(header, subheader));
     return pageWrapper;

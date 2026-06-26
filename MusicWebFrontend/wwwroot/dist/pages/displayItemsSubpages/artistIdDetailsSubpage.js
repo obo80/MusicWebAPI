@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { mainURL } from "../../app.js";
-import { getItemFromApi, getPagedItemsFromApi } from "../../Utils/apiCommunication.js";
+import { getItemFromApi, getPagedItemsFromApi } from "../../Infrastructure/ApiCommunication/ApiItems.js";
 import { createDivByClassName } from "../../Utils/helpers.js";
 import { renderAlbumDetailsContainer } from "./albumIdDetailsSubpage.js";
 let activeAlbum = null;

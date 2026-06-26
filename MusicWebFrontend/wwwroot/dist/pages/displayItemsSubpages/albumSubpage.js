@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { mainURL } from "../../app.js";
-import { getPagedItemsFromApi } from "../../Utils/apiCommunication.js";
+import { getPagedItemsFromApi } from "../../Infrastructure/ApiCommunication/ApiItems.js";
 import { createDivByClassName } from "../../Utils/helpers.js";
 import { createTileCard, createDetailsButtonsDiv, createMainContentContainerElement } from "./sharedSuppage.js";
 export function createAlbumCard(albumDto) {

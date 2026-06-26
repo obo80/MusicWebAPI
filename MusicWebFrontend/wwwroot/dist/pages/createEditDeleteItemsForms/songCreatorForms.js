@@ -8,7 +8,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { mainURL } from "../../app.js";
-import { ApiGetMethodObjectDtoWithAuthorization, ApiPostMethodObjectDtoWithAuthorization, ApiPutMethodObjectDtoWithAuthorization } from "../../Utils/apiCommunication.js";
+import { ApiDeleteMethodWithAuthorization, ApiGetMethodObjectDtoWithAuthorization, ApiPostMethodObjectDtoWithAuthorization, ApiPutMethodObjectDtoWithAuthorization } from "../../Infrastructure/ApiCommunication/apiHTTPMethods.js";
+import { getItemFieldValue } from "../../Infrastructure/ApiCommunication/ApiItems.js";
 import { toast } from "../../Utils/toast.js";
 import { displaySongsPage } from "../displayItemsSubpages/songSupbpage.js";
 import { CurrentUser } from "../user/currentUser.js";
@@ -81,6 +82,20 @@ export function deleteSong(songId) {
     return __awaiter(this, void 0, void 0, function* () {
         if (confirm("Czy na pewno chcesz usunąć utwór?")) {
             console.log("Delete song in progress");
+            const token = CurrentUser.token;
+            const songUrl = mainURL + "song/" + songId.toString();
+            const artistId = yield getItemFieldValue("artistId", songUrl, token);
+            const artistSongUrl = mainURL + "artist/" + artistId + "/song/" + songId.toString();
+            const response = yield ApiDeleteMethodWithAuthorization(artistSongUrl, token);
+            const statusCode = response.status;
+            if (statusCode === 204) {
+                toast.success("Utwór został usunięty");
+                yield displaySongsPage();
+            }
+            else {
+                toast.error("Wystąpił błąd podczas usuwania utworu");
+                console.log(statusCode, response);
+            }
         }
     });
 }

@@ -1,10 +1,11 @@
-﻿import { getPagedItemsFromApi } from "../../Utils/apiCommunication.js";
+﻿
 import type { ArtistDto } from "../../DTO/ItemsDto.js";
 import {createDetailsButtonsDiv,
         createMainContentContainerElement,
         createTileCard
         } from "./sharedSuppage.js";
 import { mainURL } from "../../app.js";
+import { getPagedItemsFromApi } from "../../Infrastructure/ApiCommunication/ApiItems.js";
 
 export function createArtistCard(artistDto: ArtistDto): HTMLElement {
     const cardTile = createTileCard(artistDto);

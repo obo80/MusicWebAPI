@@ -1,14 +1,15 @@
 ﻿import { mainURL } from "../../app.js";
 import { CreateSongDto } from "../../DTO/CreateItemsDto.js";
 import { SongDto } from "../../DTO/ItemsDto.js";
-import { ApiGetMethodObjectDtoWithAuthorization, ApiPostMethodObjectDtoWithAuthorization, ApiPutMethodObjectDtoWithAuthorization } from "../../Utils/apiCommunication.js";
+import { ApiDeleteMethodWithAuthorization, ApiGetMethodObjectDtoWithAuthorization, ApiGetMethodObjectDtoWithoutAuthorization, ApiPostMethodObjectDtoWithAuthorization, ApiPutMethodObjectDtoWithAuthorization } from "../../Infrastructure/ApiCommunication/apiHTTPMethods.js";
+import { getItemFieldValue } from "../../Infrastructure/ApiCommunication/ApiItems.js";
 import { toast } from "../../Utils/toast.js";
 import { displaySongsPage } from "../displayItemsSubpages/songSupbpage.js";
 import { CurrentUser } from "../user/currentUser.js";
 import { formField } from "./Shared/formField.js";
 import { albumIdFormFieldId, artistIdFormFieldId, createSongFormFields, editSongFormFields } from "./Shared/formFieldsCreator.js";
 import { itemSharedForm } from "./Shared/ItemSharedForm.js";
-import { markCurretnItemInSelect, markOptionSelected } from "./Shared/SelectInput.js";
+import { markCurretnItemInSelect } from "./Shared/SelectInput.js";
 import { getNumberIdByFieldId, updateAlbumsSelectOptions, updateArtistsSelectOptions } from "./Shared/SharedFormsUtils.js";
 
 const createSongFormHeaderText = "Dodaj utwór";
@@ -44,8 +45,6 @@ export async function createSong() {
         }
     );
     await updateArtistsSelectOptions(artistIdFormFieldId);
-
-
 
 }
 
@@ -87,10 +86,27 @@ export async function editSong(songId: number) {
 
 export async function deleteSong(songId: number) {
     if (confirm("Czy na pewno chcesz usunąć utwór?")) {
-    console.log("Delete song in progress");
-    }
+        console.log("Delete song in progress");
 
+        const token = CurrentUser.token;
+        const songUrl = mainURL + "song/" + songId.toString();
+        const artistId = await getItemFieldValue("artistId", songUrl, token);
+
+        const artistSongUrl = mainURL + "artist/" + artistId + "/song/" + songId.toString();
+        const response = await ApiDeleteMethodWithAuthorization(artistSongUrl, token);
+        const statusCode = response.status;
+        if (statusCode === 204) {
+            toast.success("Utwór został usunięty");
+            await displaySongsPage();
+        }
+        else {
+            toast.error("Wystąpił błąd podczas usuwania utworu");
+            console.log(statusCode, response);
+        }
+    }
 }
+
+
 
 async function updateFormFieldsValueFromCurrentSongId(songId: number, songFormFields: formField[]): Promise<void> {
     const url = mainURL + "song/" + songId;

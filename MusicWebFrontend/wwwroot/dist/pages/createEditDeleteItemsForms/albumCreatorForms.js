@@ -8,14 +8,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { mainURL } from "../../app.js";
-import { ApiGetMethodObjectDtoWithAuthorization, ApiPostMethodObjectDtoWithAuthorization, ApiPutMethodObjectDtoWithAuthorization } from "../../Utils/apiCommunication.js";
+import { ApiDeleteMethodWithAuthorization, ApiGetMethodObjectDtoWithAuthorization, ApiPostMethodObjectDtoWithAuthorization, ApiPutMethodObjectDtoWithAuthorization } from "../../Infrastructure/ApiCommunication/apiHTTPMethods.js";
+import { getItemFieldValue, getItemsForUrl } from "../../Infrastructure/ApiCommunication/ApiItems.js";
 import { toast } from "../../Utils/toast.js";
 import { displayAlbumsPage } from "../displayItemsSubpages/albumSubpage.js";
 import { CurrentUser } from "../user/currentUser.js";
 import { formField } from "./Shared/formField.js";
 import { artistIdFormFieldId, createAlbumFormFields, editAlbumFormFields } from "./Shared/formFieldsCreator.js";
 import { itemSharedForm } from "./Shared/ItemSharedForm.js";
-import { markOptionSelected } from "./Shared/SelectInput.js";
 import { getNumberIdByFieldId, updateArtistsSelectOptions } from "./Shared/SharedFormsUtils.js";
 const createAlbumFormHeaderText = "Dodaj album";
 const editAlbumFormHeaderText = "Edycja albumu";
@@ -81,20 +81,32 @@ export function editAlbum(albumId) {
         yield updateArtistsSelectOptions(artistIdFormFieldId);
     });
 }
-function disableArtistSelect(artistIdFormFieldId) {
-    const artistSelect = document.getElementById(artistIdFormFieldId);
-    artistSelect.disabled = true;
-}
-function markCurretnArtistInSelect(artistIdFormFieldId, albumFormFields) {
-    const artistId = getNumberIdByFieldId(artistIdFormFieldId, albumFormFields);
-    const artistSelect = document.getElementById(artistIdFormFieldId);
-    artistSelect.disabled = true;
-    markOptionSelected(artistSelect, artistId.toString());
-}
 export function deleteAlbum(albumId) {
     return __awaiter(this, void 0, void 0, function* () {
         if (confirm("Czy na pewno chcesz usunąć album?")) {
-            console.log("Delete album in progress");
+            //console.log("Delete album in progress");
+            const token = CurrentUser.token;
+            const albumUrl = mainURL + "album/" + albumId.toString();
+            const abumSongsUrl = mainURL + "album/" + albumId + "/songs";
+            const songs = yield getItemsForUrl(abumSongsUrl, token);
+            if (songs !== null && songs.length > 0) {
+                alert("Album zawiera utwory, usuń je z albumu przed jego usunięciem");
+                toast.error("Album zawiera utwory, nie można usunąć albumu");
+                return;
+            }
+            //console.log("Usuwanie albumu");
+            const artistId = yield getItemFieldValue("artistId", albumUrl, token);
+            const artistSongUrl = mainURL + "artist/" + artistId + "/album/" + albumId.toString();
+            const response = yield ApiDeleteMethodWithAuthorization(artistSongUrl, token);
+            const statusCode = response.status;
+            if (statusCode === 204) {
+                toast.success("Album został usunięty");
+                yield displayAlbumsPage();
+            }
+            else {
+                toast.error("Wystąpił błąd podczas usuwania albumu");
+                console.log(statusCode, response);
+            }
         }
     });
 }

@@ -7,9 +7,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { getPagedItemsFromApi } from "../../Utils/apiCommunication.js";
 import { createDetailsButtonsDiv, createMainContentContainerElement, createTileCard } from "./sharedSuppage.js";
 import { mainURL } from "../../app.js";
+import { getPagedItemsFromApi } from "../../Infrastructure/ApiCommunication/ApiItems.js";
 export function createArtistCard(artistDto) {
     const cardTile = createTileCard(artistDto);
     const tileSummary = cardTile.querySelector(".tile-summary");

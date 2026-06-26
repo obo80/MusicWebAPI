@@ -1,9 +1,11 @@
 ﻿import { mainURL } from "../../app.js"
 import { CreateAlbumDto } from "../../DTO/CreateItemsDto.js";
-import { AlbumDto } from "../../DTO/ItemsDto.js";
-import { ApiGetMethodObjectDtoWithAuthorization, ApiPostMethodObjectDtoWithAuthorization, ApiPutMethodObjectDtoWithAuthorization } from "../../Utils/apiCommunication.js";
+import { AlbumDto, SongDto } from "../../DTO/ItemsDto.js";
+import { ApiDeleteMethodWithAuthorization, ApiGetMethodObjectDtoWithAuthorization, ApiPostMethodObjectDtoWithAuthorization, ApiPutMethodObjectDtoWithAuthorization } from "../../Infrastructure/ApiCommunication/apiHTTPMethods.js";
+import { getItemFieldValue, getItemsForUrl } from "../../Infrastructure/ApiCommunication/ApiItems.js";
 import { toast } from "../../Utils/toast.js";
 import { displayAlbumsPage } from "../displayItemsSubpages/albumSubpage.js";
+import { displaySongsPage } from "../displayItemsSubpages/songSupbpage.js";
 import { CurrentUser } from "../user/currentUser.js";
 import { formField } from "./Shared/formField.js";
 import { artistIdFormFieldId, createAlbumFormFields, editAlbumFormFields} from "./Shared/formFieldsCreator.js";
@@ -90,20 +92,37 @@ export async function editAlbum(albumId: number) {
     await updateArtistsSelectOptions(artistIdFormFieldId);
 }
 
-function disableArtistSelect(artistIdFormFieldId: string) {
-    const artistSelect = document.getElementById(artistIdFormFieldId) as HTMLSelectElement;
-    artistSelect.disabled = true;
-}
-function markCurretnArtistInSelect(artistIdFormFieldId: string, albumFormFields: formField[]) {
-    const artistId = getNumberIdByFieldId(artistIdFormFieldId, albumFormFields);
-    const artistSelect = document.getElementById(artistIdFormFieldId) as HTMLSelectElement;
-    artistSelect.disabled = true;
-    markOptionSelected(artistSelect, artistId.toString());
-}
 
 export async function deleteAlbum(albumId: number) {
     if (confirm("Czy na pewno chcesz usunąć album?")) {
-        console.log("Delete album in progress");
+        //console.log("Delete album in progress");
+
+        const token = CurrentUser.token;
+        const albumUrl = mainURL + "album/" + albumId.toString();
+        const abumSongsUrl = mainURL + "album/" + albumId + "/songs";
+        const songs = await getItemsForUrl<SongDto>(abumSongsUrl, token);
+
+        if (songs !== null && songs.length > 0) {
+            alert("Album zawiera utwory, usuń je z albumu przed jego usunięciem");
+            toast.error("Album zawiera utwory, nie można usunąć albumu");
+            return;
+
+        }
+        //console.log("Usuwanie albumu");
+
+        const artistId = await getItemFieldValue("artistId", albumUrl, token);
+
+        const artistSongUrl = mainURL + "artist/" + artistId + "/album/" + albumId.toString();
+        const response = await ApiDeleteMethodWithAuthorization(artistSongUrl, token);
+        const statusCode = response.status;
+        if (statusCode === 204) {
+            toast.success("Album został usunięty");
+            await displayAlbumsPage();
+        }
+        else {
+            toast.error("Wystąpił błąd podczas usuwania albumu");
+            console.log(statusCode, response);
+        }
     }
 }
 async function updateFormFieldsValueFromCurrentAlbumId(albumId: number, albumFormFields: formField[]): Promise<void> {

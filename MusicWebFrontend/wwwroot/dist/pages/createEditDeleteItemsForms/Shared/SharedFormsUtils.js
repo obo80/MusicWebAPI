@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { mainURL } from "../../../app.js";
-import { ApiGetMethodObjectDtoWithAuthorization } from "../../../Utils/apiCommunication.js";
+import { ApiGetMethodObjectDtoWithAuthorization } from "../../../Infrastructure/ApiCommunication/apiHTTPMethods.js";
 import { CurrentUser } from "../../user/currentUser.js";
 import { appendSelectOptionsFromSelectDto } from "./SelectInput.js";
 export function getFormFieldsFromDto(dto, formFields) {

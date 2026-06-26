@@ -7,42 +7,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-export function getPagedItemsFromApi(url) {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            const response = yield fetch(url);
-            if (!response.ok) {
-                console.log(`Failed to fetch data from ${url}. Status: ${response.status}`);
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            const data = yield response.json();
-            console.log(`Data fetched from ${url}:`);
-            return data;
-        }
-        catch (error) {
-            console.error("Error fetching items:", error);
-            return null;
-        }
-    });
-}
-export function getItemFromApi(url) {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            const response = yield fetch(url);
-            if (!response.ok) {
-                console.log(`Failed to fetch data from ${url}. Status: ${response.status}`);
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            const data = yield response.json();
-            console.log(`Data fetched from ${url}:`);
-            return data;
-        }
-        catch (error) {
-            console.error("Error fetching items:", error);
-            return null;
-        }
-    });
-}
 export function ApiGetMethodObjectDtoWithAuthorization(url, token) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -51,6 +15,23 @@ export function ApiGetMethodObjectDtoWithAuthorization(url, token) {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
+                }
+            });
+            const responseResult = yield handleResponse(response);
+            return responseResult;
+        }
+        catch (error) {
+            console.error("Error fetching items:", error);
+        }
+    });
+}
+export function ApiGetMethodObjectDtoWithoutAuthorization(url, token) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const response = yield fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
                 }
             });
             const responseResult = yield handleResponse(response);
@@ -136,7 +117,7 @@ export function ApiDeleteMethodWithAuthorization(url, token) {
         }
     });
 }
-function handleResponse(rawResponse) {
+export function handleResponse(rawResponse) {
     return __awaiter(this, void 0, void 0, function* () {
         const contentType = rawResponse.headers.get('content-type') || '';
         let data;
@@ -156,28 +137,4 @@ function handleResponse(rawResponse) {
         };
     });
 }
-export function loginUserToApi(url, loginDto) {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            const response = yield fetch(url, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(loginDto)
-            });
-            const responseResult = yield handleResponse(response);
-            const resultStatusCode = responseResult.status;
-            if (resultStatusCode === 200) {
-                localStorage.setItem("token", responseResult.data);
-                return 200;
-            }
-            else {
-                return resultStatusCode;
-            }
-        }
-        catch (error) {
-            console.error("Error fetching items:", error);
-            return 500;
-        }
-    });
-}
-//# sourceMappingURL=apiCommunication.js.map
+//# sourceMappingURL=apiHTTPMethods.js.map

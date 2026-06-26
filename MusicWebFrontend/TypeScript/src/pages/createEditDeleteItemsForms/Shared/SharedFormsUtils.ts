@@ -2,7 +2,7 @@
 import { SelectOptionsDto } from "../../../DTO/CreateItemsDto.js";
 import { AlbumDto, ArtistDto } from "../../../DTO/ItemsDto.js";
 import { PagedResultDto } from "../../../DTO/PagedResultDto.js";
-import { ApiGetMethodObjectDtoWithAuthorization } from "../../../Utils/apiCommunication.js";
+import { ApiGetMethodObjectDtoWithAuthorization } from "../../../Infrastructure/ApiCommunication/apiHTTPMethods.js";
 import { CurrentUser } from "../../user/currentUser.js";
 import { formField, formfieldValue } from "./formField.js";
 import { appendSelectOptionsFromSelectDto } from "./SelectInput.js";
