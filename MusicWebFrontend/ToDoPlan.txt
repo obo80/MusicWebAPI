@@ -8,12 +8,16 @@ Listy artystów, albumów i utowrów
 
 Panel wyszukiwania i funkcje do obsługi plus CSS.
 
-------	Logowanie użytkownika:
+Do zrobienia
+- css do formy kreatora
+- wyszukiwanie i sortowanie dla listy elementów
+- dodać przyciski w szczegółach, np edit delete, remove na liście albumów lub utworów danego artysty albo albumu
+- system ocen
 
 DO Naprawy:
-- zmiana albumu przy edycji utworu nie działa
-- błąd dodawania kolejnych opcji bez usunięcia poprzednich na event listenerze 
-	- to chyba poprawione - do upewnienia się czy dobrze działa
+- brakuje opcji wybierz artyste podczas tworzenia listy elementów do wyboru, z automatu zaznaczony jest pierwszy w kolejności.
+	- podczas tworzenia utworu jest również pierwszy wpisany ale nie ma wybranych albumów - to jest niby dobrze bo mają się ładować jak jest zmiania artysty
+	na event listenerze - trzeba dodać opcję wybierz, albo sprawdzić czy się nie kasuje podczas ładowania elememtów
 
 - Lista Utworów - do kafelków dodać informację o albumie
 - brak informacji o długości utworu w szczególach utworu

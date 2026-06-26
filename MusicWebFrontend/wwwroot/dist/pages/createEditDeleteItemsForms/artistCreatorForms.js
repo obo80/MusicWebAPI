@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import { mainURL } from "../../app.js";
 import { ApiDeleteMethodWithAuthorization, ApiGetMethodObjectDtoWithAuthorization, ApiPostMethodObjectDtoWithAuthorization, ApiPutMethodObjectDtoWithAuthorization } from "../../Infrastructure/ApiCommunication/apiHTTPMethods.js";
+import { getItemsForUrl } from "../../Infrastructure/ApiCommunication/ApiItems.js";
 import { toast } from "../../Utils/toast.js";
 import { displayArtistsPage } from "../displayItemsSubpages/artistSubpage.js";
 import { CurrentUser } from "../user/currentUser.js";
@@ -69,11 +70,38 @@ export function deleteArtist(artistId) {
     return __awaiter(this, void 0, void 0, function* () {
         if (confirm("Czy na pewno chcesz usunąć artystę?")) {
             console.log("Delete artist in progress");
-            //const artistSongs = await getArtistSongs(artistId);
-            // dodać sprawdzanie czy ma albumy i utwory
-            const url = mainURL + "artist/" + artistId.toString();
+            const artistIdUrl = mainURL + "artist/" + artistId.toString();
             const token = CurrentUser.token;
-            const response = yield ApiDeleteMethodWithAuthorization(url, token);
+            // const artistSongUrl = artistIdUrl + "/song";
+            // const artistAlbumUrl = artistIdUrl + "/album";
+            const songs = yield getItemsForUrl(artistIdUrl + "/song", token);
+            const albums = yield getItemsForUrl(artistIdUrl + "/album", token);
+            if (songs !== null && songs.length > 0 && albums !== null && albums.length > 0) {
+                alert("Artysta zawiera utwory i albumy, usuń je przed usunięciem artysty");
+                toast.error("Artysta zawiera utwory i albumy, nie można usunąć artysty");
+                return;
+            }
+            else if (songs !== null && songs.length > 0) {
+                alert("Artysta zawiera utwory, usuń je przed usunięciem artysty");
+                toast.error("Artysta zawiera utwory, nie można usunąć artysty");
+                return;
+            }
+            else if (albums !== null && albums.length > 0) {
+                alert("Artysta zawiera albumy, usuń je przed usunięciem artysty");
+                toast.error("Artysta zawiera albumy, nie można usunąć artysty");
+                return;
+            }
+            console.log("Usuwanie artysty");
+            const response = yield ApiDeleteMethodWithAuthorization(artistIdUrl, token);
+            const statusCode = response.status;
+            if (statusCode === 204) {
+                toast.success("Artysta został usunięty");
+                yield displayArtistsPage();
+            }
+            else {
+                toast.error("Wystąpił błąd podczas usuwania artysty");
+                console.log(statusCode, response);
+            }
             console.log(response);
         }
     });
